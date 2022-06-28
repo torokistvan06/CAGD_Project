@@ -114,6 +114,8 @@ namespace cagd
         connect(_gl_widget,SIGNAL(dzHermitePointChanged(double)),_side_widget->hermite_dz,SLOT(setValue(double)));
 
         connect(_side_widget->selectedHermiteArc, SIGNAL(valueChanged(int)), _gl_widget, SLOT(_setSelectedHermiteArc(int)));
+        connect(_side_widget->selectedSecondaryHermiteArc, SIGNAL(valueChanged(int)), _gl_widget, SLOT(_setSelectedSecondaryHermiteArc(int)));
+
         connect(_side_widget->hermite_index, SIGNAL(valueChanged(int)), _gl_widget, SLOT(setHermitePointIndex(int)));
         connect(_side_widget->hermite_x, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setHermitePointx(double)));
         connect(_side_widget->hermite_y, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setHermitePointy(double)));
@@ -137,7 +139,7 @@ namespace cagd
 
         connect(_side_widget->selectedPrimaryDirection, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(_setPrimaryDirection(int)));
         connect(_side_widget->selectedSecondaryDirection, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(_setSecondaryDirection(int)));
-        connect(_side_widget->selectedSecondaryHermiteArc, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(_setSecondarySelectedArc(int)));
+
 
         connect(_side_widget->continueSelectedArc, SIGNAL(pressed()), _gl_widget, SLOT(_continueArc()));
 

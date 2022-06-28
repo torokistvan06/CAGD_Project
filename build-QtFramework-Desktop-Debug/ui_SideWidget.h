@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'SideWidget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.8
+** Created by: Qt User Interface Compiler version 6.2.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -134,8 +134,8 @@ public:
     QPushButton *joinSelectedArcs;
     QPushButton *mergeSelectedArcs;
     QLabel *label_81;
-    QComboBox *selectedSecondaryHermiteArc;
     QSpinBox *selectedHermiteArc;
+    QSpinBox *selectedSecondaryHermiteArc;
     QWidget *tab_6;
     QComboBox *selectedHermitePatch;
     QLabel *label_46;
@@ -182,7 +182,7 @@ public:
         groupBox->setGeometry(QRect(10, 0, 271, 231));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(3, 21, 261, 201));
+        layoutWidget->setGeometry(QRect(3, 21, 261, 220));
         formLayout = new QFormLayout(layoutWidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setContentsMargins(0, 0, 0, 0);
@@ -598,13 +598,14 @@ public:
         label_81 = new QLabel(tab_2);
         label_81->setObjectName(QString::fromUtf8("label_81"));
         label_81->setGeometry(QRect(260, 290, 141, 21));
-        selectedSecondaryHermiteArc = new QComboBox(tab_2);
-        selectedSecondaryHermiteArc->setObjectName(QString::fromUtf8("selectedSecondaryHermiteArc"));
-        selectedSecondaryHermiteArc->setGeometry(QRect(440, 290, 76, 24));
         selectedHermiteArc = new QSpinBox(tab_2);
         selectedHermiteArc->setObjectName(QString::fromUtf8("selectedHermiteArc"));
         selectedHermiteArc->setGeometry(QRect(120, 20, 46, 26));
         selectedHermiteArc->setMaximum(100);
+        selectedSecondaryHermiteArc = new QSpinBox(tab_2);
+        selectedSecondaryHermiteArc->setObjectName(QString::fromUtf8("selectedSecondaryHermiteArc"));
+        selectedSecondaryHermiteArc->setGeometry(QRect(440, 290, 61, 26));
+        selectedSecondaryHermiteArc->setMaximum(100);
         tabWidget->addTab(tab_2, QString());
         tab_6 = new QWidget();
         tab_6->setObjectName(QString::fromUtf8("tab_6"));
@@ -706,7 +707,7 @@ public:
         hermite_patch_tz->setGeometry(QRect(330, 130, 64, 26));
         hermite_patch_tz->setMinimum(-99.000000000000000);
         tabWidget->addTab(tab_6, QString());
-#ifndef QT_NO_SHORTCUT
+#if QT_CONFIG(shortcut)
         label->setBuddy(rotate_x_slider);
         label_2->setBuddy(rotate_y_slider);
         label_3->setBuddy(rotate_z_slider);
@@ -718,7 +719,7 @@ public:
         label_8->setBuddy(trans_y_spin_box);
         label_9->setBuddy(zoom_factor_spin_box);
         label_11->setBuddy(zoom_factor_spin_box);
-#endif // QT_NO_SHORTCUT
+#endif // QT_CONFIG(shortcut)
 
         retranslateUi(SideWidget);
 
@@ -730,91 +731,91 @@ public:
 
     void retranslateUi(QWidget *SideWidget)
     {
-        SideWidget->setWindowTitle(QApplication::translate("SideWidget", "Form", nullptr));
-        groupBox->setTitle(QApplication::translate("SideWidget", "Transformations", nullptr));
-        label->setText(QApplication::translate("SideWidget", "Rotate around x", nullptr));
-        label_2->setText(QApplication::translate("SideWidget", "Rotate around y", nullptr));
-        label_3->setText(QApplication::translate("SideWidget", "Rotate around z", nullptr));
-        label_4->setText(QApplication::translate("SideWidget", "Zoom factor", nullptr));
-#ifndef QT_NO_TOOLTIP
+        SideWidget->setWindowTitle(QCoreApplication::translate("SideWidget", "Form", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("SideWidget", "Transformations", nullptr));
+        label->setText(QCoreApplication::translate("SideWidget", "Rotate around x", nullptr));
+        label_2->setText(QCoreApplication::translate("SideWidget", "Rotate around y", nullptr));
+        label_3->setText(QCoreApplication::translate("SideWidget", "Rotate around z", nullptr));
+        label_4->setText(QCoreApplication::translate("SideWidget", "Zoom factor", nullptr));
+#if QT_CONFIG(tooltip)
         zoom_factor_spin_box->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        label_5->setText(QApplication::translate("SideWidget", "Translate along x", nullptr));
-        label_6->setText(QApplication::translate("SideWidget", "Translate along y", nullptr));
-        label_7->setText(QApplication::translate("SideWidget", "Translate along z", nullptr));
-        label_10->setText(QApplication::translate("SideWidget", "Scaling", nullptr));
-        label_8->setText(QApplication::translate("SideWidget", "Parametric curve:", nullptr));
-        ShowTangent->setText(QApplication::translate("SideWidget", "Show Tangent", nullptr));
-        ShowAcceleration->setText(QApplication::translate("SideWidget", "Show Acceleration", nullptr));
-        label_9->setText(QApplication::translate("SideWidget", "Scaling", nullptr));
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+        label_5->setText(QCoreApplication::translate("SideWidget", "Translate along x", nullptr));
+        label_6->setText(QCoreApplication::translate("SideWidget", "Translate along y", nullptr));
+        label_7->setText(QCoreApplication::translate("SideWidget", "Translate along z", nullptr));
+        label_10->setText(QCoreApplication::translate("SideWidget", "Scaling", nullptr));
+        label_8->setText(QCoreApplication::translate("SideWidget", "Parametric curve:", nullptr));
+        ShowTangent->setText(QCoreApplication::translate("SideWidget", "Show Tangent", nullptr));
+        ShowAcceleration->setText(QCoreApplication::translate("SideWidget", "Show Acceleration", nullptr));
+        label_9->setText(QCoreApplication::translate("SideWidget", "Scaling", nullptr));
+#if QT_CONFIG(tooltip)
         scale_spin_box->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        label_11->setText(QApplication::translate("SideWidget", "Div Point Count", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("SideWidget", "Lab2", nullptr));
-        label_12->setText(QApplication::translate("SideWidget", "Selected cyclic curve:", nullptr));
-        showCyclicCurves->setText(QApplication::translate("SideWidget", "Show interpolating curves", nullptr));
-        showTangents->setText(QApplication::translate("SideWidget", "Show tangents", nullptr));
-        showAccelerations->setText(QApplication::translate("SideWidget", "Show acceleration", nullptr));
-        label_13->setText(QApplication::translate("SideWidget", "Speed of object on selected curve", nullptr));
-        label_14->setText(QApplication::translate("SideWidget", "Selected point on selected cyclic curve", nullptr));
-        label_15->setText(QApplication::translate("SideWidget", "X:", nullptr));
-        label_16->setText(QApplication::translate("SideWidget", "Y:", nullptr));
-        label_17->setText(QApplication::translate("SideWidget", "Z:", nullptr));
-        label_18->setText(QApplication::translate("SideWidget", "Distance:", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("SideWidget", "Lab3", nullptr));
-        label_19->setText(QApplication::translate("SideWidget", "Selected surface", nullptr));
-        label_20->setText(QApplication::translate("SideWidget", "Selected texture", nullptr));
-        label_21->setText(QApplication::translate("SideWidget", "Selected material", nullptr));
-        showTexture->setText(QApplication::translate("SideWidget", "Show texture", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("SideWidget", "Lab4", nullptr));
-        label_22->setText(QApplication::translate("SideWidget", "Selected shader:", nullptr));
-        label_23->setText(QApplication::translate("SideWidget", "Scale factor", nullptr));
-        label_24->setText(QApplication::translate("SideWidget", "Smoothing", nullptr));
-        label_25->setText(QApplication::translate("SideWidget", "Shading", nullptr));
-        label_26->setText(QApplication::translate("SideWidget", "Red:", nullptr));
-        label_27->setText(QApplication::translate("SideWidget", "Blue", nullptr));
-        label_28->setText(QApplication::translate("SideWidget", "Green", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(Lab5), QApplication::translate("SideWidget", "Lab5", nullptr));
-        label_29->setText(QApplication::translate("SideWidget", "Selected point", nullptr));
-        label_30->setText(QApplication::translate("SideWidget", "x", nullptr));
-        label_31->setText(QApplication::translate("SideWidget", "y", nullptr));
-        label_32->setText(QApplication::translate("SideWidget", "z", nullptr));
-        show_hermite_first_order_derivates->setText(QApplication::translate("SideWidget", "Show First Order Derivatives", nullptr));
-        show_hermite_second_order_derivates->setText(QApplication::translate("SideWidget", "Show Second Order Derivatives", nullptr));
-        label_74->setText(QApplication::translate("SideWidget", "Selected arc", nullptr));
-        label_75->setText(QApplication::translate("SideWidget", "dx", nullptr));
-        label_76->setText(QApplication::translate("SideWidget", "dy", nullptr));
-        label_77->setText(QApplication::translate("SideWidget", "dz", nullptr));
-        createNewCompositeCurve->setText(QApplication::translate("SideWidget", "Create New Composite Curve", nullptr));
-        label_78->setText(QApplication::translate("SideWidget", "Selected composite curve:", nullptr));
-        highlightSelectedCompositeArc->setText(QApplication::translate("SideWidget", "Highlight selected composite arc", nullptr));
-        addArcToCompositeCurve->setText(QApplication::translate("SideWidget", "Add selected arc to selected composite curve", nullptr));
-        label_33->setText(QApplication::translate("SideWidget", "r", nullptr));
-        label_34->setText(QApplication::translate("SideWidget", "g", nullptr));
-        label_35->setText(QApplication::translate("SideWidget", "b", nullptr));
-        label_79->setText(QApplication::translate("SideWidget", "Selected primary direction", nullptr));
-        continueSelectedArc->setText(QApplication::translate("SideWidget", "Continue Selected Arc (Primary Dir)", nullptr));
-        label_80->setText(QApplication::translate("SideWidget", "Selected secondary direction", nullptr));
-        joinSelectedArcs->setText(QApplication::translate("SideWidget", "Join Selected Arcs", nullptr));
-        mergeSelectedArcs->setText(QApplication::translate("SideWidget", "Merge Selected Arcs", nullptr));
-        label_81->setText(QApplication::translate("SideWidget", "Selected secondary arc", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("SideWidget", "Hermite Arcs", nullptr));
-        label_46->setText(QApplication::translate("SideWidget", "Selected patch", nullptr));
-        label_47->setText(QApplication::translate("SideWidget", "Selected point", nullptr));
-        label_48->setText(QApplication::translate("SideWidget", "x", nullptr));
-        label_63->setText(QApplication::translate("SideWidget", "y", nullptr));
-        label_64->setText(QApplication::translate("SideWidget", "z", nullptr));
-        label_65->setText(QApplication::translate("SideWidget", "ux", nullptr));
-        label_66->setText(QApplication::translate("SideWidget", "uy", nullptr));
-        label_67->setText(QApplication::translate("SideWidget", "uz", nullptr));
-        label_68->setText(QApplication::translate("SideWidget", "vx", nullptr));
-        label_69->setText(QApplication::translate("SideWidget", "vy", nullptr));
-        label_70->setText(QApplication::translate("SideWidget", "vz", nullptr));
-        label_71->setText(QApplication::translate("SideWidget", "tx", nullptr));
-        label_72->setText(QApplication::translate("SideWidget", "tz", nullptr));
-        label_73->setText(QApplication::translate("SideWidget", "ty", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_6), QApplication::translate("SideWidget", "Hermite Patches", nullptr));
+#endif // QT_CONFIG(tooltip)
+        label_11->setText(QCoreApplication::translate("SideWidget", "Div Point Count", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("SideWidget", "Lab2", nullptr));
+        label_12->setText(QCoreApplication::translate("SideWidget", "Selected cyclic curve:", nullptr));
+        showCyclicCurves->setText(QCoreApplication::translate("SideWidget", "Show interpolating curves", nullptr));
+        showTangents->setText(QCoreApplication::translate("SideWidget", "Show tangents", nullptr));
+        showAccelerations->setText(QCoreApplication::translate("SideWidget", "Show acceleration", nullptr));
+        label_13->setText(QCoreApplication::translate("SideWidget", "Speed of object on selected curve", nullptr));
+        label_14->setText(QCoreApplication::translate("SideWidget", "Selected point on selected cyclic curve", nullptr));
+        label_15->setText(QCoreApplication::translate("SideWidget", "X:", nullptr));
+        label_16->setText(QCoreApplication::translate("SideWidget", "Y:", nullptr));
+        label_17->setText(QCoreApplication::translate("SideWidget", "Z:", nullptr));
+        label_18->setText(QCoreApplication::translate("SideWidget", "Distance:", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("SideWidget", "Lab3", nullptr));
+        label_19->setText(QCoreApplication::translate("SideWidget", "Selected surface", nullptr));
+        label_20->setText(QCoreApplication::translate("SideWidget", "Selected texture", nullptr));
+        label_21->setText(QCoreApplication::translate("SideWidget", "Selected material", nullptr));
+        showTexture->setText(QCoreApplication::translate("SideWidget", "Show texture", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("SideWidget", "Lab4", nullptr));
+        label_22->setText(QCoreApplication::translate("SideWidget", "Selected shader:", nullptr));
+        label_23->setText(QCoreApplication::translate("SideWidget", "Scale factor", nullptr));
+        label_24->setText(QCoreApplication::translate("SideWidget", "Smoothing", nullptr));
+        label_25->setText(QCoreApplication::translate("SideWidget", "Shading", nullptr));
+        label_26->setText(QCoreApplication::translate("SideWidget", "Red:", nullptr));
+        label_27->setText(QCoreApplication::translate("SideWidget", "Blue", nullptr));
+        label_28->setText(QCoreApplication::translate("SideWidget", "Green", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(Lab5), QCoreApplication::translate("SideWidget", "Lab5", nullptr));
+        label_29->setText(QCoreApplication::translate("SideWidget", "Selected point", nullptr));
+        label_30->setText(QCoreApplication::translate("SideWidget", "x", nullptr));
+        label_31->setText(QCoreApplication::translate("SideWidget", "y", nullptr));
+        label_32->setText(QCoreApplication::translate("SideWidget", "z", nullptr));
+        show_hermite_first_order_derivates->setText(QCoreApplication::translate("SideWidget", "Show First Order Derivatives", nullptr));
+        show_hermite_second_order_derivates->setText(QCoreApplication::translate("SideWidget", "Show Second Order Derivatives", nullptr));
+        label_74->setText(QCoreApplication::translate("SideWidget", "Selected arc", nullptr));
+        label_75->setText(QCoreApplication::translate("SideWidget", "dx", nullptr));
+        label_76->setText(QCoreApplication::translate("SideWidget", "dy", nullptr));
+        label_77->setText(QCoreApplication::translate("SideWidget", "dz", nullptr));
+        createNewCompositeCurve->setText(QCoreApplication::translate("SideWidget", "Create New Composite Curve", nullptr));
+        label_78->setText(QCoreApplication::translate("SideWidget", "Selected composite curve:", nullptr));
+        highlightSelectedCompositeArc->setText(QCoreApplication::translate("SideWidget", "Highlight selected composite arc", nullptr));
+        addArcToCompositeCurve->setText(QCoreApplication::translate("SideWidget", "Add selected arc to selected composite curve", nullptr));
+        label_33->setText(QCoreApplication::translate("SideWidget", "r", nullptr));
+        label_34->setText(QCoreApplication::translate("SideWidget", "g", nullptr));
+        label_35->setText(QCoreApplication::translate("SideWidget", "b", nullptr));
+        label_79->setText(QCoreApplication::translate("SideWidget", "Selected primary direction", nullptr));
+        continueSelectedArc->setText(QCoreApplication::translate("SideWidget", "Continue Selected Arc (Primary Dir)", nullptr));
+        label_80->setText(QCoreApplication::translate("SideWidget", "Selected secondary direction", nullptr));
+        joinSelectedArcs->setText(QCoreApplication::translate("SideWidget", "Join Selected Arcs", nullptr));
+        mergeSelectedArcs->setText(QCoreApplication::translate("SideWidget", "Merge Selected Arcs", nullptr));
+        label_81->setText(QCoreApplication::translate("SideWidget", "Selected secondary arc", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("SideWidget", "Hermite Arcs", nullptr));
+        label_46->setText(QCoreApplication::translate("SideWidget", "Selected patch", nullptr));
+        label_47->setText(QCoreApplication::translate("SideWidget", "Selected point", nullptr));
+        label_48->setText(QCoreApplication::translate("SideWidget", "x", nullptr));
+        label_63->setText(QCoreApplication::translate("SideWidget", "y", nullptr));
+        label_64->setText(QCoreApplication::translate("SideWidget", "z", nullptr));
+        label_65->setText(QCoreApplication::translate("SideWidget", "ux", nullptr));
+        label_66->setText(QCoreApplication::translate("SideWidget", "uy", nullptr));
+        label_67->setText(QCoreApplication::translate("SideWidget", "uz", nullptr));
+        label_68->setText(QCoreApplication::translate("SideWidget", "vx", nullptr));
+        label_69->setText(QCoreApplication::translate("SideWidget", "vy", nullptr));
+        label_70->setText(QCoreApplication::translate("SideWidget", "vz", nullptr));
+        label_71->setText(QCoreApplication::translate("SideWidget", "tx", nullptr));
+        label_72->setText(QCoreApplication::translate("SideWidget", "tz", nullptr));
+        label_73->setText(QCoreApplication::translate("SideWidget", "ty", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_6), QCoreApplication::translate("SideWidget", "Hermite Patches", nullptr));
     } // retranslateUi
 
 };

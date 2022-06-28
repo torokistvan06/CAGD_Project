@@ -222,7 +222,7 @@ namespace cagd
         GLuint                                      _selected_composite_arc = 0;
         GLuint                                      _number_of_composite_arcs = 0;
         GLuint                                      _primary_dir = 0, _secondary_dir = 0; // 0 - Left, 1 - Right
-        GLuint                                      _selected_secondary_arc;
+        GLuint                                      _selected_secondary_arc = 0;
 
 
         GLfloat                                     _r = 0.5, _g = 0.5, _b = 0.5;
@@ -333,7 +333,10 @@ namespace cagd
         void _addSelectedArcToSelectedCompositeArc();
 
         void _setSelectedHermiteArc(int index);
+
         void setHermitePointIndex(int index);
+
+        void _setSelectedSecondaryHermiteArc(int index);
 
         void _hermite_red(double value);
         void _hermite_green(double value);
@@ -344,6 +347,7 @@ namespace cagd
         void _setSecondarySelectedArc(int index);
 
         void _continueArc();
+        void _joinArc();
 
         void setHermitePointx(double value);
         void setHermitePointy(double value);

@@ -106,9 +106,9 @@ namespace cagd {
 
     }
 
-    GLboolean HermiteCompositeCurve3::JoinExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
+    CubicHermiteArc3* HermiteCompositeCurve3::JoinExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
 
-        return GL_TRUE;
+        return 0;
     }
 
     GLboolean HermiteCompositeCurve3::MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
