@@ -11,7 +11,6 @@ namespace cagd
     class HermiteCompositeSurface3
     {
     public:
-        enum Direction{N, NW, W, SW, S, SE, E, NE};
 
         class PatchAttributes
         {
@@ -21,35 +20,61 @@ namespace cagd
             Material                        *material; // use pointers to pre-defined materials
             QOpenGLTexture                  *texture;  // use pointers to pre-defined textures
             ShaderProgram                   *shader;   // use pointers to pre-defined shader programs
-
+            GLint                           index;
             // other attributes
             // ...
 
             PatchAttributes                 *neighbours[8];
-            Direction                       connection_type[8];
+            GLint                           connection_type[8];
 
             // ctor, copy ctor, assignment operator, dtor (they are required by the std::vector!)
         };
 
-    protected:
-        GLuint                          _minimal_patch_count_to_be_reserved;
+        GLuint                           _selected_patch;
+        GLuint                           _selected_composite_patch;
+
+        GLuint                           _composite_index;
         GLuint                          _number_of_patches;
+
+        bool                            _use_textures;
+        bool                            _use_shaders;
+        bool                            _show_u_lines;
+        bool                            _show_v_lines;
+        bool                            _show_first_order_derivates;
+        bool                            _show_second_order_derivates;
+        bool                            _highlight_selected_composite_patch;
+
+
+    protected:
         std::vector<PatchAttributes>    _attributes;
 
     public:
         // special/default ctor
-        HermiteCompositeSurface3(/*GLdouble u_alpha = ..., GLdouble v_alpha = ..., GLuint minimial_patch_count_to_be_reserved = ...*/);
+        HermiteCompositeSurface3(GLuint);
         ~HermiteCompositeSurface3();
 
         // operations
-        GLboolean InsertNewPatch(BicubicHermitePatch3 patch, Material mat, QOpenGLTexture texture, ShaderProgram shader);
+        GLboolean InsertNewPatch(BicubicHermitePatch3* patch, TriangulatedMesh3* image, Material* mat, QOpenGLTexture* texture, ShaderProgram* shader, int index);
         GLboolean DeleteExistingPatch(GLuint index);
-        GLboolean ContinueExistingPatch(GLuint index, Direction direction);
-        GLboolean JoinExistingPatches(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1);
-        GLboolean MergeExistingPatches(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1);
+        GLboolean ContinueExistingPatch(GLuint index, int direction);
+        GLboolean JoinExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
+        GLboolean MergeExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
 
-        GLboolean RenderAllPatches(GLuint order, GLenum render_mode) const;
+        GLboolean RenderAllPatches() const;
         GLboolean RenderSelectedPatch(GLuint index, GLuint order, GLenum render_mode) const;
+
+        GLboolean updatePatch(GLuint index, TriangulatedMesh3* image);
+
+        void showTextures(bool);
+        void showShaders(bool);
+        void showULines(bool);
+        void showVLines(bool);
+        void showFirstOrder(bool);
+        void showSecondOrder(bool);
+        void hightlightSelected(bool);
+        void setSelectedPatch(int);
+        void setSelectedCompositePatch(int);
+
 
         // other setters and getters
         // ...

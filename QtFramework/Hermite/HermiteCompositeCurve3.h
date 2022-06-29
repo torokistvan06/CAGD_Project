@@ -35,6 +35,7 @@ namespace cagd
         GLint   _selected_composite = 0;
         GLint   _composite_index;
 
+        GLint negDirection(int direction);
 
     protected:
         GLuint                          _number_of_arcs = 0;
@@ -49,7 +50,9 @@ namespace cagd
         CubicHermiteArc3* ContinueExisitingArc(GLuint index, int direction);
         GLvoid addNeighbourContinue(GLint index_0, int direction, GLint index_1);
         CubicHermiteArc3* JoinExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
-        void MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
+        GLboolean MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
+
+        GLvoid addNeighbour(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
 
         GLboolean RenderAllArcs() const;
         GLboolean RenderSelectedArc(GLuint index, GLuint order, GLenum render_mode) const;

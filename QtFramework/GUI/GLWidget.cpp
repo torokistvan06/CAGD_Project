@@ -90,7 +90,7 @@ namespace cagd
 
                 initializeCyclicData();
                 initializeModels();
-                initializeMaterials();
+                _initializeMaterials();
                 initializeProperties();
                 initializeCyclicCurves();
                 connect(_old_timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -100,8 +100,8 @@ namespace cagd
             {
 
                 initializeParametricSurfaceData();
-                initializeMaterials();
-                initializeTextures();
+                _initializeMaterials();
+                _initializeTextures();
                 initializeParametricSurfaces();
                 connect(_timer, SIGNAL(timeout()), this, SLOT(animateSurface()));
                 break;
@@ -109,11 +109,11 @@ namespace cagd
                 case 3:
             {
                 initializeParametricSurfaceData();
-                initializeMaterials();
-                initializeTextures();
+                _initializeMaterials();
+                _initializeTextures();
                 initializeParametricSurfaces();
                 connect(_timer, SIGNAL(timeout()), this, SLOT(animateSurface()));
-                initializeShaders();
+                _initializeShaders();
                 break;
             }
                 case 4:
@@ -124,7 +124,7 @@ namespace cagd
             }
             case 5:
             {
-                initializeShaders();
+                _initializeShaders();
                 initializeHermitePatch();
                 updateHermitePatch();
                 break;
@@ -136,6 +136,15 @@ namespace cagd
             }
                 case 7:
             {
+                HCoordinate3 direction (0.0, 0.0, 5.0, 0.0);
+                Color4  ambient(0.4, 0.4, 0.4, 1.0);
+                Color4  diffuse(0.8, 0.8, 0.8, 1.0);
+                Color4  specular(1.0, 1.0, 1.0, 1.0);
+                _dl = new (nothrow) DirectionalLight(GL_LIGHT1, direction, ambient, diffuse, specular);
+
+                _initializeMaterials();
+                _initializeTextures();
+                _initializeShaders();
                 _initializeHermitePatches();
                 break;
             }
@@ -370,14 +379,14 @@ namespace cagd
         for(GLint i = 0 ; i < _number_of_composite_arcs ; i++) {
             if(i == _selected_composite_arc) {
                 _composite_hermite_arcs[i]->updateArc(_selected_hermite_arc, _images_of_hermite_arcs[_selected_hermite_arc]);
-                if(i != _selected_secondary_arc){
-                    _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
-                }
+                _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
             }
         }
 
         return true;
     }
+
+
 
     void GLWidget::_continueArc() {
         if(_composite_arc_index_of_hermite_arcs[_selected_hermite_arc] == -1) {
@@ -403,6 +412,7 @@ namespace cagd
 
         _images_of_hermite_arcs[_number_of_hermite_arcs - 1]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
         _composite_hermite_arcs[_comp_index]->InsertNewArc(_hermite_arcs[_number_of_hermite_arcs - 1], _images_of_hermite_arcs[_number_of_hermite_arcs - 1], _r, _g, _b, _number_of_hermite_arcs - 1);
+        _composite_hermite_arcs[_comp_index]->addNeighbourContinue(_selected_hermite_arc, _primary_dir , _number_of_hermite_arcs - 1);
         update();
     }
 
@@ -431,6 +441,8 @@ namespace cagd
 
         _images_of_hermite_arcs[_number_of_hermite_arcs - 1]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
         _composite_hermite_arcs[_comp_index]->InsertNewArc(_hermite_arcs[_number_of_hermite_arcs - 1], _images_of_hermite_arcs[_number_of_hermite_arcs - 1], _r, _g, _b, _number_of_hermite_arcs - 1);
+        _composite_hermite_arcs[_comp_index]->addNeighbour(_selected_hermite_arc, _primary_dir, _number_of_hermite_arcs - 1, 0);
+        _composite_hermite_arcs[_comp_index]->addNeighbour(_number_of_hermite_arcs - 1, 1, _selected_secondary_arc, _secondary_dir);
         update();
     }
 
@@ -440,19 +452,28 @@ namespace cagd
         }
 
         int _comp_index = _composite_arc_index_of_hermite_arcs[_selected_hermite_arc];
-        _composite_hermite_arcs[_comp_index]->MergeExistingArcs(_selected_hermite_arc, _primary_dir, _selected_secondary_arc, _secondary_dir);
+        if(!_composite_hermite_arcs[_comp_index]->MergeExistingArcs(_selected_hermite_arc, _primary_dir, _selected_secondary_arc, _secondary_dir)) {
+            return;
+        }
 
 
         _hermite_arcs[_selected_hermite_arc]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
         _hermite_arcs[_selected_secondary_arc]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
 
-        _images_of_hermite_arcs[_selected_hermite_arc] = _hermite_arcs[_number_of_hermite_arcs - 1]->GenerateImage(2,100,GL_STATIC_DRAW);
-        _images_of_hermite_arcs[_selected_secondary_arc] = _hermite_arcs[_number_of_hermite_arcs - 1]->GenerateImage(2,100,GL_STATIC_DRAW);
+        _images_of_hermite_arcs[_selected_hermite_arc] = _hermite_arcs[_selected_hermite_arc]->GenerateImage(2,100,GL_STATIC_DRAW);
+        _images_of_hermite_arcs[_selected_secondary_arc] = _hermite_arcs[_selected_secondary_arc]->GenerateImage(2,100,GL_STATIC_DRAW);
 
         _images_of_hermite_arcs[_selected_hermite_arc]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
         _images_of_hermite_arcs[_selected_secondary_arc]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
 
-        _updateSelectedHermiteArc();
+        for(GLint i = 0 ; i < _number_of_composite_arcs ; i++) {
+            if(i == _selected_composite_arc) {
+                _composite_hermite_arcs[i]->updateArc(_selected_hermite_arc, _images_of_hermite_arcs[_selected_hermite_arc]);
+                _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
+            }
+        }
+
+        _composite_hermite_arcs[_comp_index]->addNeighbour(_selected_hermite_arc, _primary_dir, _selected_secondary_arc, _secondary_dir);
         update();
     }
 
@@ -576,6 +597,11 @@ namespace cagd
        _valid_selected_composite_curve = true;
        _composite_hermite_arcs.ResizeColumns(_number_of_hermite_arcs);
        _composite_hermite_arcs[_number_of_composite_arcs - 1] = new HermiteCompositeCurve3(_number_of_composite_arcs - 1);
+       _composite_hermite_arcs[_number_of_composite_arcs - 1]->setFirstOrderVisibility(_show_hermite_first_order);
+       _composite_hermite_arcs[_number_of_composite_arcs - 1]->setSecondOrderVisibility(_show_hermite_second_order);
+       _composite_hermite_arcs[_number_of_composite_arcs - 1]->highlightSelectedComposite(_highlight_selected_composite_curve);
+       _composite_hermite_arcs[_number_of_composite_arcs - 1]->setSelected(_selected_hermite_arc);
+       _composite_hermite_arcs[_number_of_composite_arcs - 1]->setSelectedComposite(_selected_composite_arc);
    }
    void GLWidget::_highlightHermiteCompositeArc(bool visibility) {
         _highlight_selected_composite_curve = visibility;
@@ -615,9 +641,17 @@ namespace cagd
     bool GLWidget::_initializeHermitePatches() {
         ifstream fin("Hermite/HermitePatches.txt");
 
+        fin >> _number_of_hermite_patches;
+        _hermite_patches.ResizeColumns(_number_of_hermite_patches);
+        _images_of_hermite_patches.ResizeColumns(_number_of_hermite_patches);
+        _composite_patch_index_of_hermite_patches.ResizeColumns(_number_of_hermite_patches);
+        _patches_u_lines.ResizeColumns(_number_of_hermite_patches);
+        _patches_v_lines.ResizeColumns(_number_of_hermite_patches);
+
         for(GLuint i = 0 ; i < _number_of_hermite_patches ; i++) {
             _hermite_patches[i] = new BicubicHermitePatch3();
             _images_of_hermite_patches[i] = new TriangulatedMesh3();
+            _composite_patch_index_of_hermite_patches[i] = -1;
             fin >> *_hermite_patches[i];
 
             if ( !_hermite_patches[i]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW)) {
@@ -650,21 +684,125 @@ namespace cagd
                 }
                 return false;
             }
+
+            _u_lines = _hermite_patches[i]->GenerateUIsoparametricLines(10, 2, 30);
+            for(GLuint i = 0 ; i < _u_lines->GetColumnCount(); i++) {
+                if((*_u_lines)[i]) {
+                    (*_u_lines)[i]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+                }
+            }
+            _patches_u_lines[i] = _u_lines;
+
+            _v_lines = _hermite_patches[i]->GenerateVIsoparametricLines(10, 2, 30);
+            for(GLuint i = 0 ; i < _v_lines->GetColumnCount(); i++) {
+                if((*_v_lines)[i]) {
+                    (*_v_lines)[i]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+                }
+            }
+            _patches_v_lines[i] = _v_lines;
         }
 
         return true;
     }
 
     bool GLWidget::_renderHermitePatches() {
-        for(GLuint i = 0 ; i < _number_of_hermite_patches ; i++) {
-            if (i == _selected_hermite_patch) {
-                glColor3f(0,1,0);
-            } else {
-                glColor3f(0,0,1);
-            }
-            _images_of_hermite_patches[i]->Render();
-        }
+        _dl->Enable();
+            glEnable(GL_LIGHTING);
+            glEnable(GL_NORMALIZE);
+            glEnable(GL_TEXTURE_2D);
 
+                for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+                    _composite_hermite_patches[i]->RenderAllPatches();
+                }
+
+                _materials[0].Apply();
+                for(GLuint i = 0 ; i < _number_of_hermite_patches ; i++) {
+                    if(_composite_patch_index_of_hermite_patches[i] == -1)
+                    {
+
+                        _images_of_hermite_patches[i]->Render();
+
+                        if (_show_u_lines && _selected_hermite_patch == i) {
+                            for(GLuint j = 0; j < _patches_u_lines[i]->GetColumnCount(); j++)
+                            {
+                                if((*_patches_u_lines[i])[j])
+                                {
+                                    (*_patches_u_lines[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                                }
+                            }
+                        }
+
+                        if (_show_v_lines && _selected_hermite_patch == i) {
+                            for(GLuint j = 0; j < _patches_v_lines[i]->GetColumnCount(); j++)
+                            {
+                                if((*_patches_v_lines[i])[j])
+                                {
+                                    (*_patches_v_lines[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                                }
+                            }
+                        }
+
+                        if(_show_first_order_derivates && _selected_hermite_patch == i){
+                           glColor3f(0.0f, 1.0f, 0.0f);
+                           for(GLuint j = 0; j < _patches_u_lines[i]->GetColumnCount(); j++)
+                           {
+                               glPointSize(1.0f);
+                               glColor3f(0.0f, 1.0f, 0.0f);
+
+                               if((*_patches_u_lines[i])[j])
+                               {
+                                   (*_patches_u_lines[i])[j]->RenderDerivatives(1, GL_POINTS);
+                                   (*_patches_u_lines[i])[j]->RenderDerivatives(1, GL_LINES);
+                               }
+                           }
+
+                           for(GLuint j = 0; j < _patches_v_lines[i]->GetColumnCount(); j++)
+                           {
+                               glPointSize(1.0f);
+                               glColor3f(0.0f, 1.0f, 0.0f);
+
+                               if((*_patches_v_lines[i])[j])
+                               {
+                                   (*_patches_v_lines[i])[j]->RenderDerivatives(1, GL_POINTS);
+                                   (*_patches_v_lines[i])[j]->RenderDerivatives(1, GL_LINES);
+                               }
+                           }
+                       }
+
+                        if(_show_second_order_derivates && _selected_hermite_patch == i){
+                           glColor3f(0.0f, 1.0f, 0.0f);
+                           for(GLuint j = 0; j < _patches_u_lines[i]->GetColumnCount(); j++)
+                           {
+                               glPointSize(1.0f);
+                               glColor3f(0.0f, 1.0f, 0.0f);
+
+                               if((*_patches_u_lines[i])[j])
+                               {
+                                   (*_patches_u_lines[i])[j]->RenderDerivatives(2, GL_POINTS);
+                                   (*_patches_u_lines[i])[j]->RenderDerivatives(2, GL_LINES);
+                               }
+                           }
+
+                           for(GLuint j = 0; j < _patches_v_lines[i]->GetColumnCount(); j++)
+                           {
+                               glPointSize(1.0f);
+                               glColor3f(0.0f, 1.0f, 0.0f);
+
+                               if((*_patches_v_lines[i])[j])
+                               {
+                                   (*_patches_v_lines[i])[j]->RenderDerivatives(2, GL_POINTS);
+                                   (*_patches_v_lines[i])[j]->RenderDerivatives(2, GL_LINES);
+                               }
+                           }
+                       }
+                    }
+                }
+
+
+            glDisable(GL_TEXTURE_2D);
+            glDisable(GL_NORMALIZE);
+            glDisable(GL_LIGHTING);
+        _dl->Disable();
         return true;
     }
 
@@ -699,98 +837,244 @@ namespace cagd
             }
             return false;
         }
+
+        _u_lines = _hermite_patches[_selected_hermite_patch]->GenerateUIsoparametricLines(10, 2, 30);
+        for(GLuint i = 0 ; i < _u_lines->GetColumnCount(); i++) {
+            if((*_u_lines)[i]) {
+                (*_u_lines)[i]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+            }
+        }
+        _patches_u_lines[_selected_hermite_patch] = _u_lines;
+
+        _v_lines = _hermite_patches[_selected_hermite_patch]->GenerateVIsoparametricLines(10, 2, 30);
+        for(GLuint i = 0 ; i < _v_lines->GetColumnCount(); i++) {
+            if((*_v_lines)[i]) {
+                (*_v_lines)[i]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+            }
+        }
+        _patches_v_lines[_selected_hermite_patch] = _v_lines;
+
+        for(GLint i = 0 ; i < _number_of_composite_patches ; i++) {
+            if(i == _selected_composite_patch) {
+                _composite_hermite_patches[i]->updatePatch(_selected_hermite_patch, _images_of_hermite_patches[_selected_hermite_patch]);
+                _composite_hermite_patches[i]->updatePatch(_selected_secondary_patch, _images_of_hermite_patches[_selected_secondary_patch]);
+            }
+        }
         return true;
     }
 
+    void GLWidget::_createNewCompositePatch() {
+        _number_of_composite_patches += 1;
+        _valid_selected_composite_patch = true;
+        _composite_hermite_patches.ResizeColumns(_number_of_composite_patches);
+        HermiteCompositeSurface3* surface = new HermiteCompositeSurface3(_number_of_composite_patches - 1);
+        surface->setSelectedPatch(_selected_hermite_patch);
+        surface->setSelectedCompositePatch(_selected_composite_patch);
+        surface->showFirstOrder(_show_first_order_derivates);
+        surface->showSecondOrder(_show_second_order_derivates);
+        surface->showShaders(_use_shaders);
+        surface->showTextures(_use_textures);
+        surface->showULines(_show_u_lines);
+        surface->showVLines(_show_v_lines);
+        surface->hightlightSelected(_highlight_selected_composite_patch);
+        _composite_hermite_patches[_number_of_composite_patches - 1] = surface;
+    }
+
+    void GLWidget::_addSelectedPatchToSelectedCompositePatch() {
+        if(_valid_selected_composite_patch) {
+            Material* mat = &_materials[_selected_patch_material];
+            QOpenGLTexture* texture = _texture[_selected_patch_texture];
+            ShaderProgram* shader = &_shaders[_selected_patch_shader];
+            BicubicHermitePatch3* patch = _hermite_patches[_selected_hermite_patch];
+            TriangulatedMesh3* image = _images_of_hermite_patches[_selected_hermite_patch];
+            _composite_hermite_patches[_selected_composite_patch]->InsertNewPatch(patch, image, mat, texture, shader, _selected_hermite_patch);
+            _composite_patch_index_of_hermite_patches[_selected_hermite_patch] = _selected_composite_patch;
+        }
+    }
+
+    void GLWidget::_setHermitePatchMaterial(int index){
+         _selected_patch_material = index;
+    }
+
+    void GLWidget::_setHermitePatchTexture(int index){
+         _selected_patch_texture = index;
+    }
+
+    void GLWidget::_setHermitePatchShader(int index){
+         _selected_patch_shader = index;
+    }
+
+    void GLWidget::_showHermitePatchTextures(bool visibility){
+         _use_textures = visibility;
+         for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+            _composite_hermite_patches[i]->showTextures(visibility);
+         }
+         update();
+    }
+
+    void GLWidget::_showHermitePatchShaders(bool visibility){
+         _use_shaders = visibility;
+         for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+            _composite_hermite_patches[i]->showShaders(visibility);
+         }
+         update();
+    }
+
+    void GLWidget::_setSelectedSecondaryHermitePatch(int index) {
+        if (index < _number_of_hermite_patches) {
+            _selected_secondary_patch = index;
+        }
+        update();
+    }
+
+    void GLWidget::_setVisibilityOfULines(bool visibility) {
+        _show_u_lines = visibility;
+        for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+           _composite_hermite_patches[i]->showULines(visibility);
+        }
+        update();
+    }
+
+    void GLWidget::_setVisibilityOfVLines(bool visibility) {
+        _show_v_lines = visibility;
+        for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+           _composite_hermite_patches[i]->showVLines(visibility);
+        }
+        update();
+    }
+
+    void GLWidget::_highlightSelectedCompositePatch(bool visibility) {
+        _highlight_selected_composite_patch = visibility;
+        for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+           _composite_hermite_patches[i]->hightlightSelected(visibility);
+        }
+        update();
+    }
+
+    void GLWidget::_setVisibilityOfFirstOrderDerivatives(bool visibility) {
+        _show_first_order_derivates = visibility;
+        for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+           _composite_hermite_patches[i]->showFirstOrder(visibility);
+        }
+        update();
+    }
+
+    void GLWidget::_setVisibilityOfSecondOrderDerivatives(bool visibility){
+        _show_second_order_derivates = visibility;
+        for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+           _composite_hermite_patches[i]->showSecondOrder(visibility);
+        }
+        update();
+    }
+
     void GLWidget::_setSelectedHermitePatch(int index) {
-        _selected_hermite_patch = index;
+        if(index < _number_of_hermite_patches) {
+            _selected_hermite_patch = index;
+            for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+                _composite_hermite_patches[i]->setSelectedPatch(index);
+             }
 
-        switch(_selected_hermite_patch_point)
-        {
-             case 0:
+            switch(_selected_hermite_patch_point)
             {
-                emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(0,0).x());
-                emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(0,0).y());
-                emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(0,0).z());
+                 case 0:
+                {
+                    emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(0,0).x());
+                    emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(0,0).y());
+                    emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(0,0).z());
 
-                emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(2,0).x());
-                emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(2,0).y());
-                emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(2,0).z());
+                    emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(2,0).x());
+                    emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(2,0).y());
+                    emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(2,0).z());
 
-                emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(0,2).x());
-                emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(0,2).y());
-                emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(0,2).z());
+                    emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(0,2).x());
+                    emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(0,2).y());
+                    emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(0,2).z());
 
-                emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(2,2).x());
-                emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(2,2).y());
-                emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(2,2).z());
-                break;
+                    emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(2,2).x());
+                    emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(2,2).y());
+                    emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(2,2).z());
+                    break;
+                }
+                 case 1:
+                {
+
+                    emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(0,1).x());
+                    emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(0,1).y());
+                    emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(0,1).z());
+
+                    emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(2,1).x());
+                    emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(2,1).y());
+                    emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(2,1).z());
+
+                    emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(0,3).x());
+                    emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(0,3).y());
+                    emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(0,3).z());
+
+                    emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(2,3).x());
+                    emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(2,3).y());
+                    emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(2,3).z());
+                    break;
+                }
+
+                case 2:
+               {
+
+                   emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(1,0).x());
+                   emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(1,0).y());
+                   emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(1,0).z());
+
+                   emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(3,0).x());
+                   emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(3,0).y());
+                   emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(3,0).z());
+
+                   emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(1,2).x());
+                   emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(1,2).y());
+                   emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(1,2).z());
+
+                   emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(3,2).x());
+                   emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(3,2).y());
+                   emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(3,2).z());
+                   break;
+               }
+
+                case 3:
+               {
+
+                   emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(1,1).x());
+                   emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(1,1).y());
+                   emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(1,1).z());
+
+                   emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(3,1).x());
+                   emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(3,1).y());
+                   emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(3,1).z());
+
+                   emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(1,3).x());
+                   emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(1,3).y());
+                   emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(1,3).z());
+
+                   emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(3,3).x());
+                   emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(3,3).y());
+                   emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(3,3).z());
+                   break;
+               }
             }
-             case 1:
-            {
-
-                emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(0,1).x());
-                emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(0,1).y());
-                emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(0,1).z());
-
-                emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(2,1).x());
-                emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(2,1).y());
-                emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(2,1).z());
-
-                emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(0,3).x());
-                emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(0,3).y());
-                emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(0,3).z());
-
-                emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(2,3).x());
-                emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(2,3).y());
-                emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(2,3).z());
-                break;
-            }
-
-            case 2:
-           {
-
-               emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(1,0).x());
-               emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(1,0).y());
-               emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(1,0).z());
-
-               emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(3,0).x());
-               emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(3,0).y());
-               emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(3,0).z());
-
-               emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(1,2).x());
-               emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(1,2).y());
-               emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(1,2).z());
-
-               emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(3,2).x());
-               emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(3,2).y());
-               emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(3,2).z());
-               break;
-           }
-
-            case 3:
-           {
-
-               emit HermitePatchPointChangeX((*_hermite_patches[_selected_hermite_patch])(1,1).x());
-               emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(1,1).y());
-               emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(1,1).z());
-
-               emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(3,1).x());
-               emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(3,1).y());
-               emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(3,1).z());
-
-               emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(1,3).x());
-               emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(1,3).y());
-               emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(1,3).z());
-
-               emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(3,3).x());
-               emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(3,3).y());
-               emit HermitePatchPointChangeTZ((*_hermite_patches[_selected_hermite_patch])(3,3).z());
-               break;
-           }
         }
 
+
         update();
+    }
+
+
+    void GLWidget::_selectCompositePatch(int index) {
+        if(index < _number_of_composite_patches) {
+            _selected_composite_patch = index;
+            for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
+                _composite_hermite_patches[i]->setSelectedCompositePatch(index);
+             }
+            _valid_selected_composite_patch = true;
+        } else {
+            _valid_selected_composite_patch = false;
+        }
     }
 
     void GLWidget::_setSelectedHermitePatchPoint(int index) {
@@ -1571,7 +1855,7 @@ namespace cagd
      update();
     }
 
-    void GLWidget::initializeShaders()
+    void GLWidget::_initializeShaders()
     {
         try {
             _shaders.ResizeColumns(4);
@@ -1941,7 +2225,7 @@ namespace cagd
         }
     }
 
-    void GLWidget::initializeTextures() {
+    void GLWidget::_initializeTextures() {
 
         _texture[0] = new QOpenGLTexture(QImage("Textures/texture_01.jpg").mirrored());
         _texture[0]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
@@ -2114,7 +2398,7 @@ namespace cagd
         return true;
     }
 
-    bool GLWidget::initializeMaterials() {
+    bool GLWidget::_initializeMaterials() {
         _materials.ResizeColumns(7);
         _materials[0] = MatFBBrass;
         _materials[1] = MatFBGold;

@@ -37,6 +37,12 @@ namespace cagd {
         return GL_TRUE;
     }
 
+    GLint HermiteCompositeCurve3::negDirection(int direction) {
+        if(direction == 1)
+            return 0;
+        return 1;
+    }
+
     CubicHermiteArc3* HermiteCompositeCurve3::ContinueExisitingArc(GLuint index, int direction){
 
         int ind;
@@ -47,10 +53,12 @@ namespace cagd {
             }
         }
 
-        if( _attributes[ind].next != nullptr) {
+        if( _attributes[ind].next != nullptr && direction == 1) {
             return nullptr;
         }
-
+        if (_attributes[ind].previous != nullptr && direction == 0) {
+            return nullptr;
+        }
         CubicHermiteArc3 *arc = new CubicHermiteArc3();
         DCoordinate3 distance = _attributes[ind].arc->GetDistance();
         if(distance.x() < 0) {
@@ -68,10 +76,10 @@ namespace cagd {
         DCoordinate3 left = _attributes[ind].arc->GetCorner(0), right = _attributes[ind].arc->GetCorner(1);
         DCoordinate3 leftTangent = _attributes[ind].arc->GetTangent(0), rightTangent = _attributes[ind].arc->GetTangent(1);
 
-        if(left.x() > right.x()) {
-            swap(left,right);
-            swap(leftTangent, rightTangent);
-        }
+        //nem lesz swap hanem:
+        //0. indexu corner mindig LEFT
+        //1. indexu corner mindig RIGHT
+        //es a continue direction is szame 0 - LEFT, 1 - RIGHT
 
         if(direction == 0) {
             arc->SetCorner(0, left - distance);
@@ -99,11 +107,19 @@ namespace cagd {
             }
         }
 
-        _attributes[ind_0].next = &_attributes[ind_1];
-        if (direction == 0)
-            _attributes[ind_0].next_connection_type = 1;
-        else
-            _attributes[ind_0].next_connection_type = 0;
+        if(direction == 1) {
+            _attributes[ind_0].next = &_attributes[ind_1];
+            _attributes[ind_0].next_connection_type = negDirection(direction);
+
+            _attributes[ind_1].previous = &_attributes[ind_0];
+            _attributes[ind_1].previous_connection_type = direction;
+        } else {
+            _attributes[ind_0].previous = &_attributes[ind_1];
+            _attributes[ind_0].previous_connection_type = negDirection(direction);
+
+            _attributes[ind_1].next = &_attributes[ind_0];
+            _attributes[ind_1].next_connection_type = direction;
+        }
 
 
     }
@@ -130,26 +146,32 @@ namespace cagd {
             return nullptr;
         }
 
+        if(_attributes[ind_primary].next != nullptr && direction_0 == 1) {
+            return nullptr;
+        }
+
+        if(_attributes[ind_primary].previous != nullptr && direction_0 == 0) {
+            return nullptr;
+        }
+
+        if(_attributes[ind_secondary].next != nullptr && direction_1 == 1) {
+            return nullptr;
+        }
+
+        if(_attributes[ind_secondary].previous != nullptr && direction_1 == 0) {
+            return nullptr;
+        }
+
         //deciding left and right points of primary and secondary arc
         DCoordinate3 left_primary = _attributes[ind_primary].arc->GetCorner(0);
         DCoordinate3 right_primary = _attributes[ind_primary].arc->GetCorner(1);
         DCoordinate3 leftTangent_primary = _attributes[ind_primary].arc->GetTangent(0);
         DCoordinate3 rightTangent_primary = _attributes[ind_primary].arc->GetTangent(1);
 
-        if(left_primary.x() > right_primary.x()) {
-            swap(left_primary, right_primary);
-            swap(leftTangent_primary, rightTangent_primary);
-        }
-
         DCoordinate3 left_secondary = _attributes[ind_secondary].arc->GetCorner(0);
         DCoordinate3 right_secondary = _attributes[ind_secondary].arc->GetCorner(1);
         DCoordinate3 leftTangent_secondary = _attributes[ind_secondary].arc->GetTangent(0);
         DCoordinate3 rightTangent_secondary = _attributes[ind_secondary].arc->GetTangent(1);
-
-        if(left_secondary.x() > right_secondary.x()) {
-            swap(left_secondary, right_secondary);
-            swap(leftTangent_secondary, rightTangent_secondary);
-        }
 
         //deceding start and end point of new arc
         CubicHermiteArc3 *arc = new CubicHermiteArc3();
@@ -187,7 +209,7 @@ namespace cagd {
         return arc;
     }
 
-    void HermiteCompositeCurve3::MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
+    GLboolean HermiteCompositeCurve3::MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
 
         int ind_primary = -1, ind_secondary = -1;
 
@@ -201,26 +223,32 @@ namespace cagd {
             }
         }
 
+        if(_attributes[ind_primary].next != nullptr && direction_0 == 1) {
+            return GL_FALSE;
+        }
+
+        if(_attributes[ind_primary].previous != nullptr && direction_0 == 0) {
+            return GL_FALSE;
+        }
+
+        if(_attributes[ind_secondary].next != nullptr && direction_1 == 1) {
+            return GL_FALSE;
+        }
+
+        if(_attributes[ind_secondary].previous != nullptr && direction_1 == 0) {
+            return GL_FALSE;
+        }
+
         //deciding left and right points of primary and secondary arc
         DCoordinate3 left_primary = _attributes[ind_primary].arc->GetCorner(0);
         DCoordinate3 right_primary = _attributes[ind_primary].arc->GetCorner(1);
         DCoordinate3 leftTangent_primary = _attributes[ind_primary].arc->GetTangent(0);
         DCoordinate3 rightTangent_primary = _attributes[ind_primary].arc->GetTangent(1);
 
-        if(left_primary.x() > right_primary.x()) {
-            swap(left_primary, right_primary);
-            swap(leftTangent_primary, rightTangent_primary);
-        }
-
         DCoordinate3 left_secondary = _attributes[ind_secondary].arc->GetCorner(0);
         DCoordinate3 right_secondary = _attributes[ind_secondary].arc->GetCorner(1);
         DCoordinate3 leftTangent_secondary = _attributes[ind_secondary].arc->GetTangent(0);
         DCoordinate3 rightTangent_secondary = _attributes[ind_secondary].arc->GetTangent(1);
-
-        if(left_secondary.x() > right_secondary.x()) {
-            swap(left_secondary, right_secondary);
-            swap(leftTangent_secondary, rightTangent_secondary);
-        }
 
         DCoordinate3 middle_point;
         DCoordinate3 middle_tangent;
@@ -236,30 +264,72 @@ namespace cagd {
             _attributes[ind_secondary].arc->SetCorner(0, middle_point);
             _attributes[ind_secondary].arc->SetTangent(0, middle_tangent);
         }
+        //left right
+        else if(direction_0 == 0 && direction_1 == 1) {
+            middle_point = (left_primary + right_secondary)/2;
+            middle_tangent = (leftTangent_primary + rightTangent_secondary)/2;
 
+            _attributes[ind_primary].arc->SetCorner(0, middle_point);
+            _attributes[ind_primary].arc->SetTangent(0, middle_tangent);
 
-//        //left right
-//        else if(direction_0 == 0 && direction_1 == 1) {
-//            arc->SetCorner(0, left_primary);
-//            arc->SetCorner(1, right_secondary);
-//            arc->SetTangent(0,leftTangent_primary);
-//            arc->SetTangent(1,rightTangent_secondary);
-//        }
-//        //right left
-//        else if(direction_0 == 1 && direction_1 == 0) {
-//            arc->SetCorner(0, right_primary);
-//            arc->SetCorner(1, left_secondary);
-//            arc->SetTangent(0,rightTangent_primary);
-//            arc->SetTangent(1,leftTangent_secondary);
-//        }
-//        //right right
-//        else {
-//            arc->SetCorner(0, right_primary);
-//            arc->SetCorner(1, right_secondary);
-//            arc->SetTangent(0,rightTangent_primary);
-//            arc->SetTangent(1,rightTangent_secondary);
-//        }
+            _attributes[ind_secondary].arc->SetCorner(1, middle_point);
+            _attributes[ind_secondary].arc->SetTangent(1, middle_tangent);
+        }
+        //right left
+        else if(direction_0 == 1 && direction_1 == 0) {
+            middle_point = (right_primary + left_secondary)/2;
+            middle_tangent = (rightTangent_primary + leftTangent_secondary)/2;
+
+            _attributes[ind_primary].arc->SetCorner(1, middle_point);
+            _attributes[ind_primary].arc->SetTangent(1, middle_tangent);
+
+            _attributes[ind_secondary].arc->SetCorner(0, middle_point);
+            _attributes[ind_secondary].arc->SetTangent(0, middle_tangent);
+        }
+        //right right
+        else {
+            middle_point = (right_primary + right_secondary)/2;
+            middle_tangent = (rightTangent_primary + rightTangent_secondary)/2;
+
+            _attributes[ind_primary].arc->SetCorner(1, middle_point);
+            _attributes[ind_primary].arc->SetTangent(1, middle_tangent);
+
+            _attributes[ind_secondary].arc->SetCorner(1, middle_point);
+            _attributes[ind_secondary].arc->SetTangent(1, middle_tangent);
+        }
+
+        return GL_TRUE;
     }
+
+    GLvoid HermiteCompositeCurve3::addNeighbour(GLuint index_0, int direction_0, GLuint index_1, int direction_1) {
+        int ind_0 , ind_1;
+        for(int i = 0 ; i < _number_of_arcs ; i++) {
+            if( _attributes[i].index == index_0) {
+                ind_0 = i;
+            }
+            if(_attributes[i].index == index_1) {
+                ind_1 = i;
+            }
+        }
+
+        if(direction_0 == 0) {
+            _attributes[ind_0].previous = &_attributes[ind_1];
+            _attributes[ind_0].previous_connection_type = direction_1;
+        } else {
+            _attributes[ind_0].next = &_attributes[ind_1];
+            _attributes[ind_0].next_connection_type = direction_1;
+        }
+
+        if(direction_1 == 0) {
+            _attributes[ind_1].previous = &_attributes[ind_0];
+            _attributes[ind_1].previous_connection_type = direction_0;
+        } else {
+            _attributes[ind_1].next = &_attributes[ind_0];
+            _attributes[ind_1].next_connection_type = direction_0;
+        }
+
+    }
+
 
     GLboolean HermiteCompositeCurve3::RenderAllArcs() const {
 
@@ -296,7 +366,7 @@ namespace cagd {
 
     void HermiteCompositeCurve3::updateArc(GLint index, GenericCurve3* image) {
         for(GLint i = 0 ; i < _number_of_arcs ; i++) {
-            if(_attributes[i].index == index && _attributes[i].index) {
+            if(_attributes[i].index == index) {// && _attributes[i].index) { //ha index == 0 => false
                 _attributes[i].image = image;
             }
         }

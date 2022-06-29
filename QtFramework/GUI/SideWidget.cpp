@@ -92,15 +92,43 @@ namespace cagd
 
         // Project - Hermite Patches:
 
-        this->selectedHermitePatch->addItem("0");
-        this->selectedHermitePatch->addItem("1");
-        this->selectedHermitePatch->addItem("2");
-        this->selectedHermitePatch->addItem("3");
-        this->selectedHermitePatch->addItem("4");
-        this->selectedHermitePatch->addItem("5");
-        this->selectedHermitePatch->addItem("6");
-        this->selectedHermitePatch->addItem("7");
-        this->selectedHermitePatch->addItem("8");
+        this->selectedPatchPrimaryDirection->addItem("North");
+        this->selectedPatchPrimaryDirection->addItem("East");
+        this->selectedPatchPrimaryDirection->addItem("West");
+        this->selectedPatchPrimaryDirection->addItem("South");
+
+        this->selectedPatchSecondaryDirection->addItem("North");
+        this->selectedPatchSecondaryDirection->addItem("East");
+        this->selectedPatchSecondaryDirection->addItem("West");
+        this->selectedPatchSecondaryDirection->addItem("South");
+
+        this->selectedPatchTexture->addItem("1");
+        this->selectedPatchTexture->addItem("2");
+        this->selectedPatchTexture->addItem("3");
+        this->selectedPatchTexture->addItem("4");
+        this->selectedPatchTexture->addItem("5");
+        this->selectedPatchTexture->addItem("6");
+        this->selectedPatchTexture->addItem("7");
+        this->selectedPatchTexture->addItem("8");
+        this->selectedPatchTexture->addItem("9");
+        this->selectedPatchTexture->addItem("10");
+        this->selectedPatchTexture->addItem("11");
+        this->selectedPatchTexture->addItem("12");
+        this->selectedPatchTexture->addItem("13");
+        this->selectedPatchTexture->addItem("14");
+
+        this->selectedPatchMaterial->addItem("Brass");
+        this->selectedPatchMaterial->addItem("Gold");
+        this->selectedPatchMaterial->addItem("Silver");
+        this->selectedPatchMaterial->addItem("Emerald");
+        this->selectedPatchMaterial->addItem("Pearl");
+        this->selectedPatchMaterial->addItem("Ruby");
+        this->selectedPatchMaterial->addItem("Turquoise");
+
+        this->selectedPatchShader->addItem("Directional Light");
+        this->selectedPatchShader->addItem("Two Sided Light");
+        this->selectedPatchShader->addItem("Toon");
+        this->selectedPatchShader->addItem("Reflection Lines");
 
     }
 

@@ -148,7 +148,7 @@ namespace cagd
 
         // Project - Hermite patch
 
-        connect(_side_widget->selectedHermitePatch, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(_setSelectedHermitePatch(int)));
+        connect(_side_widget->selectedHermitePatch, SIGNAL(valueChanged(int)), _gl_widget, SLOT(_setSelectedHermitePatch(int)));
 
 
         connect(_gl_widget, SIGNAL(HermitePatchPointChangeX(double)), _side_widget->hermite_patch_x, SLOT(setValue(double)));
@@ -178,6 +178,23 @@ namespace cagd
         connect(_side_widget->hermite_patch_tx, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setHermitePatchPointTX(double)));
         connect(_side_widget->hermite_patch_ty, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setHermitePatchPointTY(double)));
         connect(_side_widget->hermite_patch_tz, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setHermitePatchPointTZ(double)));
+
+        connect(_side_widget->selectedSecondaryHermitePatch, SIGNAL(valueChanged(int)), _gl_widget, SLOT(_setSelectedSecondaryHermitePatch(int)));
+        connect(_side_widget->showULines, SIGNAL(clicked(bool)), _gl_widget, SLOT(_setVisibilityOfULines(bool)));
+        connect(_side_widget->showVLines, SIGNAL(clicked(bool)), _gl_widget, SLOT(_setVisibilityOfVLines(bool)));
+        connect(_side_widget->highlightSelectedCompositePatch, SIGNAL(clicked(bool)), _gl_widget, SLOT(_highlightSelectedCompositePatch(bool)));
+        connect(_side_widget->showHermitePatchFirstOrder, SIGNAL(clicked(bool)), _gl_widget, SLOT(_setVisibilityOfFirstOrderDerivatives(bool)));
+        connect(_side_widget->showHermitePatchSecondaryOrder, SIGNAL(clicked(bool)), _gl_widget, SLOT(_setVisibilityOfSecondOrderDerivatives(bool)));
+
+        connect(_side_widget->useTextures, SIGNAL(clicked(bool)), _gl_widget, SLOT(_showHermitePatchTextures(bool)));
+        connect(_side_widget->useShaders, SIGNAL(clicked(bool)), _gl_widget, SLOT(_showHermitePatchTextures(bool)));
+
+        connect(_side_widget->selectedPatchMaterial, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(_setHermitePatchMaterial(int)));
+        connect(_side_widget->selectedPatchTexture, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(_setHermitePatchTexture(int)));
+        connect(_side_widget->selectedPatchShader, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(_setHermitePatchShader(int)));
+
+        connect(_side_widget->createNewCompositePatch, SIGNAL(pressed()), _gl_widget, SLOT(_createNewCompositePatch()));
+        connect(_side_widget->addSelectedPatchToSelectedCompositePatch, SIGNAL(pressed()), _gl_widget, SLOT(_addSelectedPatchToSelectedCompositePatch()));
 
     }
 
