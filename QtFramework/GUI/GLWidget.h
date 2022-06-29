@@ -18,6 +18,7 @@
 #include "../Hermite/CubicHermiteArc3.h"
 #include "../Hermite/BicubicHermitePatch3.h"
 #include "../Hermite/HermiteCompositeCurve3.h"
+#include "../Hermite/HermiteCompositeSurfaces3.h"
 #include <QTimer>
 #include <QOpenGLTexture>
 
@@ -31,7 +32,7 @@ namespace cagd
 
         // variable that defines what we see on the main window
 
-        int _selected = 6;
+        int _selected = 7;
 
         // 0 - Parametric Curves
         // 1 - RedBullAirAndWaterScene
@@ -82,7 +83,6 @@ namespace cagd
         RowMatrix<TriangulatedMesh3>    _static_models;
 
         RowMatrix<ModelProperties>      _static_model_properties;
-        RowMatrix<Material>             _materials;
 
         GLint                           _dynamic_model_count = 4;
         GLint                           _static_model_count = 4;
@@ -120,7 +120,6 @@ namespace cagd
         void initializeCyclicCurves();
         void initializeCyclicData();
         bool initializeProperties();
-        bool initializeMaterials();
         bool initializeModels();
 
         void updateCyclicCurveImage(int);
@@ -138,8 +137,6 @@ namespace cagd
 
         ParametricCurve3*       _parametric_surfaces_curve[6];
         GenericCurve3*          _images_of_parametric_surfaces_curve[6];
-
-        QOpenGLTexture*         _texture[14];
 
         int                     _selected_parametric_surface = 0;
         int                     _selected_texture = 0;
@@ -164,14 +161,12 @@ namespace cagd
         // functions for parametric surfaces
 
         void initializeParametricSurfaces();
-        void initializeTextures();
         void initializeParametricSurfaceData();
 
         void paintSelectedSurface();
 
         // variables for shaders
 
-        RowMatrix<ShaderProgram>    _shaders;
 
         float                       _shader_scale = 0;
         float                       _shader_smoothing = 0;
@@ -186,7 +181,6 @@ namespace cagd
 
         // functions for shaders
 
-        void initializeShaders();
 
         // Hermite Arc
 
@@ -224,7 +218,6 @@ namespace cagd
         GLuint                                      _primary_dir = 0, _secondary_dir = 0; // 0 - Left, 1 - Right
         GLuint                                      _selected_secondary_arc = 0;
 
-
         GLfloat                                     _r = 0.5, _g = 0.5, _b = 0.5;
 
         RowMatrix<CubicHermiteArc3*>                _hermite_arcs;
@@ -245,14 +238,44 @@ namespace cagd
         // Project - Hermite Patches;
 
         GLuint                                      _selected_hermite_patch = 0;
-        GLuint                                      _selected_hermite_patch_point = 0;
         GLuint                                      _number_of_hermite_patches = 9;
-        BicubicHermitePatch3                        *_hermite_patches[9];
-        TriangulatedMesh3                           *_images_of_hermite_patches[9];
+        GLuint                                      _selected_hermite_patch_point = 0;
+        GLuint                                      _selected_composite_patch = 0;
+        GLuint                                      _number_of_composite_patches = 0;
+        GLuint                                      _primary_patch_dir = 0, _secondary_patch_dir = 0;
+        GLuint                                      _selected_secondary_patch = 0;
+
+        GLuint                                      _selected_patch_material = 0;
+        GLuint                                      _selected_patch_texture = 0;
+        GLuint                                      _selected_patch_shader = 0;
+
+        RowMatrix<BicubicHermitePatch3*>            _hermite_patches;
+        RowMatrix<TriangulatedMesh3*>               _images_of_hermite_patches;
+        RowMatrix<GLint>                            _composite_patch_index_of_hermite_patches;
+        RowMatrix<HermiteCompositeSurface3*>        _composite_hermite_patches;
+        RowMatrix<RowMatrix<GenericCurve3*>*>       _patches_u_lines, _patches_v_lines;
+
+        RowMatrix<ShaderProgram>                    _shaders;
+        RowMatrix<Material>                         _materials;
+        QOpenGLTexture*                             _texture[14];
+
+        bool                                        _valid_selected_composite_patch;
+
+        bool                                        _show_u_lines = false;
+        bool                                        _show_v_lines = false;
+        bool                                        _show_first_order_derivates = false;
+        bool                                        _show_second_order_derivates = false;
+        bool                                        _highlight_selected_composite_patch = false;
+
+        bool                                        _use_textures = false;
+        bool                                        _use_shaders = false;
 
         bool                                        _initializeHermitePatches();
         bool                                        _renderHermitePatches();
         bool                                        _updateSelectedHermitePatch();
+        void                                        _initializeTextures();
+        void                                        _initializeShaders();
+        bool                                        _initializeMaterials();
 
 
     public:
@@ -324,6 +347,9 @@ namespace cagd
         void setBlue(double value);
         void setGreen(double value);
 
+        void showHermitePatchFirstOrder(bool visibility);
+        void showHermitePatchSecondOrder(bool visibility);
+
         // Project - Hermite arc
 
         void _createNewCompositeArc();
@@ -363,8 +389,26 @@ namespace cagd
 
         // Project - Hermite patch
 
+        void _showHermitePatchTextures(bool visibility);
+        void _showHermitePatchShaders(bool visibility);
+
+        void _setHermitePatchMaterial(int index);
+        void _setHermitePatchTexture(int index);
+        void _setHermitePatchShader(int index);
+
         void _setSelectedHermitePatch(int index);
         void _setSelectedHermitePatchPoint(int index);
+
+        void _setSelectedSecondaryHermitePatch(int index);
+        void _setVisibilityOfULines(bool visibility);
+        void _setVisibilityOfVLines(bool visibility);
+        void _highlightSelectedCompositePatch(bool visibility);
+        void _setVisibilityOfFirstOrderDerivatives(bool visibility);
+        void _setVisibilityOfSecondOrderDerivatives(bool visibility);
+
+        void _selectCompositePatch(int);
+        void _createNewCompositePatch();
+        void _addSelectedPatchToSelectedCompositePatch();
 
         void setHermitePatchIndex(int index);
 
@@ -381,8 +425,6 @@ namespace cagd
         void setHermitePatchPointTY(double value);
         void setHermitePatchPointTZ(double value);
 
-        void showHermitePatchFirstOrder(bool visibility);
-        void showHermitePatchSecondOrder(bool visibility);
 
 
     signals:

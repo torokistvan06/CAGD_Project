@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>659</width>
-    <height>635</height>
+    <height>829</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -240,13 +240,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
+     <y>240</y>
      <width>631</width>
-     <height>381</height>
+     <height>561</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -1441,33 +1441,23 @@
     <attribute name="title">
      <string>Hermite Patches</string>
     </attribute>
-    <widget class="QComboBox" name="selectedHermitePatch">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>10</y>
-       <width>76</width>
-       <height>24</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_46">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>91</width>
+       <width>121</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Selected patch</string>
+      <string>Selected primary patch</string>
      </property>
     </widget>
     <widget class="QSpinBox" name="hermite_patch_index">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>190</x>
        <y>40</y>
        <width>46</width>
        <height>26</height>
@@ -1482,12 +1472,12 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>91</width>
+       <width>171</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Selected point</string>
+      <string>Selected point of primary patch</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_48">
@@ -1800,6 +1790,342 @@
      </property>
      <property name="minimum">
       <double>-99.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="selectedHermitePatch">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>10</y>
+       <width>46</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_49">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>10</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selected secondary patch</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="selectedSecondaryHermitePatch">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>10</y>
+       <width>46</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="showULines">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>170</y>
+       <width>201</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show isoparametric lines on u</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="showVLines">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>200</y>
+       <width>201</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show isoparametric lines on v</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="showHermitePatchFirstOrder">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>230</y>
+       <width>251</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show first derivates on isoparametric lines</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="showHermitePatchSecondaryOrder">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>260</y>
+       <width>281</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show second derivates on isoparametric lines</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_82">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>40</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selected composite patch</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="selectedCompositeHermitePatch">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>40</y>
+       <width>46</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="highlightSelectedCompositePatch">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>290</y>
+       <width>211</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Highlight selected composite patch</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="createNewCompositePatch">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>170</y>
+       <width>291</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Create New Composite Patch</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addSelectedPatchToSelectedCompositePatch">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>210</y>
+       <width>291</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add Selected Patch to Selected Composite Patch</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_83">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>340</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selected primary direction</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_84">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>370</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selected secondary direction</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="selectedPatchPrimaryDirection">
+     <property name="geometry">
+      <rect>
+       <x>485</x>
+       <y>370</y>
+       <width>111</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="selectedPatchSecondaryDirection">
+     <property name="geometry">
+      <rect>
+       <x>485</x>
+       <y>340</y>
+       <width>111</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="continueSelectedPatch">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>410</y>
+       <width>241</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Continue Selected Patch (Primary Dir)</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="joinSelectedPatches">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>450</y>
+       <width>241</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Join Selected Patches</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="mergeSelectedPatches">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>490</y>
+       <width>241</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Merge Selected Patches</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_85">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>250</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select texture for patch:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_86">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>280</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select material for patch:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_87">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>310</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select shader for patch:</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="selectedPatchMaterial">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>280</y>
+       <width>121</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="selectedPatchTexture">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>250</y>
+       <width>121</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="selectedPatchShader">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>310</y>
+       <width>121</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="useShaders">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>350</y>
+       <width>211</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enable shaders</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="useTextures">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>320</y>
+       <width>211</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enable textures</string>
      </property>
     </widget>
    </widget>
