@@ -142,6 +142,8 @@ namespace cagd
 
 
         connect(_side_widget->continueSelectedArc, SIGNAL(pressed()), _gl_widget, SLOT(_continueArc()));
+        connect(_side_widget->joinSelectedArcs, SIGNAL(pressed()), _gl_widget, SLOT(_joinArc()));
+        connect(_side_widget->mergeSelectedArcs, SIGNAL(pressed()), _gl_widget, SLOT(_mergeArc()));
 
 
         // Project - Hermite patch

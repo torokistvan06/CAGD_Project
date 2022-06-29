@@ -49,7 +49,7 @@ namespace cagd
         CubicHermiteArc3* ContinueExisitingArc(GLuint index, int direction);
         GLvoid addNeighbourContinue(GLint index_0, int direction, GLint index_1);
         CubicHermiteArc3* JoinExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
-        GLboolean MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
+        void MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
 
         GLboolean RenderAllArcs() const;
         GLboolean RenderSelectedArc(GLuint index, GLuint order, GLenum render_mode) const;

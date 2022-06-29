@@ -24,6 +24,7 @@ namespace cagd {
         this->_attributes.push_back(element);
         return GL_TRUE;
     }
+
     GLboolean HermiteCompositeCurve3::DeleteExistingArc(GLuint index){
 
         for(GLuint i = index ; i <= _number_of_arcs ; i++) {
@@ -39,6 +40,7 @@ namespace cagd {
     CubicHermiteArc3* HermiteCompositeCurve3::ContinueExisitingArc(GLuint index, int direction){
 
         int ind;
+
         for(GLuint i = 0 ; i < _number_of_arcs ; i++) {
             if(_attributes[i].index == index) {
                ind = i;
@@ -108,12 +110,155 @@ namespace cagd {
 
     CubicHermiteArc3* HermiteCompositeCurve3::JoinExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
 
-        return 0;
+        int ind_primary = -1, ind_secondary = -1;
+
+        if(index_0 == index_1){
+            return nullptr;
+        }
+
+        for(GLuint i = 0 ; i < _number_of_arcs ; i++) {
+            if(_attributes[i].index == index_0) {
+               ind_primary = i;
+            }
+
+            if(_attributes[i].index == index_1) {
+               ind_secondary = i;
+            }
+        }
+
+        if(ind_primary == -1 || ind_secondary == -1){
+            return nullptr;
+        }
+
+        //deciding left and right points of primary and secondary arc
+        DCoordinate3 left_primary = _attributes[ind_primary].arc->GetCorner(0);
+        DCoordinate3 right_primary = _attributes[ind_primary].arc->GetCorner(1);
+        DCoordinate3 leftTangent_primary = _attributes[ind_primary].arc->GetTangent(0);
+        DCoordinate3 rightTangent_primary = _attributes[ind_primary].arc->GetTangent(1);
+
+        if(left_primary.x() > right_primary.x()) {
+            swap(left_primary, right_primary);
+            swap(leftTangent_primary, rightTangent_primary);
+        }
+
+        DCoordinate3 left_secondary = _attributes[ind_secondary].arc->GetCorner(0);
+        DCoordinate3 right_secondary = _attributes[ind_secondary].arc->GetCorner(1);
+        DCoordinate3 leftTangent_secondary = _attributes[ind_secondary].arc->GetTangent(0);
+        DCoordinate3 rightTangent_secondary = _attributes[ind_secondary].arc->GetTangent(1);
+
+        if(left_secondary.x() > right_secondary.x()) {
+            swap(left_secondary, right_secondary);
+            swap(leftTangent_secondary, rightTangent_secondary);
+        }
+
+        //deceding start and end point of new arc
+        CubicHermiteArc3 *arc = new CubicHermiteArc3();
+
+        //left left
+        if(direction_0 == 0 && direction_1 == 0) {
+            arc->SetCorner(0, left_primary);
+            arc->SetCorner(1, left_secondary);
+            arc->SetTangent(0,leftTangent_primary);
+            arc->SetTangent(1,leftTangent_secondary);
+        }
+        //left right
+        else if(direction_0 == 0 && direction_1 == 1) {
+            arc->SetCorner(0, left_primary);
+            arc->SetCorner(1, right_secondary);
+            arc->SetTangent(0,leftTangent_primary);
+            arc->SetTangent(1,rightTangent_secondary);
+        }
+        //right left
+        else if(direction_0 == 1 && direction_1 == 0) {
+            arc->SetCorner(0, right_primary);
+            arc->SetCorner(1, left_secondary);
+            arc->SetTangent(0,rightTangent_primary);
+            arc->SetTangent(1,leftTangent_secondary);
+        }
+        //right right
+        else {
+            arc->SetCorner(0, right_primary);
+            arc->SetCorner(1, right_secondary);
+            arc->SetTangent(0,rightTangent_primary);
+            arc->SetTangent(1,rightTangent_secondary);
+        }
+
+
+        return arc;
     }
 
-    GLboolean HermiteCompositeCurve3::MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
+    void HermiteCompositeCurve3::MergeExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
 
-        return GL_TRUE;
+        int ind_primary = -1, ind_secondary = -1;
+
+        for(GLuint i = 0 ; i < _number_of_arcs ; i++) {
+            if(_attributes[i].index == index_0) {
+               ind_primary = i;
+            }
+
+            if(_attributes[i].index == index_1) {
+               ind_secondary = i;
+            }
+        }
+
+        //deciding left and right points of primary and secondary arc
+        DCoordinate3 left_primary = _attributes[ind_primary].arc->GetCorner(0);
+        DCoordinate3 right_primary = _attributes[ind_primary].arc->GetCorner(1);
+        DCoordinate3 leftTangent_primary = _attributes[ind_primary].arc->GetTangent(0);
+        DCoordinate3 rightTangent_primary = _attributes[ind_primary].arc->GetTangent(1);
+
+        if(left_primary.x() > right_primary.x()) {
+            swap(left_primary, right_primary);
+            swap(leftTangent_primary, rightTangent_primary);
+        }
+
+        DCoordinate3 left_secondary = _attributes[ind_secondary].arc->GetCorner(0);
+        DCoordinate3 right_secondary = _attributes[ind_secondary].arc->GetCorner(1);
+        DCoordinate3 leftTangent_secondary = _attributes[ind_secondary].arc->GetTangent(0);
+        DCoordinate3 rightTangent_secondary = _attributes[ind_secondary].arc->GetTangent(1);
+
+        if(left_secondary.x() > right_secondary.x()) {
+            swap(left_secondary, right_secondary);
+            swap(leftTangent_secondary, rightTangent_secondary);
+        }
+
+        DCoordinate3 middle_point;
+        DCoordinate3 middle_tangent;
+
+        //left left
+        if(direction_0 == 0 && direction_1 == 0) {
+            middle_point = (left_primary + left_secondary)/2;
+            middle_tangent = (leftTangent_primary + leftTangent_secondary)/2;
+
+            _attributes[ind_primary].arc->SetCorner(0, middle_point);
+            _attributes[ind_primary].arc->SetTangent(0, middle_tangent);
+
+            _attributes[ind_secondary].arc->SetCorner(0, middle_point);
+            _attributes[ind_secondary].arc->SetTangent(0, middle_tangent);
+        }
+
+
+//        //left right
+//        else if(direction_0 == 0 && direction_1 == 1) {
+//            arc->SetCorner(0, left_primary);
+//            arc->SetCorner(1, right_secondary);
+//            arc->SetTangent(0,leftTangent_primary);
+//            arc->SetTangent(1,rightTangent_secondary);
+//        }
+//        //right left
+//        else if(direction_0 == 1 && direction_1 == 0) {
+//            arc->SetCorner(0, right_primary);
+//            arc->SetCorner(1, left_secondary);
+//            arc->SetTangent(0,rightTangent_primary);
+//            arc->SetTangent(1,leftTangent_secondary);
+//        }
+//        //right right
+//        else {
+//            arc->SetCorner(0, right_primary);
+//            arc->SetCorner(1, right_secondary);
+//            arc->SetTangent(0,rightTangent_primary);
+//            arc->SetTangent(1,rightTangent_secondary);
+//        }
     }
 
     GLboolean HermiteCompositeCurve3::RenderAllArcs() const {
@@ -151,7 +296,7 @@ namespace cagd {
 
     void HermiteCompositeCurve3::updateArc(GLint index, GenericCurve3* image) {
         for(GLint i = 0 ; i < _number_of_arcs ; i++) {
-            if(_attributes[i].index == index) {
+            if(_attributes[i].index == index && _attributes[i].index) {
                 _attributes[i].image = image;
             }
         }

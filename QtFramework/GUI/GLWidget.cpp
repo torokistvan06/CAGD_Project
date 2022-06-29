@@ -370,7 +370,9 @@ namespace cagd
         for(GLint i = 0 ; i < _number_of_composite_arcs ; i++) {
             if(i == _selected_composite_arc) {
                 _composite_hermite_arcs[i]->updateArc(_selected_hermite_arc, _images_of_hermite_arcs[_selected_hermite_arc]);
-                _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
+                if(i != _selected_secondary_arc){
+                    _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
+                }
             }
         }
 
@@ -405,6 +407,7 @@ namespace cagd
     }
 
     void GLWidget::_joinArc(){
+
         if(_composite_arc_index_of_hermite_arcs[_selected_hermite_arc] == -1) {
             return;
         }
@@ -413,6 +416,44 @@ namespace cagd
         CubicHermiteArc3* arc = _composite_hermite_arcs[_comp_index]->JoinExistingArcs(_selected_hermite_arc, _primary_dir, _selected_secondary_arc, _secondary_dir);
         if(arc == nullptr)
             return;
+
+        _number_of_hermite_arcs += 1;
+        _hermite_arcs.ResizeColumns(_number_of_hermite_arcs);
+        _images_of_hermite_arcs.ResizeColumns(_number_of_hermite_arcs);
+        _composite_arc_index_of_hermite_arcs.ResizeColumns(_number_of_hermite_arcs);
+
+        _composite_arc_index_of_hermite_arcs[_number_of_hermite_arcs - 1] = _composite_arc_index_of_hermite_arcs[_selected_hermite_arc];
+        _hermite_arcs[_number_of_hermite_arcs - 1] = arc;
+
+        _hermite_arcs[_number_of_hermite_arcs - 1]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+
+        _images_of_hermite_arcs[_number_of_hermite_arcs - 1] = _hermite_arcs[_number_of_hermite_arcs - 1]->GenerateImage(2,100,GL_STATIC_DRAW);
+
+        _images_of_hermite_arcs[_number_of_hermite_arcs - 1]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
+        _composite_hermite_arcs[_comp_index]->InsertNewArc(_hermite_arcs[_number_of_hermite_arcs - 1], _images_of_hermite_arcs[_number_of_hermite_arcs - 1], _r, _g, _b, _number_of_hermite_arcs - 1);
+        update();
+    }
+
+    void GLWidget::_mergeArc(){
+        if(_composite_arc_index_of_hermite_arcs[_selected_hermite_arc] == -1) {
+            return;
+        }
+
+        int _comp_index = _composite_arc_index_of_hermite_arcs[_selected_hermite_arc];
+        _composite_hermite_arcs[_comp_index]->MergeExistingArcs(_selected_hermite_arc, _primary_dir, _selected_secondary_arc, _secondary_dir);
+
+
+        _hermite_arcs[_selected_hermite_arc]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+        _hermite_arcs[_selected_secondary_arc]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+
+        _images_of_hermite_arcs[_selected_hermite_arc] = _hermite_arcs[_number_of_hermite_arcs - 1]->GenerateImage(2,100,GL_STATIC_DRAW);
+        _images_of_hermite_arcs[_selected_secondary_arc] = _hermite_arcs[_number_of_hermite_arcs - 1]->GenerateImage(2,100,GL_STATIC_DRAW);
+
+        _images_of_hermite_arcs[_selected_hermite_arc]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
+        _images_of_hermite_arcs[_selected_secondary_arc]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
+
+        _updateSelectedHermiteArc();
+        update();
     }
 
     void GLWidget::_addSelectedArcToSelectedCompositeArc() {

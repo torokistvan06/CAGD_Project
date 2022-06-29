@@ -348,6 +348,7 @@ namespace cagd
 
         void _continueArc();
         void _joinArc();
+        void _mergeArc();
 
         void setHermitePointx(double value);
         void setHermitePointy(double value);
