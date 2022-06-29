@@ -218,7 +218,7 @@ namespace cagd
 
     inline const DCoordinate3 DCoordinate3::operator /(const GLdouble& rhs) const
     {
-        return DCoordinate3(rhs / _data[0], rhs / _data[1], rhs / _data[2]);
+        return DCoordinate3(_data[0] / rhs, _data[1] / rhs, _data[2] / rhs);
     }
 
     // scale *this
