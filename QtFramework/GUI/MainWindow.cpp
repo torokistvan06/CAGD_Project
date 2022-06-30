@@ -196,6 +196,10 @@ namespace cagd
         connect(_side_widget->createNewCompositePatch, SIGNAL(pressed()), _gl_widget, SLOT(_createNewCompositePatch()));
         connect(_side_widget->addSelectedPatchToSelectedCompositePatch, SIGNAL(pressed()), _gl_widget, SLOT(_addSelectedPatchToSelectedCompositePatch()));
 
+        connect(_side_widget->continueSelectedPatch, SIGNAL(pressed()), _gl_widget, SLOT(_continuePatch()));
+        connect(_side_widget->joinSelectedPatches, SIGNAL(pressed()), _gl_widget, SLOT(_joinPatch()));
+        connect(_side_widget->mergeSelectedPatches, SIGNAL(pressed()), _gl_widget, SLOT(_mergePatch()));
+
     }
 
 

@@ -389,6 +389,10 @@ namespace cagd
 
         // Project - Hermite patch
 
+        void _continuePatch();
+        void _joinPatch();
+        void _mergePatch();
+
         void _showHermitePatchTextures(bool visibility);
         void _showHermitePatchShaders(bool visibility);
 
