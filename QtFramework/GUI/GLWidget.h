@@ -32,7 +32,7 @@ namespace cagd
 
         // variable that defines what we see on the main window
 
-        int _selected = 6;
+        int _selected = 7;
 
         // 0 - Parametric Curves
         // 1 - RedBullAirAndWaterScene
@@ -394,6 +394,9 @@ namespace cagd
         void _continuePatch();
         void _joinPatch();
         void _mergePatch();
+
+        void _setPatchPrimaryDirection(int index);
+        void _setPatchSecondaryDirection(int index);
 
         void _showHermitePatchTextures(bool visibility);
         void _showHermitePatchShaders(bool visibility);

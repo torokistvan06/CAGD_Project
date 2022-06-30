@@ -200,6 +200,9 @@ namespace cagd
         connect(_side_widget->joinSelectedPatches, SIGNAL(pressed()), _gl_widget, SLOT(_joinPatch()));
         connect(_side_widget->mergeSelectedPatches, SIGNAL(pressed()), _gl_widget, SLOT(_mergePatch()));
 
+        connect(_side_widget->selectedPatchPrimaryDirection, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(_setPatchPrimaryDirection(int)));
+        connect(_side_widget->selectedPatchSecondaryDirection, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(_setPatchSecondaryDirection(int)));
+
     }
 
 
