@@ -1142,13 +1142,13 @@ namespace cagd
                 emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(0,0).y());
                 emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(0,0).z());
 
-                emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(2,0).x());
-                emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(2,0).y());
-                emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(2,0).z());
+                emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(2,0).x());
+                emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(2,0).y());
+                emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(2,0).z());
 
-                emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(0,2).x());
-                emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(0,2).y());
-                emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(0,2).z());
+                emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(0,2).x());
+                emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(0,2).y());
+                emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(0,2).z());
 
                 emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(2,2).x());
                 emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(2,2).y());
@@ -1162,13 +1162,13 @@ namespace cagd
                 emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(0,1).y());
                 emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(0,1).z());
 
-                emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(2,1).x());
-                emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(2,1).y());
-                emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(2,1).z());
+                emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(2,1).x());
+                emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(2,1).y());
+                emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(2,1).z());
 
-                emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(0,3).x());
-                emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(0,3).y());
-                emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(0,3).z());
+                emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(0,3).x());
+                emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(0,3).y());
+                emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(0,3).z());
 
                 emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(2,3).x());
                 emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(2,3).y());
@@ -1183,13 +1183,13 @@ namespace cagd
                emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(1,0).y());
                emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(1,0).z());
 
-               emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(3,0).x());
-               emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(3,0).y());
-               emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(3,0).z());
+               emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(3,0).x());
+               emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(3,0).y());
+               emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(3,0).z());
 
-               emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(1,2).x());
-               emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(1,2).y());
-               emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(1,2).z());
+               emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(1,2).x());
+               emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(1,2).y());
+               emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(1,2).z());
 
                emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(3,2).x());
                emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(3,2).y());
@@ -1204,13 +1204,13 @@ namespace cagd
                emit HermitePatchPointChangeY((*_hermite_patches[_selected_hermite_patch])(1,1).y());
                emit HermitePatchPointChangeZ((*_hermite_patches[_selected_hermite_patch])(1,1).z());
 
-               emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(3,1).x());
-               emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(3,1).y());
-               emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(3,1).z());
+               emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(3,1).x());
+               emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(3,1).y());
+               emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(3,1).z());
 
-               emit HermitePatchPointChangeUX((*_hermite_patches[_selected_hermite_patch])(1,3).x());
-               emit HermitePatchPointChangeUY((*_hermite_patches[_selected_hermite_patch])(1,3).y());
-               emit HermitePatchPointChangeUZ((*_hermite_patches[_selected_hermite_patch])(1,3).z());
+               emit HermitePatchPointChangeVX((*_hermite_patches[_selected_hermite_patch])(1,3).x());
+               emit HermitePatchPointChangeVY((*_hermite_patches[_selected_hermite_patch])(1,3).y());
+               emit HermitePatchPointChangeVZ((*_hermite_patches[_selected_hermite_patch])(1,3).z());
 
                emit HermitePatchPointChangeTX((*_hermite_patches[_selected_hermite_patch])(3,3).x());
                emit HermitePatchPointChangeTY((*_hermite_patches[_selected_hermite_patch])(3,3).y());
@@ -1302,7 +1302,7 @@ namespace cagd
     }
 
 
-    void GLWidget::setHermitePatchPointVX(double value) {
+    void GLWidget::setHermitePatchPointUX(double value) {
          switch(_selected_hermite_patch_point) {
          case 0:
          {
@@ -1316,12 +1316,12 @@ namespace cagd
          }
          case 2:
          {
-             (*_hermite_patches[_selected_hermite_patch])(2,0)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch])(3,0)[0] = value;
              break;
          }
          case 3:
          {
-             (*_hermite_patches[_selected_hermite_patch])(2,1)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch])(3,1)[0] = value;
              break;
          }
      }
@@ -1329,7 +1329,7 @@ namespace cagd
          update();
     }
 
-    void GLWidget::setHermitePatchPointVY(double value) {
+    void GLWidget::setHermitePatchPointUY(double value) {
          switch(_selected_hermite_patch_point) {
          case 0:
          {
@@ -1356,7 +1356,7 @@ namespace cagd
          update();
     }
 
-    void GLWidget::setHermitePatchPointVZ(double value) {
+    void GLWidget::setHermitePatchPointUZ(double value) {
          switch(_selected_hermite_patch_point) {
          case 0:
          {
@@ -1384,7 +1384,7 @@ namespace cagd
     }
 
 
-    void GLWidget::setHermitePatchPointUX(double value) {
+    void GLWidget::setHermitePatchPointVX(double value) {
          switch(_selected_hermite_patch_point) {
          case 0:
          {
@@ -1411,7 +1411,7 @@ namespace cagd
          update();
     }
 
-    void GLWidget::setHermitePatchPointUY(double value) {
+    void GLWidget::setHermitePatchPointVY(double value) {
          switch(_selected_hermite_patch_point) {
          case 0:
          {
@@ -1438,7 +1438,7 @@ namespace cagd
          update();
     }
 
-    void GLWidget::setHermitePatchPointUZ(double value) {
+    void GLWidget::setHermitePatchPointVZ(double value) {
          switch(_selected_hermite_patch_point) {
          case 0:
          {
@@ -3357,13 +3357,13 @@ namespace cagd
                emit HermitePatchPointChangeY((*_bicubic_hermite_patch3)(0,0).y());
                emit HermitePatchPointChangeZ((*_bicubic_hermite_patch3)(0,0).z());
 
-               emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(2,0).x());
-               emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(2,0).y());
-               emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(2,0).z());
+               emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(2,0).x());
+               emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(2,0).y());
+               emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(2,0).z());
 
-               emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(0,2).x());
-               emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(0,2).y());
-               emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(0,2).z());
+               emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(0,2).x());
+               emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(0,2).y());
+               emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(0,2).z());
 
                emit HermitePatchPointChangeTX((*_bicubic_hermite_patch3)(2,2).x());
                emit HermitePatchPointChangeTY((*_bicubic_hermite_patch3)(2,2).y());
@@ -3377,13 +3377,13 @@ namespace cagd
                emit HermitePatchPointChangeY((*_bicubic_hermite_patch3)(0,1).y());
                emit HermitePatchPointChangeZ((*_bicubic_hermite_patch3)(0,1).z());
 
-               emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(2,1).x());
-               emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(2,1).y());
-               emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(2,1).z());
+               emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(2,1).x());
+               emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(2,1).y());
+               emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(2,1).z());
 
-               emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(0,3).x());
-               emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(0,3).y());
-               emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(0,3).z());
+               emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(0,3).x());
+               emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(0,3).y());
+               emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(0,3).z());
 
                emit HermitePatchPointChangeTX((*_bicubic_hermite_patch3)(2,3).x());
                emit HermitePatchPointChangeTY((*_bicubic_hermite_patch3)(2,3).y());
@@ -3398,13 +3398,13 @@ namespace cagd
                   emit HermitePatchPointChangeY((*_bicubic_hermite_patch3)(1,0).y());
                   emit HermitePatchPointChangeZ((*_bicubic_hermite_patch3)(1,0).z());
 
-                  emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(3,0).x());
-                  emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(3,0).y());
-                  emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(3,0).z());
+                  emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(3,0).x());
+                  emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(3,0).y());
+                  emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(3,0).z());
 
-                  emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(1,2).x());
-                  emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(1,2).y());
-                  emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(1,2).z());
+                  emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(1,2).x());
+                  emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(1,2).y());
+                  emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(1,2).z());
 
                   emit HermitePatchPointChangeTX((*_bicubic_hermite_patch3)(3,2).x());
                   emit HermitePatchPointChangeTY((*_bicubic_hermite_patch3)(3,2).y());
@@ -3419,13 +3419,13 @@ namespace cagd
                   emit HermitePatchPointChangeY((*_bicubic_hermite_patch3)(1,1).y());
                   emit HermitePatchPointChangeZ((*_bicubic_hermite_patch3)(1,1).z());
 
-                  emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(3,1).x());
-                  emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(3,1).y());
-                  emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(3,1).z());
+                  emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(3,1).x());
+                  emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(3,1).y());
+                  emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(3,1).z());
 
-                  emit HermitePatchPointChangeUX((*_bicubic_hermite_patch3)(1,3).x());
-                  emit HermitePatchPointChangeUY((*_bicubic_hermite_patch3)(1,3).y());
-                  emit HermitePatchPointChangeUZ((*_bicubic_hermite_patch3)(1,3).z());
+                  emit HermitePatchPointChangeVX((*_bicubic_hermite_patch3)(1,3).x());
+                  emit HermitePatchPointChangeVY((*_bicubic_hermite_patch3)(1,3).y());
+                  emit HermitePatchPointChangeVZ((*_bicubic_hermite_patch3)(1,3).z());
 
                   emit HermitePatchPointChangeTX((*_bicubic_hermite_patch3)(3,3).x());
                   emit HermitePatchPointChangeTY((*_bicubic_hermite_patch3)(3,3).y());

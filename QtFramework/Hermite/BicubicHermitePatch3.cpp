@@ -400,7 +400,7 @@ std::istream& cagd::operator >>(std::istream& lhs, BicubicHermitePatch3& rhs) {
     for(GLuint m = 0 ; m < 4 ; m++) {
         for(GLuint n = 0 ; n < 4 ; n++) {
            lhs >> tmp;
-           rhs.SetData(n,m,tmp);
+           rhs.SetData(m,n,tmp);
         }
     }
     return lhs;
