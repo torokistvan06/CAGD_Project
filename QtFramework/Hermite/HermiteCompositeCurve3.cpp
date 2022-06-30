@@ -336,10 +336,13 @@ namespace cagd {
         for(GLint i = 0 ; i < _number_of_arcs ; i++) {
 
             glPointSize(10.0f);
+
             if (_attributes[i].index == _selected) {
-                glColor3f(1,0,0);
-            } else if (_selected_composite == this->_composite_index && _highlight_selected_composite) {
-                glColor3f(1,0,1);
+                glColor3f(1.0f, 0.0, 0.0);
+            } else if (_attributes[i].index == _selected_secondary) {
+                glColor3f(0.0f, 0.0f, 1.0);
+            } else if (_selected_composite == _composite_index && _highlight_selected_composite) {
+                glColor3f(1.0f, 0.0, 1.0f);
             } else {
                 glColor4f(_attributes[i].color->r(),_attributes[i].color->g(),_attributes[i].color->b(),_attributes[i].color->a());
             }
@@ -390,6 +393,10 @@ namespace cagd {
 
     void HermiteCompositeCurve3::setSelectedComposite(int value) {
         this->_selected_composite = value;
+    }
+
+    void HermiteCompositeCurve3::setSelectedSecondary(GLint value) {
+        this->_selected_secondary = value;
     }
 
     GLboolean HermiteCompositeCurve3::RenderSelectedArc(GLuint index, GLuint order, GLenum render_mode) const {

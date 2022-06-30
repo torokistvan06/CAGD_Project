@@ -305,12 +305,10 @@ namespace cagd
         for(GLuint i = 0 ; i < _number_of_hermite_arcs ; i++) {
             if( _composite_arc_index_of_hermite_arcs[i] == -1) {
                 glPointSize(10.0f);
-                if (i == _selected_hermite_arc && i != _selected_secondary_arc) {
+                if (i == _selected_hermite_arc) {
                     glColor3f(1.0f, 0.0, 0.0);
-                } else if (i == _selected_secondary_arc && i != _selected_hermite_arc) {
-                    glColor3f(0.0f, 1.0, 1.0);
-                } else if (i == _selected_hermite_arc || i == _selected_secondary_arc) {
-                    glColor3f(1.0f, 0.0f, 0.0f);
+                } else if (i == _selected_secondary_arc) {
+                    glColor3f(0.0f, 0.0f, 1.0);
                 } else {
                     glColor3f(0.0f, 1.0f, 0.0f);
                 }
@@ -508,7 +506,7 @@ namespace cagd
         if(index < _number_of_hermite_arcs) {
             _selected_secondary_arc = index;
             for(GLuint i = 0 ; i < _number_of_composite_arcs ; i++) {
-                _composite_hermite_arcs[i]->setSelected(_selected_secondary_arc);
+                _composite_hermite_arcs[i]->setSelectedSecondary(_selected_secondary_arc);
             }
 
         }
@@ -602,6 +600,7 @@ namespace cagd
        _composite_hermite_arcs[_number_of_composite_arcs - 1]->highlightSelectedComposite(_highlight_selected_composite_curve);
        _composite_hermite_arcs[_number_of_composite_arcs - 1]->setSelected(_selected_hermite_arc);
        _composite_hermite_arcs[_number_of_composite_arcs - 1]->setSelectedComposite(_selected_composite_arc);
+       _composite_hermite_arcs[_number_of_composite_arcs - 1]->setSelectedSecondary(_selected_secondary_arc);
    }
    void GLWidget::_highlightHermiteCompositeArc(bool visibility) {
         _highlight_selected_composite_curve = visibility;

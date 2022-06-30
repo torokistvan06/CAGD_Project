@@ -32,7 +32,7 @@ namespace cagd
 
         // variable that defines what we see on the main window
 
-        int _selected = 7;
+        int _selected = 6;
 
         // 0 - Parametric Curves
         // 1 - RedBullAirAndWaterScene
