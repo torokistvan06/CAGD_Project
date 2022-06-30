@@ -120,8 +120,6 @@ namespace cagd {
             _attributes[ind_1].next = &_attributes[ind_0];
             _attributes[ind_1].next_connection_type = direction;
         }
-
-
     }
 
     CubicHermiteArc3* HermiteCompositeCurve3::JoinExistingArcs(GLuint index_0, int direction_0, GLuint index_1, int direction_1){
@@ -176,35 +174,37 @@ namespace cagd {
         //deceding start and end point of new arc
         CubicHermiteArc3 *arc = new CubicHermiteArc3();
 
-        //left left
+        //left left - OK
         if(direction_0 == 0 && direction_1 == 0) {
+            _attributes[ind_primary].arc->SetTangent(0,-leftTangent_primary);
             arc->SetCorner(0, left_primary);
             arc->SetCorner(1, left_secondary);
-            arc->SetTangent(0,leftTangent_primary);
-            arc->SetTangent(1,leftTangent_secondary);
+            arc->SetTangent(0, leftTangent_primary);
+            arc->SetTangent(1, -leftTangent_secondary);
         }
-        //left right
+        //left right - nincs torespont
         else if(direction_0 == 0 && direction_1 == 1) {
+            _attributes[ind_primary].arc->SetTangent(0, -leftTangent_primary);
             arc->SetCorner(0, left_primary);
             arc->SetCorner(1, right_secondary);
             arc->SetTangent(0,leftTangent_primary);
-            arc->SetTangent(1,rightTangent_secondary);
+            arc->SetTangent(1,-rightTangent_secondary);
         }
-        //right left
+        //right left - nincs torespont
         else if(direction_0 == 1 && direction_1 == 0) {
             arc->SetCorner(0, right_primary);
             arc->SetCorner(1, left_secondary);
             arc->SetTangent(0,rightTangent_primary);
             arc->SetTangent(1,leftTangent_secondary);
         }
-        //right right
+        //right right - nincs torespont
         else {
+            _attributes[ind_secondary].arc->SetTangent(1, -rightTangent_secondary);
             arc->SetCorner(0, right_primary);
             arc->SetCorner(1, right_secondary);
             arc->SetTangent(0,rightTangent_primary);
             arc->SetTangent(1,rightTangent_secondary);
         }
-
 
         return arc;
     }
@@ -253,7 +253,7 @@ namespace cagd {
         DCoordinate3 middle_point;
         DCoordinate3 middle_tangent;
 
-        //left left
+        //left left - nincs torespont
         if(direction_0 == 0 && direction_1 == 0) {
             middle_point = (left_primary + left_secondary)/2;
             middle_tangent = (leftTangent_primary + leftTangent_secondary)/2;
@@ -262,12 +262,12 @@ namespace cagd {
             _attributes[ind_primary].arc->SetTangent(0, middle_tangent);
 
             _attributes[ind_secondary].arc->SetCorner(0, middle_point);
-            _attributes[ind_secondary].arc->SetTangent(0, middle_tangent);
+            _attributes[ind_secondary].arc->SetTangent(0, -middle_tangent);
         }
-        //left right
+        //left right - nincs torespont
         else if(direction_0 == 0 && direction_1 == 1) {
             middle_point = (left_primary + right_secondary)/2;
-            middle_tangent = (leftTangent_primary + rightTangent_secondary)/2;
+            middle_tangent = (leftTangent_primary + rightTangent_secondary) / 2;
 
             _attributes[ind_primary].arc->SetCorner(0, middle_point);
             _attributes[ind_primary].arc->SetTangent(0, middle_tangent);
@@ -275,7 +275,7 @@ namespace cagd {
             _attributes[ind_secondary].arc->SetCorner(1, middle_point);
             _attributes[ind_secondary].arc->SetTangent(1, middle_tangent);
         }
-        //right left
+        //right left - nincs torespont
         else if(direction_0 == 1 && direction_1 == 0) {
             middle_point = (right_primary + left_secondary)/2;
             middle_tangent = (rightTangent_primary + leftTangent_secondary)/2;
@@ -295,7 +295,7 @@ namespace cagd {
             _attributes[ind_primary].arc->SetTangent(1, middle_tangent);
 
             _attributes[ind_secondary].arc->SetCorner(1, middle_point);
-            _attributes[ind_secondary].arc->SetTangent(1, middle_tangent);
+            _attributes[ind_secondary].arc->SetTangent(1, -middle_tangent);
         }
 
         return GL_TRUE;
@@ -374,6 +374,36 @@ namespace cagd {
             }
         }
     }
+
+    GLvoid HermiteCompositeCurve3::updateNeighbours(GLint index, GLint pointIndex, DCoordinate3 corner, DCoordinate3 tangent) {
+        for(GLint i = 0 ; i < _number_of_arcs ; i++) {
+            if(_attributes[i].index == index) {
+                updateNeighboursRecursive(&_attributes[i], pointIndex, corner, tangent, nullptr);
+                break;
+            }
+        }
+    }
+    GLvoid HermiteCompositeCurve3::updateNeighboursRecursive(ArcAttributes* attr, GLint pointIndex, DCoordinate3 corner, DCoordinate3 tangent, ArcAttributes* parent) {
+        if(attr == nullptr)
+            return;
+
+        if(attr->next != nullptr && attr->next != parent && pointIndex == 1) {
+            DCoordinate3 new_corner = attr->next->arc->GetCorner(attr->next_connection_type) - corner;
+            attr->next->arc->SetCorner(attr->next_connection_type, new_corner);
+            DCoordinate3 new_tangent = attr->next->arc->GetTangent(attr->next_connection_type) - tangent;
+            attr->next->arc->SetTangent(attr->next_connection_type, new_tangent);
+            updateNeighboursRecursive(attr->next,attr->next_connection_type, corner, tangent, attr);
+        }
+
+        if(attr->previous != nullptr && attr->previous != parent && pointIndex == 0) {
+            DCoordinate3 new_corner = attr->previous->arc->GetCorner(attr->previous_connection_type) - corner;
+            attr->previous->arc->SetCorner(attr->previous_connection_type, new_corner);
+            DCoordinate3 new_tangent = attr->previous->arc->GetTangent(attr->previous_connection_type) - tangent;
+            attr->previous->arc->SetTangent(attr->previous_connection_type, new_tangent);
+            updateNeighboursRecursive(attr->previous,attr->previous_connection_type, corner, tangent, attr);
+        }
+    }
+
 
     void HermiteCompositeCurve3::setSelected(int value) {
         this->_selected = value;

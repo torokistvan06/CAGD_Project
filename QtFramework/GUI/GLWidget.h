@@ -376,6 +376,8 @@ namespace cagd
         void _joinArc();
         void _mergeArc();
 
+        void _updateArcNeighbours(DCoordinate3, DCoordinate3);
+
         void setHermitePointx(double value);
         void setHermitePointy(double value);
         void setHermitePointz(double value);

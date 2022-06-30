@@ -59,7 +59,9 @@ namespace cagd
         GLboolean RenderSelectedArc(GLuint index, GLuint order, GLenum render_mode) const;
 
         GLvoid updateArc(GLint index, GenericCurve3* image);
-
+        GLvoid updateNeighbours(GLint index, GLint pointIndex, DCoordinate3 corner, DCoordinate3 tangent);
+        GLvoid updateNeighboursRecursive(ArcAttributes*, GLint pointIndex, DCoordinate3 corner, DCoordinate3 tangent, ArcAttributes* parent);
+        
         void setFirstOrderVisibility(bool);
         void setSecondOrderVisibility(bool);
         void highlightSelectedComposite(bool);

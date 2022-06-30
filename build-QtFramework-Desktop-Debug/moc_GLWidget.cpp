@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_cagd__GLWidget_t {
-    QByteArrayData data[124];
-    char stringdata0[2528];
+    QByteArrayData data[126];
+    char stringdata0[2562];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -115,46 +115,48 @@ QT_MOC_LITERAL(80, 1514, 24), // "_setSecondarySelectedArc"
 QT_MOC_LITERAL(81, 1539, 12), // "_continueArc"
 QT_MOC_LITERAL(82, 1552, 8), // "_joinArc"
 QT_MOC_LITERAL(83, 1561, 9), // "_mergeArc"
-QT_MOC_LITERAL(84, 1571, 16), // "setHermitePointx"
-QT_MOC_LITERAL(85, 1588, 16), // "setHermitePointy"
-QT_MOC_LITERAL(86, 1605, 16), // "setHermitePointz"
-QT_MOC_LITERAL(87, 1622, 17), // "setHermitePointdx"
-QT_MOC_LITERAL(88, 1640, 17), // "setHermitePointdy"
-QT_MOC_LITERAL(89, 1658, 17), // "setHermitePointdz"
-QT_MOC_LITERAL(90, 1676, 30), // "showHermiteFirstOrderDerivates"
-QT_MOC_LITERAL(91, 1707, 31), // "showHermiteSecondOrderDerivates"
-QT_MOC_LITERAL(92, 1739, 14), // "_continuePatch"
-QT_MOC_LITERAL(93, 1754, 10), // "_joinPatch"
-QT_MOC_LITERAL(94, 1765, 11), // "_mergePatch"
-QT_MOC_LITERAL(95, 1777, 25), // "_showHermitePatchTextures"
-QT_MOC_LITERAL(96, 1803, 24), // "_showHermitePatchShaders"
-QT_MOC_LITERAL(97, 1828, 24), // "_setHermitePatchMaterial"
-QT_MOC_LITERAL(98, 1853, 23), // "_setHermitePatchTexture"
-QT_MOC_LITERAL(99, 1877, 22), // "_setHermitePatchShader"
-QT_MOC_LITERAL(100, 1900, 24), // "_setSelectedHermitePatch"
-QT_MOC_LITERAL(101, 1925, 29), // "_setSelectedHermitePatchPoint"
-QT_MOC_LITERAL(102, 1955, 33), // "_setSelectedSecondaryHermiteP..."
-QT_MOC_LITERAL(103, 1989, 22), // "_setVisibilityOfULines"
-QT_MOC_LITERAL(104, 2012, 22), // "_setVisibilityOfVLines"
-QT_MOC_LITERAL(105, 2035, 32), // "_highlightSelectedCompositePatch"
-QT_MOC_LITERAL(106, 2068, 37), // "_setVisibilityOfFirstOrderDer..."
-QT_MOC_LITERAL(107, 2106, 38), // "_setVisibilityOfSecondOrderDe..."
-QT_MOC_LITERAL(108, 2145, 21), // "_selectCompositePatch"
-QT_MOC_LITERAL(109, 2167, 24), // "_createNewCompositePatch"
-QT_MOC_LITERAL(110, 2192, 41), // "_addSelectedPatchToSelectedCo..."
-QT_MOC_LITERAL(111, 2234, 20), // "setHermitePatchIndex"
-QT_MOC_LITERAL(112, 2255, 21), // "setHermitePatchPointX"
-QT_MOC_LITERAL(113, 2277, 21), // "setHermitePatchPointY"
-QT_MOC_LITERAL(114, 2299, 21), // "setHermitePatchPointZ"
-QT_MOC_LITERAL(115, 2321, 22), // "setHermitePatchPointUX"
-QT_MOC_LITERAL(116, 2344, 22), // "setHermitePatchPointUY"
-QT_MOC_LITERAL(117, 2367, 22), // "setHermitePatchPointUZ"
-QT_MOC_LITERAL(118, 2390, 22), // "setHermitePatchPointVX"
-QT_MOC_LITERAL(119, 2413, 22), // "setHermitePatchPointVY"
-QT_MOC_LITERAL(120, 2436, 22), // "setHermitePatchPointVZ"
-QT_MOC_LITERAL(121, 2459, 22), // "setHermitePatchPointTX"
-QT_MOC_LITERAL(122, 2482, 22), // "setHermitePatchPointTY"
-QT_MOC_LITERAL(123, 2505, 22) // "setHermitePatchPointTZ"
+QT_MOC_LITERAL(84, 1571, 20), // "_updateArcNeighbours"
+QT_MOC_LITERAL(85, 1592, 12), // "DCoordinate3"
+QT_MOC_LITERAL(86, 1605, 16), // "setHermitePointx"
+QT_MOC_LITERAL(87, 1622, 16), // "setHermitePointy"
+QT_MOC_LITERAL(88, 1639, 16), // "setHermitePointz"
+QT_MOC_LITERAL(89, 1656, 17), // "setHermitePointdx"
+QT_MOC_LITERAL(90, 1674, 17), // "setHermitePointdy"
+QT_MOC_LITERAL(91, 1692, 17), // "setHermitePointdz"
+QT_MOC_LITERAL(92, 1710, 30), // "showHermiteFirstOrderDerivates"
+QT_MOC_LITERAL(93, 1741, 31), // "showHermiteSecondOrderDerivates"
+QT_MOC_LITERAL(94, 1773, 14), // "_continuePatch"
+QT_MOC_LITERAL(95, 1788, 10), // "_joinPatch"
+QT_MOC_LITERAL(96, 1799, 11), // "_mergePatch"
+QT_MOC_LITERAL(97, 1811, 25), // "_showHermitePatchTextures"
+QT_MOC_LITERAL(98, 1837, 24), // "_showHermitePatchShaders"
+QT_MOC_LITERAL(99, 1862, 24), // "_setHermitePatchMaterial"
+QT_MOC_LITERAL(100, 1887, 23), // "_setHermitePatchTexture"
+QT_MOC_LITERAL(101, 1911, 22), // "_setHermitePatchShader"
+QT_MOC_LITERAL(102, 1934, 24), // "_setSelectedHermitePatch"
+QT_MOC_LITERAL(103, 1959, 29), // "_setSelectedHermitePatchPoint"
+QT_MOC_LITERAL(104, 1989, 33), // "_setSelectedSecondaryHermiteP..."
+QT_MOC_LITERAL(105, 2023, 22), // "_setVisibilityOfULines"
+QT_MOC_LITERAL(106, 2046, 22), // "_setVisibilityOfVLines"
+QT_MOC_LITERAL(107, 2069, 32), // "_highlightSelectedCompositePatch"
+QT_MOC_LITERAL(108, 2102, 37), // "_setVisibilityOfFirstOrderDer..."
+QT_MOC_LITERAL(109, 2140, 38), // "_setVisibilityOfSecondOrderDe..."
+QT_MOC_LITERAL(110, 2179, 21), // "_selectCompositePatch"
+QT_MOC_LITERAL(111, 2201, 24), // "_createNewCompositePatch"
+QT_MOC_LITERAL(112, 2226, 41), // "_addSelectedPatchToSelectedCo..."
+QT_MOC_LITERAL(113, 2268, 20), // "setHermitePatchIndex"
+QT_MOC_LITERAL(114, 2289, 21), // "setHermitePatchPointX"
+QT_MOC_LITERAL(115, 2311, 21), // "setHermitePatchPointY"
+QT_MOC_LITERAL(116, 2333, 21), // "setHermitePatchPointZ"
+QT_MOC_LITERAL(117, 2355, 22), // "setHermitePatchPointUX"
+QT_MOC_LITERAL(118, 2378, 22), // "setHermitePatchPointUY"
+QT_MOC_LITERAL(119, 2401, 22), // "setHermitePatchPointUZ"
+QT_MOC_LITERAL(120, 2424, 22), // "setHermitePatchPointVX"
+QT_MOC_LITERAL(121, 2447, 22), // "setHermitePatchPointVY"
+QT_MOC_LITERAL(122, 2470, 22), // "setHermitePatchPointVZ"
+QT_MOC_LITERAL(123, 2493, 22), // "setHermitePatchPointTX"
+QT_MOC_LITERAL(124, 2516, 22), // "setHermitePatchPointTY"
+QT_MOC_LITERAL(125, 2539, 22) // "setHermitePatchPointTZ"
 
     },
     "cagd::GLWidget\0setSelectedX\0\0value\0"
@@ -203,7 +205,8 @@ QT_MOC_LITERAL(123, 2505, 22) // "setHermitePatchPointTZ"
     "_hermite_red\0_hermite_green\0_hermite_blue\0"
     "_setPrimaryDirection\0_setSecondaryDirection\0"
     "_setSecondarySelectedArc\0_continueArc\0"
-    "_joinArc\0_mergeArc\0setHermitePointx\0"
+    "_joinArc\0_mergeArc\0_updateArcNeighbours\0"
+    "DCoordinate3\0setHermitePointx\0"
     "setHermitePointy\0setHermitePointz\0"
     "setHermitePointdx\0setHermitePointdy\0"
     "setHermitePointdz\0showHermiteFirstOrderDerivates\0"
@@ -238,7 +241,7 @@ static const uint qt_meta_data_cagd__GLWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-     116,   14, // methods
+     117,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -246,124 +249,125 @@ static const uint qt_meta_data_cagd__GLWidget[] = {
       23,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  594,    2, 0x06 /* Public */,
-       4,    1,  597,    2, 0x06 /* Public */,
-       5,    1,  600,    2, 0x06 /* Public */,
-       6,    1,  603,    2, 0x06 /* Public */,
-       7,    1,  606,    2, 0x06 /* Public */,
-       8,    1,  609,    2, 0x06 /* Public */,
-       9,    1,  612,    2, 0x06 /* Public */,
-      10,    1,  615,    2, 0x06 /* Public */,
-      11,    1,  618,    2, 0x06 /* Public */,
-      12,    1,  621,    2, 0x06 /* Public */,
-      13,    1,  624,    2, 0x06 /* Public */,
-      14,    1,  627,    2, 0x06 /* Public */,
-      15,    1,  630,    2, 0x06 /* Public */,
-      16,    1,  633,    2, 0x06 /* Public */,
-      17,    1,  636,    2, 0x06 /* Public */,
-      18,    1,  639,    2, 0x06 /* Public */,
-      19,    1,  642,    2, 0x06 /* Public */,
-      20,    1,  645,    2, 0x06 /* Public */,
-      21,    1,  648,    2, 0x06 /* Public */,
-      22,    1,  651,    2, 0x06 /* Public */,
-      23,    1,  654,    2, 0x06 /* Public */,
-      24,    1,  657,    2, 0x06 /* Public */,
-      25,    1,  660,    2, 0x06 /* Public */,
+       1,    1,  599,    2, 0x06 /* Public */,
+       4,    1,  602,    2, 0x06 /* Public */,
+       5,    1,  605,    2, 0x06 /* Public */,
+       6,    1,  608,    2, 0x06 /* Public */,
+       7,    1,  611,    2, 0x06 /* Public */,
+       8,    1,  614,    2, 0x06 /* Public */,
+       9,    1,  617,    2, 0x06 /* Public */,
+      10,    1,  620,    2, 0x06 /* Public */,
+      11,    1,  623,    2, 0x06 /* Public */,
+      12,    1,  626,    2, 0x06 /* Public */,
+      13,    1,  629,    2, 0x06 /* Public */,
+      14,    1,  632,    2, 0x06 /* Public */,
+      15,    1,  635,    2, 0x06 /* Public */,
+      16,    1,  638,    2, 0x06 /* Public */,
+      17,    1,  641,    2, 0x06 /* Public */,
+      18,    1,  644,    2, 0x06 /* Public */,
+      19,    1,  647,    2, 0x06 /* Public */,
+      20,    1,  650,    2, 0x06 /* Public */,
+      21,    1,  653,    2, 0x06 /* Public */,
+      22,    1,  656,    2, 0x06 /* Public */,
+      23,    1,  659,    2, 0x06 /* Public */,
+      24,    1,  662,    2, 0x06 /* Public */,
+      25,    1,  665,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      26,    1,  663,    2, 0x0a /* Public */,
-      27,    1,  666,    2, 0x0a /* Public */,
-      28,    1,  669,    2, 0x0a /* Public */,
-      29,    1,  672,    2, 0x0a /* Public */,
-      30,    1,  675,    2, 0x0a /* Public */,
-      31,    1,  678,    2, 0x0a /* Public */,
-      32,    1,  681,    2, 0x0a /* Public */,
-      33,    1,  684,    2, 0x0a /* Public */,
-      35,    1,  687,    2, 0x0a /* Public */,
-      37,    1,  690,    2, 0x0a /* Public */,
-      39,    1,  693,    2, 0x0a /* Public */,
-      41,    1,  696,    2, 0x0a /* Public */,
-      42,    0,  699,    2, 0x0a /* Public */,
-      43,    1,  700,    2, 0x0a /* Public */,
-      44,    1,  703,    2, 0x0a /* Public */,
-      45,    1,  706,    2, 0x0a /* Public */,
-      46,    1,  709,    2, 0x0a /* Public */,
-      47,    1,  712,    2, 0x0a /* Public */,
-      49,    1,  715,    2, 0x0a /* Public */,
-      50,    1,  718,    2, 0x0a /* Public */,
-      51,    1,  721,    2, 0x0a /* Public */,
-      52,    1,  724,    2, 0x0a /* Public */,
-      53,    1,  727,    2, 0x0a /* Public */,
-      54,    1,  730,    2, 0x0a /* Public */,
-      55,    1,  733,    2, 0x0a /* Public */,
-      56,    1,  736,    2, 0x0a /* Public */,
-      57,    1,  739,    2, 0x0a /* Public */,
-      58,    0,  742,    2, 0x0a /* Public */,
-      59,    1,  743,    2, 0x0a /* Public */,
-      60,    1,  746,    2, 0x0a /* Public */,
-      61,    1,  749,    2, 0x0a /* Public */,
-      62,    1,  752,    2, 0x0a /* Public */,
-      63,    1,  755,    2, 0x0a /* Public */,
-      64,    1,  758,    2, 0x0a /* Public */,
-      65,    1,  761,    2, 0x0a /* Public */,
-      66,    1,  764,    2, 0x0a /* Public */,
-      67,    1,  767,    2, 0x0a /* Public */,
-      68,    0,  770,    2, 0x0a /* Public */,
-      69,    1,  771,    2, 0x0a /* Public */,
-      70,    1,  774,    2, 0x0a /* Public */,
-      71,    0,  777,    2, 0x0a /* Public */,
-      72,    1,  778,    2, 0x0a /* Public */,
-      73,    1,  781,    2, 0x0a /* Public */,
-      74,    1,  784,    2, 0x0a /* Public */,
-      75,    1,  787,    2, 0x0a /* Public */,
-      76,    1,  790,    2, 0x0a /* Public */,
-      77,    1,  793,    2, 0x0a /* Public */,
-      78,    1,  796,    2, 0x0a /* Public */,
-      79,    1,  799,    2, 0x0a /* Public */,
-      80,    1,  802,    2, 0x0a /* Public */,
-      81,    0,  805,    2, 0x0a /* Public */,
-      82,    0,  806,    2, 0x0a /* Public */,
-      83,    0,  807,    2, 0x0a /* Public */,
-      84,    1,  808,    2, 0x0a /* Public */,
-      85,    1,  811,    2, 0x0a /* Public */,
-      86,    1,  814,    2, 0x0a /* Public */,
-      87,    1,  817,    2, 0x0a /* Public */,
-      88,    1,  820,    2, 0x0a /* Public */,
-      89,    1,  823,    2, 0x0a /* Public */,
-      90,    1,  826,    2, 0x0a /* Public */,
-      91,    1,  829,    2, 0x0a /* Public */,
-      92,    0,  832,    2, 0x0a /* Public */,
-      93,    0,  833,    2, 0x0a /* Public */,
-      94,    0,  834,    2, 0x0a /* Public */,
-      95,    1,  835,    2, 0x0a /* Public */,
-      96,    1,  838,    2, 0x0a /* Public */,
-      97,    1,  841,    2, 0x0a /* Public */,
-      98,    1,  844,    2, 0x0a /* Public */,
-      99,    1,  847,    2, 0x0a /* Public */,
-     100,    1,  850,    2, 0x0a /* Public */,
-     101,    1,  853,    2, 0x0a /* Public */,
-     102,    1,  856,    2, 0x0a /* Public */,
-     103,    1,  859,    2, 0x0a /* Public */,
-     104,    1,  862,    2, 0x0a /* Public */,
-     105,    1,  865,    2, 0x0a /* Public */,
-     106,    1,  868,    2, 0x0a /* Public */,
-     107,    1,  871,    2, 0x0a /* Public */,
-     108,    1,  874,    2, 0x0a /* Public */,
-     109,    0,  877,    2, 0x0a /* Public */,
-     110,    0,  878,    2, 0x0a /* Public */,
-     111,    1,  879,    2, 0x0a /* Public */,
-     112,    1,  882,    2, 0x0a /* Public */,
-     113,    1,  885,    2, 0x0a /* Public */,
-     114,    1,  888,    2, 0x0a /* Public */,
-     115,    1,  891,    2, 0x0a /* Public */,
-     116,    1,  894,    2, 0x0a /* Public */,
-     117,    1,  897,    2, 0x0a /* Public */,
-     118,    1,  900,    2, 0x0a /* Public */,
-     119,    1,  903,    2, 0x0a /* Public */,
-     120,    1,  906,    2, 0x0a /* Public */,
-     121,    1,  909,    2, 0x0a /* Public */,
-     122,    1,  912,    2, 0x0a /* Public */,
-     123,    1,  915,    2, 0x0a /* Public */,
+      26,    1,  668,    2, 0x0a /* Public */,
+      27,    1,  671,    2, 0x0a /* Public */,
+      28,    1,  674,    2, 0x0a /* Public */,
+      29,    1,  677,    2, 0x0a /* Public */,
+      30,    1,  680,    2, 0x0a /* Public */,
+      31,    1,  683,    2, 0x0a /* Public */,
+      32,    1,  686,    2, 0x0a /* Public */,
+      33,    1,  689,    2, 0x0a /* Public */,
+      35,    1,  692,    2, 0x0a /* Public */,
+      37,    1,  695,    2, 0x0a /* Public */,
+      39,    1,  698,    2, 0x0a /* Public */,
+      41,    1,  701,    2, 0x0a /* Public */,
+      42,    0,  704,    2, 0x0a /* Public */,
+      43,    1,  705,    2, 0x0a /* Public */,
+      44,    1,  708,    2, 0x0a /* Public */,
+      45,    1,  711,    2, 0x0a /* Public */,
+      46,    1,  714,    2, 0x0a /* Public */,
+      47,    1,  717,    2, 0x0a /* Public */,
+      49,    1,  720,    2, 0x0a /* Public */,
+      50,    1,  723,    2, 0x0a /* Public */,
+      51,    1,  726,    2, 0x0a /* Public */,
+      52,    1,  729,    2, 0x0a /* Public */,
+      53,    1,  732,    2, 0x0a /* Public */,
+      54,    1,  735,    2, 0x0a /* Public */,
+      55,    1,  738,    2, 0x0a /* Public */,
+      56,    1,  741,    2, 0x0a /* Public */,
+      57,    1,  744,    2, 0x0a /* Public */,
+      58,    0,  747,    2, 0x0a /* Public */,
+      59,    1,  748,    2, 0x0a /* Public */,
+      60,    1,  751,    2, 0x0a /* Public */,
+      61,    1,  754,    2, 0x0a /* Public */,
+      62,    1,  757,    2, 0x0a /* Public */,
+      63,    1,  760,    2, 0x0a /* Public */,
+      64,    1,  763,    2, 0x0a /* Public */,
+      65,    1,  766,    2, 0x0a /* Public */,
+      66,    1,  769,    2, 0x0a /* Public */,
+      67,    1,  772,    2, 0x0a /* Public */,
+      68,    0,  775,    2, 0x0a /* Public */,
+      69,    1,  776,    2, 0x0a /* Public */,
+      70,    1,  779,    2, 0x0a /* Public */,
+      71,    0,  782,    2, 0x0a /* Public */,
+      72,    1,  783,    2, 0x0a /* Public */,
+      73,    1,  786,    2, 0x0a /* Public */,
+      74,    1,  789,    2, 0x0a /* Public */,
+      75,    1,  792,    2, 0x0a /* Public */,
+      76,    1,  795,    2, 0x0a /* Public */,
+      77,    1,  798,    2, 0x0a /* Public */,
+      78,    1,  801,    2, 0x0a /* Public */,
+      79,    1,  804,    2, 0x0a /* Public */,
+      80,    1,  807,    2, 0x0a /* Public */,
+      81,    0,  810,    2, 0x0a /* Public */,
+      82,    0,  811,    2, 0x0a /* Public */,
+      83,    0,  812,    2, 0x0a /* Public */,
+      84,    2,  813,    2, 0x0a /* Public */,
+      86,    1,  818,    2, 0x0a /* Public */,
+      87,    1,  821,    2, 0x0a /* Public */,
+      88,    1,  824,    2, 0x0a /* Public */,
+      89,    1,  827,    2, 0x0a /* Public */,
+      90,    1,  830,    2, 0x0a /* Public */,
+      91,    1,  833,    2, 0x0a /* Public */,
+      92,    1,  836,    2, 0x0a /* Public */,
+      93,    1,  839,    2, 0x0a /* Public */,
+      94,    0,  842,    2, 0x0a /* Public */,
+      95,    0,  843,    2, 0x0a /* Public */,
+      96,    0,  844,    2, 0x0a /* Public */,
+      97,    1,  845,    2, 0x0a /* Public */,
+      98,    1,  848,    2, 0x0a /* Public */,
+      99,    1,  851,    2, 0x0a /* Public */,
+     100,    1,  854,    2, 0x0a /* Public */,
+     101,    1,  857,    2, 0x0a /* Public */,
+     102,    1,  860,    2, 0x0a /* Public */,
+     103,    1,  863,    2, 0x0a /* Public */,
+     104,    1,  866,    2, 0x0a /* Public */,
+     105,    1,  869,    2, 0x0a /* Public */,
+     106,    1,  872,    2, 0x0a /* Public */,
+     107,    1,  875,    2, 0x0a /* Public */,
+     108,    1,  878,    2, 0x0a /* Public */,
+     109,    1,  881,    2, 0x0a /* Public */,
+     110,    1,  884,    2, 0x0a /* Public */,
+     111,    0,  887,    2, 0x0a /* Public */,
+     112,    0,  888,    2, 0x0a /* Public */,
+     113,    1,  889,    2, 0x0a /* Public */,
+     114,    1,  892,    2, 0x0a /* Public */,
+     115,    1,  895,    2, 0x0a /* Public */,
+     116,    1,  898,    2, 0x0a /* Public */,
+     117,    1,  901,    2, 0x0a /* Public */,
+     118,    1,  904,    2, 0x0a /* Public */,
+     119,    1,  907,    2, 0x0a /* Public */,
+     120,    1,  910,    2, 0x0a /* Public */,
+     121,    1,  913,    2, 0x0a /* Public */,
+     122,    1,  916,    2, 0x0a /* Public */,
+     123,    1,  919,    2, 0x0a /* Public */,
+     124,    1,  922,    2, 0x0a /* Public */,
+     125,    1,  925,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Double,    3,
@@ -444,6 +448,7 @@ static const uint qt_meta_data_cagd__GLWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 85, 0x80000000 | 85,    2,    2,
     QMetaType::Void, QMetaType::Double,    3,
     QMetaType::Void, QMetaType::Double,    3,
     QMetaType::Void, QMetaType::Double,    3,
@@ -570,46 +575,47 @@ void cagd::GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 73: _t->_continueArc(); break;
         case 74: _t->_joinArc(); break;
         case 75: _t->_mergeArc(); break;
-        case 76: _t->setHermitePointx((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 77: _t->setHermitePointy((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 78: _t->setHermitePointz((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 79: _t->setHermitePointdx((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 80: _t->setHermitePointdy((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 81: _t->setHermitePointdz((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 82: _t->showHermiteFirstOrderDerivates((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 83: _t->showHermiteSecondOrderDerivates((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 84: _t->_continuePatch(); break;
-        case 85: _t->_joinPatch(); break;
-        case 86: _t->_mergePatch(); break;
-        case 87: _t->_showHermitePatchTextures((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 88: _t->_showHermitePatchShaders((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 89: _t->_setHermitePatchMaterial((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 90: _t->_setHermitePatchTexture((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 91: _t->_setHermitePatchShader((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 92: _t->_setSelectedHermitePatch((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 93: _t->_setSelectedHermitePatchPoint((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 94: _t->_setSelectedSecondaryHermitePatch((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 95: _t->_setVisibilityOfULines((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 96: _t->_setVisibilityOfVLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 97: _t->_highlightSelectedCompositePatch((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 98: _t->_setVisibilityOfFirstOrderDerivatives((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 99: _t->_setVisibilityOfSecondOrderDerivatives((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 100: _t->_selectCompositePatch((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 101: _t->_createNewCompositePatch(); break;
-        case 102: _t->_addSelectedPatchToSelectedCompositePatch(); break;
-        case 103: _t->setHermitePatchIndex((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 104: _t->setHermitePatchPointX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 105: _t->setHermitePatchPointY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 106: _t->setHermitePatchPointZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 107: _t->setHermitePatchPointUX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 108: _t->setHermitePatchPointUY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 109: _t->setHermitePatchPointUZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 110: _t->setHermitePatchPointVX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 111: _t->setHermitePatchPointVY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 112: _t->setHermitePatchPointVZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 113: _t->setHermitePatchPointTX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 114: _t->setHermitePatchPointTY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 115: _t->setHermitePatchPointTZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 76: _t->_updateArcNeighbours((*reinterpret_cast< DCoordinate3(*)>(_a[1])),(*reinterpret_cast< DCoordinate3(*)>(_a[2]))); break;
+        case 77: _t->setHermitePointx((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 78: _t->setHermitePointy((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 79: _t->setHermitePointz((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 80: _t->setHermitePointdx((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 81: _t->setHermitePointdy((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 82: _t->setHermitePointdz((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 83: _t->showHermiteFirstOrderDerivates((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 84: _t->showHermiteSecondOrderDerivates((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 85: _t->_continuePatch(); break;
+        case 86: _t->_joinPatch(); break;
+        case 87: _t->_mergePatch(); break;
+        case 88: _t->_showHermitePatchTextures((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 89: _t->_showHermitePatchShaders((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 90: _t->_setHermitePatchMaterial((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 91: _t->_setHermitePatchTexture((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 92: _t->_setHermitePatchShader((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 93: _t->_setSelectedHermitePatch((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 94: _t->_setSelectedHermitePatchPoint((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 95: _t->_setSelectedSecondaryHermitePatch((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 96: _t->_setVisibilityOfULines((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 97: _t->_setVisibilityOfVLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 98: _t->_highlightSelectedCompositePatch((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 99: _t->_setVisibilityOfFirstOrderDerivatives((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 100: _t->_setVisibilityOfSecondOrderDerivatives((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 101: _t->_selectCompositePatch((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 102: _t->_createNewCompositePatch(); break;
+        case 103: _t->_addSelectedPatchToSelectedCompositePatch(); break;
+        case 104: _t->setHermitePatchIndex((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 105: _t->setHermitePatchPointX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 106: _t->setHermitePatchPointY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 107: _t->setHermitePatchPointZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 108: _t->setHermitePatchPointUX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 109: _t->setHermitePatchPointUY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 110: _t->setHermitePatchPointUZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 111: _t->setHermitePatchPointVX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 112: _t->setHermitePatchPointVY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 113: _t->setHermitePatchPointVZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 114: _t->setHermitePatchPointTX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 115: _t->setHermitePatchPointTY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 116: _t->setHermitePatchPointTZ((*reinterpret_cast< double(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -807,13 +813,13 @@ int cagd::GLWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 116)
+        if (_id < 117)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 116;
+        _id -= 117;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 116)
+        if (_id < 117)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 116;
+        _id -= 117;
     }
     return _id;
 }

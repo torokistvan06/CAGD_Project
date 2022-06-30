@@ -433,11 +433,24 @@ namespace cagd
         _composite_arc_index_of_hermite_arcs[_number_of_hermite_arcs - 1] = _composite_arc_index_of_hermite_arcs[_selected_hermite_arc];
         _hermite_arcs[_number_of_hermite_arcs - 1] = arc;
 
+        _hermite_arcs[_selected_hermite_arc]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+        _hermite_arcs[_selected_secondary_arc]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+
+        _images_of_hermite_arcs[_selected_hermite_arc] = _hermite_arcs[_selected_hermite_arc]->GenerateImage(2,100,GL_STATIC_DRAW);
+        _images_of_hermite_arcs[_selected_secondary_arc] = _hermite_arcs[_selected_secondary_arc]->GenerateImage(2,100,GL_STATIC_DRAW);
+
+        _images_of_hermite_arcs[_selected_hermite_arc]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
+        _images_of_hermite_arcs[_selected_secondary_arc]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
+
         _hermite_arcs[_number_of_hermite_arcs - 1]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
-
         _images_of_hermite_arcs[_number_of_hermite_arcs - 1] = _hermite_arcs[_number_of_hermite_arcs - 1]->GenerateImage(2,100,GL_STATIC_DRAW);
-
         _images_of_hermite_arcs[_number_of_hermite_arcs - 1]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
+
+        for(GLint i = 0 ; i < _number_of_composite_arcs ; i++) {
+            _composite_hermite_arcs[i]->updateArc(_selected_hermite_arc, _images_of_hermite_arcs[_selected_hermite_arc]);
+            _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
+        }
+
         _composite_hermite_arcs[_comp_index]->InsertNewArc(_hermite_arcs[_number_of_hermite_arcs - 1], _images_of_hermite_arcs[_number_of_hermite_arcs - 1], _r, _g, _b, _number_of_hermite_arcs - 1);
         _composite_hermite_arcs[_comp_index]->addNeighbour(_selected_hermite_arc, _primary_dir, _number_of_hermite_arcs - 1, 0);
         _composite_hermite_arcs[_comp_index]->addNeighbour(_number_of_hermite_arcs - 1, 1, _selected_secondary_arc, _secondary_dir);
@@ -465,10 +478,8 @@ namespace cagd
         _images_of_hermite_arcs[_selected_secondary_arc]->UpdateVertexBufferObjects(1, GL_STATIC_DRAW);
 
         for(GLint i = 0 ; i < _number_of_composite_arcs ; i++) {
-            if(i == _selected_composite_arc) {
-                _composite_hermite_arcs[i]->updateArc(_selected_hermite_arc, _images_of_hermite_arcs[_selected_hermite_arc]);
-                _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
-            }
+            _composite_hermite_arcs[i]->updateArc(_selected_hermite_arc, _images_of_hermite_arcs[_selected_hermite_arc]);
+            _composite_hermite_arcs[i]->updateArc(_selected_secondary_arc, _images_of_hermite_arcs[_selected_secondary_arc]);
         }
 
         _composite_hermite_arcs[_comp_index]->addNeighbour(_selected_hermite_arc, _primary_dir, _selected_secondary_arc, _secondary_dir);
@@ -513,6 +524,22 @@ namespace cagd
         update();
     }
 
+
+    void GLWidget::_updateArcNeighbours(DCoordinate3 corner, DCoordinate3 tangent) {
+        int index = _composite_arc_index_of_hermite_arcs[_selected_hermite_arc];
+        if(index != -1) {
+            _composite_hermite_arcs[index]->updateNeighbours(_selected_hermite_arc, _selected_hermite_arc_point, corner, tangent);
+            for(GLuint i = 0 ; i < _number_of_hermite_arcs ; i++) {
+                if(_composite_arc_index_of_hermite_arcs[i] == index) {
+                    _hermite_arcs[i]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+                    _images_of_hermite_arcs[i] = _hermite_arcs[i]->GenerateImage(1,30,GL_STATIC_DRAW);
+                    _images_of_hermite_arcs[i]->UpdateVertexBufferObjects(1,GL_STATIC_DRAW);
+                    _composite_hermite_arcs[index]->updateArc(i, _images_of_hermite_arcs[i]);
+                }
+            }
+        }
+    }
+
     void GLWidget::_setPrimaryDirection(int index) {
         _primary_dir = index;
     }
@@ -539,38 +566,62 @@ namespace cagd
 
     }
     void GLWidget::setHermitePointx(double value){
+        DCoordinate3 corner = _hermite_arcs[_selected_hermite_arc]->GetCorner(_selected_hermite_arc_point);
+        DCoordinate3 tangent(0,0,0);
        (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point][0] = value;
+        corner -= _hermite_arcs[_selected_hermite_arc]->GetCorner(_selected_hermite_arc_point);
         _updateSelectedHermiteArc();
+        _updateArcNeighbours(corner, tangent);
         update();
    }
 
    void GLWidget::setHermitePointy(double value){
+       DCoordinate3 corner = _hermite_arcs[_selected_hermite_arc]->GetCorner(_selected_hermite_arc_point);
+       DCoordinate3 tangent(0,0,0);
        (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point][1] = value;
+       corner -= _hermite_arcs[_selected_hermite_arc]->GetCorner(_selected_hermite_arc_point);
        _updateSelectedHermiteArc();
+       _updateArcNeighbours(corner, tangent);
        update();
    }
 
    void GLWidget::setHermitePointz(double value){
+       DCoordinate3 corner = _hermite_arcs[_selected_hermite_arc]->GetCorner(_selected_hermite_arc_point);
+       DCoordinate3 tangent(0,0,0);
        (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point][2] = value;
+       corner -= _hermite_arcs[_selected_hermite_arc]->GetCorner(_selected_hermite_arc_point);
        _updateSelectedHermiteArc();
+       _updateArcNeighbours(corner, tangent);
        update();
    }
 
    void GLWidget::setHermitePointdx(double value){
+       DCoordinate3 tangent = _hermite_arcs[_selected_hermite_arc]->GetTangent(_selected_hermite_arc_point);
+       DCoordinate3 corner(0,0,0);
       (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point + 2][0] = value;
+       tangent -= _hermite_arcs[_selected_hermite_arc]->GetTangent(_selected_hermite_arc_point);
        _updateSelectedHermiteArc();
+       _updateArcNeighbours(corner, tangent);
        update();
   }
 
   void GLWidget::setHermitePointdy(double value){
+      DCoordinate3 tangent = _hermite_arcs[_selected_hermite_arc]->GetTangent(_selected_hermite_arc_point);
+      DCoordinate3 corner(0,0,0);
       (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point + 2][1] = value;
+      tangent -= _hermite_arcs[_selected_hermite_arc]->GetTangent(_selected_hermite_arc_point);
       _updateSelectedHermiteArc();
+      _updateArcNeighbours(corner, tangent);
       update();
   }
 
   void GLWidget::setHermitePointdz(double value){
+      DCoordinate3 tangent = _hermite_arcs[_selected_hermite_arc]->GetTangent(_selected_hermite_arc_point);
+      DCoordinate3 corner(0,0,0);
       (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point + 2][2] = value;
+      tangent -= _hermite_arcs[_selected_hermite_arc]->GetTangent(_selected_hermite_arc_point);
       _updateSelectedHermiteArc();
+      _updateArcNeighbours(corner, tangent);
       update();
   }
 
