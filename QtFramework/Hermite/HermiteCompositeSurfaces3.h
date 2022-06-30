@@ -56,7 +56,7 @@ namespace cagd
         // operations
         GLboolean InsertNewPatch(BicubicHermitePatch3* patch, TriangulatedMesh3* image, Material* mat, QOpenGLTexture* texture, ShaderProgram* shader, int index);
         GLboolean DeleteExistingPatch(GLuint index);
-        GLboolean ContinueExistingPatch(GLuint index, int direction);
+        BicubicHermitePatch3* ContinueExistingPatch(GLuint index, int direction);
         GLboolean JoinExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
         GLboolean MergeExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
 

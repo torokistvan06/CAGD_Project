@@ -32,6 +32,7 @@ namespace cagd
         bool    _show_hermite_second_order = false;
         bool    _highlight_selected_composite = false;
         GLint   _selected = 0;
+        GLint   _selected_secondary = 0;
         GLint   _selected_composite = 0;
         GLint   _composite_index;
 
@@ -63,6 +64,7 @@ namespace cagd
         void setSecondOrderVisibility(bool);
         void highlightSelectedComposite(bool);
         void setSelected(GLint);
+        void setSelectedSecondary(GLint);
         void setSelectedComposite(GLint);
     };
 }
