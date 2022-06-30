@@ -326,7 +326,401 @@ namespace cagd{
 
         //hibakezeles hogy ne lehessen hozzaadni ha van mar azon az oldalon szomszed
 
+        BicubicHermitePatch3 *patch = new BicubicHermitePatch3();
 
+        //PRIMARY PATCH
+        DCoordinate3 p0 = getCoordinates(0, ind_primary, 'c');
+        DCoordinate3 p1 = getCoordinates(1, ind_primary, 'c');
+        DCoordinate3 p2 = getCoordinates(2, ind_primary, 'c');
+        DCoordinate3 p3 = getCoordinates(3, ind_primary, 'c');
+
+        DCoordinate3 p0V = getCoordinates(0, ind_primary, 'v');
+        DCoordinate3 p1V = getCoordinates(1, ind_primary, 'v');
+        DCoordinate3 p2V = getCoordinates(2, ind_primary, 'v');
+        DCoordinate3 p3V = getCoordinates(3, ind_primary, 'v');
+
+        DCoordinate3 p0U = getCoordinates(0, ind_primary, 'u');
+        DCoordinate3 p1U = getCoordinates(1, ind_primary, 'u');
+        DCoordinate3 p2U = getCoordinates(2, ind_primary, 'u');
+        DCoordinate3 p3U = getCoordinates(3, ind_primary, 'u');
+
+        DCoordinate3 p0T = getCoordinates(0, ind_primary, 't');
+        DCoordinate3 p1T = getCoordinates(1, ind_primary, 't');
+        DCoordinate3 p2T = getCoordinates(2, ind_primary, 't');
+        DCoordinate3 p3T = getCoordinates(3, ind_primary, 't');
+
+        //SECONDARY PATCH
+        DCoordinate3 r0 = getCoordinates(0, ind_secondary, 'c');
+        DCoordinate3 r1 = getCoordinates(1, ind_secondary, 'c');
+        DCoordinate3 r2 = getCoordinates(2, ind_secondary, 'c');
+        DCoordinate3 r3 = getCoordinates(3, ind_secondary, 'c');
+
+        DCoordinate3 r0V = getCoordinates(0, ind_secondary, 'v');
+        DCoordinate3 r1V = getCoordinates(1, ind_secondary, 'v');
+        DCoordinate3 r2V = getCoordinates(2, ind_secondary, 'v');
+        DCoordinate3 r3V = getCoordinates(3, ind_secondary, 'v');
+
+        DCoordinate3 r0U = getCoordinates(0, ind_secondary, 'u');
+        DCoordinate3 r1U = getCoordinates(1, ind_secondary, 'u');
+        DCoordinate3 r2U = getCoordinates(2, ind_secondary, 'u');
+        DCoordinate3 r3U = getCoordinates(3, ind_secondary, 'u');
+
+        DCoordinate3 r0T = getCoordinates(0, ind_secondary, 't');
+        DCoordinate3 r1T = getCoordinates(1, ind_secondary, 't');
+        DCoordinate3 r2T = getCoordinates(2, ind_secondary, 't');
+        DCoordinate3 r3T = getCoordinates(3, ind_secondary, 't');
+
+        //PRIMARY NORTH -> SOUTH SIDE OF NEW PATCH
+        if(direction_0 == 0){
+            //south side of new patch
+            //corner
+            patch->SetData(1, 0, p0);
+            patch->SetData(1, 1, p1);
+
+            //u
+            patch->SetData(3, 0, p0U);
+            patch->SetData(3, 1, p1U);
+
+            //v
+            patch->SetData(1, 2, p0V);
+            patch->SetData(1, 3, p1V);
+
+            //t
+            patch->SetData(3, 2, p0T);
+            patch->SetData(3, 3, p1T);
+
+            //NORTH side of new patch
+            //SECONDARY: north
+            if(direction_1 == 0){
+                patch->SetData(0, 0, r0);
+                patch->SetData(0, 1, r1);
+
+                //u
+                patch->SetData(2, 0, r0U);
+                patch->SetData(2, 1, r1U);
+
+                //v
+                patch->SetData(0, 2, r0V);
+                patch->SetData(0, 3, r1V);
+
+                //t
+                patch->SetData(2, 2, r0T);
+                patch->SetData(2, 3, r1T);
+            }
+            //east
+            else if(direction_1 == 1){
+                patch->SetData(0, 0, r1);
+                patch->SetData(0, 1, r3);
+
+                //u
+                patch->SetData(2, 0, r1U);
+                patch->SetData(2, 1, r3U);
+
+                //v
+                patch->SetData(0, 2, r1V);
+                patch->SetData(0, 3, r3V);
+
+                //t
+                patch->SetData(2, 2, r1T);
+                patch->SetData(2, 3, r3T);
+            }
+            //west
+            else if(direction_1 == 2){
+                patch->SetData(0, 0, r0);
+                patch->SetData(0, 1, r2);
+
+                //u
+                patch->SetData(2, 0, r0U);
+                patch->SetData(2, 1, r2U);
+
+                //v
+                patch->SetData(0, 2, r0V);
+                patch->SetData(0, 3, r2V);
+
+                //t
+                patch->SetData(2, 2, r0T);
+                patch->SetData(2, 3, r2T);
+            }
+            else if(direction_1 == 3){
+                patch->SetData(0, 0, r2);
+                patch->SetData(0, 1, r3);
+
+                //u
+                patch->SetData(2, 0, r2U);
+                patch->SetData(2, 1, r3U);
+
+                //v
+                patch->SetData(0, 2, r2V);
+                patch->SetData(0, 3, r3V);
+
+                //t
+                patch->SetData(2, 2, r2T);
+                patch->SetData(2, 3, r3T);
+            }
+        }
+        //PRIMARY EAST -> WEST SIDE OF NEW PATCH
+        else if(direction_0 == 1){
+
+            //WEST side of new patch
+            patch->SetData(0, 0, p1);
+            patch->SetData(1, 0, p3);
+
+            //u
+            patch->SetData(2, 0, p1U);
+            patch->SetData(3, 0, p3U);
+
+            //v
+            patch->SetData(0, 2, p1V);
+            patch->SetData(1, 2, p3V);
+
+            //t
+            patch->SetData(2, 2, p1T);
+            patch->SetData(3, 2, p3T);
+
+            //WEST side of new patch
+            //SECONDARY: north
+            if(direction_1 == 0){
+                patch->SetData(0, 1, r0);
+                patch->SetData(1, 1, r1);
+
+                //u
+                patch->SetData(2, 1, r0U);
+                patch->SetData(3, 1, r1U);
+
+                //v
+                patch->SetData(0, 3, r0V);
+                patch->SetData(1, 3, r1V);
+
+                //t
+                patch->SetData(2, 3, r0T);
+                patch->SetData(3, 3, r1T);
+            }
+            //east
+            else if(direction_1 == 1){
+                patch->SetData(0, 1, r1);
+                patch->SetData(1, 1, r3);
+
+                //u
+                patch->SetData(2, 1, r1U);
+                patch->SetData(3, 1, r3U);
+
+                //v
+                patch->SetData(0, 3, r1V);
+                patch->SetData(1, 3, r3V);
+
+                //t
+                patch->SetData(2, 3, r1T);
+                patch->SetData(3, 3, r3T);
+            }
+            //west
+            else if(direction_1 == 2){
+                patch->SetData(0, 1, r0);
+                patch->SetData(1, 1, r2);
+
+                //u
+                patch->SetData(2, 1, r0U);
+                patch->SetData(3, 1, r2U);
+
+                //v
+                patch->SetData(0, 3, r0V);
+                patch->SetData(1, 3, r2V);
+
+                //t
+                patch->SetData(2, 3, r0T);
+                patch->SetData(3, 3, r2T);
+            }
+            else if(direction_1 == 3){
+                patch->SetData(0, 1, r2);
+                patch->SetData(1, 1, r3);
+
+                //u
+                patch->SetData(2, 1, r2U);
+                patch->SetData(3, 1, r3U);
+
+                //v
+                patch->SetData(0, 3, r2V);
+                patch->SetData(1, 3, r3V);
+
+                //t
+                patch->SetData(2, 3, r2T);
+                patch->SetData(3, 3, r3T);
+            }
+        }
+        //PRIMARY WEST -> EAST SIDE OF NEW PATCH
+        else if(direction_0 == 2){
+            //EAST SIDE side of new patch
+            patch->SetData(0, 1, p0);
+            patch->SetData(1, 1, p2);
+
+            //u
+            patch->SetData(2, 1, p0U);
+            patch->SetData(3, 1, p2U);
+
+            //v
+            patch->SetData(0, 3, p0V);
+            patch->SetData(1, 3, p2V);
+
+            //t
+            patch->SetData(2, 3, p0T);
+            patch->SetData(3, 3, p2T);
+
+            //WEST SIDE of new patch
+            //SECONDARY direction: NORTH
+            if(direction_1 == 0){
+                patch->SetData(0, 0, r0);
+                patch->SetData(1, 0, r1);
+
+                //u
+                patch->SetData(2, 0, r0U);
+                patch->SetData(3, 0, r1U);
+
+                //v
+                patch->SetData(0, 2, r0V);
+                patch->SetData(1, 2, r1V);
+
+                //t
+                patch->SetData(2, 2, r0T);
+                patch->SetData(3, 2, r1T);
+            }
+            //east
+            else if(direction_1 == 1){
+                patch->SetData(0, 0, r1);
+                patch->SetData(1, 0, r3);
+
+                //u
+                patch->SetData(2, 0, r1U);
+                patch->SetData(3, 0, r3U);
+
+                //v
+                patch->SetData(0, 2, r1V);
+                patch->SetData(1, 2, r3V);
+
+                //t
+                patch->SetData(2, 2, r1T);
+                patch->SetData(3, 2, r3T);
+            }
+            //west
+            else if(direction_1 == 2){
+                patch->SetData(0, 0, r0);
+                patch->SetData(1, 0, r2);
+
+                //u
+                patch->SetData(2, 0, r0U);
+                patch->SetData(3, 0, r2U);
+
+                //v
+                patch->SetData(0, 2, r0V);
+                patch->SetData(1, 2, r2V);
+
+                //t
+                patch->SetData(2, 2, r0T);
+                patch->SetData(3, 2, r2T);
+            }
+            else if(direction_1 == 3){
+                patch->SetData(0, 0, r2);
+                patch->SetData(1, 0, r3);
+
+                //u
+                patch->SetData(2, 0, r2U);
+                patch->SetData(3, 0, r3U);
+
+                //v
+                patch->SetData(0, 2, r2V);
+                patch->SetData(1, 2, r3V);
+
+                //t
+                patch->SetData(2, 2, r2T);
+                patch->SetData(3, 2, r3T);
+            }
+        }
+        //PRIMARY SOUTH -> NORTH of new patch
+        else if(direction_0 == 3){
+            //NORTH side side of new patch
+            patch->SetData(0, 0, p2);
+            patch->SetData(0, 1, p3);
+
+            //u
+            patch->SetData(2, 0, p2U);
+            patch->SetData(2, 1, p3U);
+
+            //v
+            patch->SetData(0, 2, p2V);
+            patch->SetData(0, 3, p3V);
+
+            //t
+            patch->SetData(2, 2, p2T);
+            patch->SetData(2, 3, p3T);
+
+            //SOUTH SIDE of new patch
+            //SECONDARY direction: NORTH
+            if(direction_1 == 0){
+                patch->SetData(1, 0, r0);
+                patch->SetData(1, 1, r1);
+
+                //u
+                patch->SetData(3, 0, r0U);
+                patch->SetData(3, 1, r1U);
+
+                //v
+                patch->SetData(1, 2, r0V);
+                patch->SetData(1, 3, r1V);
+
+                //t
+                patch->SetData(3, 2, r0T);
+                patch->SetData(3, 3, r1T);
+            }
+            //east
+            else if(direction_1 == 1){
+                patch->SetData(1, 0, r1);
+                patch->SetData(1, 1, r3);
+
+                //u
+                patch->SetData(3, 0, r1U);
+                patch->SetData(3, 1, r3U);
+
+                //v
+                patch->SetData(1, 2, r1V);
+                patch->SetData(1, 3, r3V);
+
+                //t
+                patch->SetData(3, 2, r1T);
+                patch->SetData(3, 3, r3T);
+            }
+            //west
+            else if(direction_1 == 2){
+                patch->SetData(1, 0, r0);
+                patch->SetData(1, 1, r2);
+
+                //u
+                patch->SetData(3, 0, r0U);
+                patch->SetData(3, 1, r2U);
+
+                //v
+                patch->SetData(1, 2, r0V);
+                patch->SetData(1, 3, r2V);
+
+                //t
+                patch->SetData(3, 2, r0T);
+                patch->SetData(3, 3, r2T);
+            }
+            else if(direction_1 == 3){
+                patch->SetData(1, 0, r2);
+                patch->SetData(1, 1, r3);
+
+                //u
+                patch->SetData(3, 0, r2U);
+                patch->SetData(3, 1, r3U);
+
+                //v
+                patch->SetData(1, 2, r2V);
+                patch->SetData(1, 3, r3V);
+
+                //t
+                patch->SetData(3, 2, r2T);
+                patch->SetData(3, 3, r3T);
+            }
+        }
+        return patch;
     };
 
     GLboolean HermiteCompositeSurface3::MergeExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1) {

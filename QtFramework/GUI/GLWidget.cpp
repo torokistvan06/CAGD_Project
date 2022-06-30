@@ -751,6 +751,40 @@ namespace cagd
       if(patch == nullptr)
           return;
 
+      _number_of_hermite_patches += 1;
+      _hermite_patches.ResizeColumns(_number_of_hermite_patches);
+      _images_of_hermite_patches.ResizeColumns(_number_of_hermite_patches);
+      _composite_patch_index_of_hermite_patches.ResizeColumns(_number_of_hermite_patches);
+      _patches_u_lines.ResizeColumns(_number_of_hermite_patches);
+      _patches_v_lines.ResizeColumns(_number_of_hermite_patches);
+
+      _composite_patch_index_of_hermite_patches[_number_of_hermite_patches -1] = _composite_patch_index_of_hermite_patches[_selected_hermite_patch];
+      _hermite_patches[_number_of_hermite_patches - 1] = patch;
+      _hermite_patches[_number_of_hermite_patches - 1]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+
+      _images_of_hermite_patches[_number_of_hermite_patches - 1] = _hermite_patches[_number_of_hermite_patches - 1]->GenerateImage(30, 30,GL_STATIC_DRAW);
+      _images_of_hermite_patches[_number_of_hermite_patches - 1]->UpdateVertexBufferObjects(GL_STATIC_DRAW);
+
+      _u_lines = _hermite_patches[_number_of_hermite_patches - 1]->GenerateUIsoparametricLines(10, 2, 30);
+      for(GLuint i = 0 ; i < _u_lines->GetColumnCount(); i++) {
+          if((*_u_lines)[i]) {
+              (*_u_lines)[i]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+          }
+      }
+      _patches_u_lines[_number_of_hermite_patches - 1] = _u_lines;
+
+      _v_lines = _hermite_patches[_number_of_hermite_patches - 1]->GenerateVIsoparametricLines(10, 2, 30);
+      for(GLuint i = 0 ; i < _v_lines->GetColumnCount(); i++) {
+          if((*_v_lines)[i]) {
+              (*_v_lines)[i]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+          }
+      }
+      _patches_v_lines[_number_of_hermite_patches - 1] = _v_lines;
+
+      _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
+//       _composite_hermite_patches[_comp_index]->addNeighbourContinue();
+      update();
+
 
 
         return;
