@@ -47,7 +47,7 @@ namespace cagd{
     BicubicHermitePatch3* HermiteCompositeSurface3::ContinueExistingPatch(GLuint index, int direction) {
         //north, east, west, south
 
-        int ind;
+        int ind = -1;
 
         for(GLuint i = 0 ; i < _number_of_patches ; i++) {
             if(_attributes[i].index == index) {
@@ -55,67 +55,37 @@ namespace cagd{
             }
         }
 
+        if(ind == -1){
+            return nullptr;
+        }
+
         //hibakezelesek hogy ne legyen mar ott szomszed
 
         BicubicHermitePatch3 *patch = new BicubicHermitePatch3();
-        GLdouble x, y, z;
 
-        //current patch corner points
-        _attributes[ind].patch->GetData(0, 0, x, y, z);
-        DCoordinate3 leftUpper(x, y, z);
+        DCoordinate3 leftUpper = getCoordinates(0, ind, 'c');
+        DCoordinate3 rightUpper = getCoordinates(1, ind, 'c');
+        DCoordinate3 leftLower = getCoordinates(2, ind, 'c');
+        DCoordinate3 rightLower = getCoordinates(3, ind, 'c');
 
-        _attributes[ind].patch->GetData(0, 1, x, y, z);
-        DCoordinate3 leftLower(x, y, z);
+        DCoordinate3 leftUpperV = getCoordinates(0, ind, 'v');
+        DCoordinate3 rightUpperV = getCoordinates(1, ind, 'v');
+        DCoordinate3 leftLowerV = getCoordinates(2, ind, 'v');
+        DCoordinate3 rightLowerV = getCoordinates(3, ind, 'v');
 
-        _attributes[ind].patch->GetData(1, 0, x, y, z);
-        DCoordinate3 rightUpper(x, y, z);
+        DCoordinate3 leftUpperU = getCoordinates(0, ind, 'u');
+        DCoordinate3 rightUpperU = getCoordinates(1, ind, 'u');
+        DCoordinate3 leftLowerU = getCoordinates(2, ind, 'u');
+        DCoordinate3 rightLowerU = getCoordinates(3, ind, 'u');
 
-        _attributes[ind].patch->GetData(1, 1, x, y, z);
-        DCoordinate3 rightLower(x, y, z);
-
-        //current patch first order partial derivatives in u direction at the corner
-        _attributes[ind].patch->GetData(0, 2, x, y, z);
-        DCoordinate3 leftUpperU(x, y, z);
-
-        _attributes[ind].patch->GetData(0, 3, x, y, z);
-        DCoordinate3 leftLowerU(x, y, z);
-
-        _attributes[ind].patch->GetData(1, 2, x, y, z);
-        DCoordinate3 rightUpperU(x, y, z);
-
-        _attributes[ind].patch->GetData(1, 3, x, y, z);
-        DCoordinate3 rightLowerU(x, y, z);
-
-        //current patch first order partial derivatives in v direction at the corner
-        _attributes[ind].patch->GetData(2, 0, x, y, z);
-        DCoordinate3 leftUpperV(x, y, z);
-
-        _attributes[ind].patch->GetData(2, 1, x, y, z);
-        DCoordinate3 leftLowerV(x, y, z);
-
-        _attributes[ind].patch->GetData(3, 0, x, y, z);
-        DCoordinate3 rightUpperV(x, y, z);
-
-        _attributes[ind].patch->GetData(3, 1, x, y, z);
-        DCoordinate3 rightLowerV(x, y, z);
-
-        //current twist vectors
-        _attributes[ind].patch->GetData(2, 2, x, y, z);
-        DCoordinate3 leftUpperT(x, y, z);
-
-        _attributes[ind].patch->GetData(2, 3, x, y, z);
-        DCoordinate3 leftLowerT(x, y, z);
-
-        _attributes[ind].patch->GetData(3, 2, x, y, z);
-        DCoordinate3 rightUpperT(x, y, z);
-
-        _attributes[ind].patch->GetData(3, 3, x, y, z);
-        DCoordinate3 rightLowerT(x, y, z);
+        DCoordinate3 leftUpperT = getCoordinates(0, ind, 't');
+        DCoordinate3 rightUpperT = getCoordinates(1, ind, 't');
+        DCoordinate3 leftLowerT = getCoordinates(2, ind, 't');
+        DCoordinate3 rightLowerT = getCoordinates(3, ind, 't');
 
         //esetekre bontani hogy merre kell continue
         //megvan minden pont es vector -> distanceokat kiszamolni, uj arcok es az uj acrokbol 1 uj patch
 
-        //NORTH -> szukseg van leftUpper, righUpper stb..
         if(direction == 0){
             DCoordinate3 distance1 = leftUpper - leftLower;
             DCoordinate3 distance2 = rightUpper - rightLower;
@@ -144,32 +114,219 @@ namespace cagd{
                 distance2.z() *= -1;
             }
 
-            patch->SetCorner(0, leftUpper + distance1);
-            patch->SetCorner(1, leftUpper);
-            patch->SetCorner(2, rightUpper + distance2);
-            patch->SetCorner(3, rightUpper);
+            //corners
+            patch->SetData(0, 0, leftUpper + distance1);
+            patch->SetData(0, 1, rightUpper + distance2);
+            patch->SetData(1, 0, leftUpper);
+            patch->SetData(1, 1, rightUpper);
 
-            patch->SetUvector(0, leftUpperU);
-            patch->SetUvector(1, leftUpperU);
-            patch->SetUvector(2, rightUpperU);
-            patch->SetUvector(3, rightUpperU);
+            //u
+            patch->SetData(2, 0, leftLowerU);
+            patch->SetData(2, 1, rightLowerU);
+            patch->SetData(3, 0, leftUpperU);
+            patch->SetData(3, 1, rightUpperU);
 
-            patch->SetVvector(0, leftUpperV);
-            patch->SetVvector(1, leftUpperV);
-            patch->SetVvector(2, rightUpperV);
-            patch->SetVvector(3, rightUpperV);
+            //v
+            patch->SetData(0, 2, leftLowerV);
+            patch->SetData(0, 3, rightLowerV);
+            patch->SetData(1, 2, leftUpperV);
+            patch->SetData(1, 3, rightUpperV);
 
-            patch->SetTwistVector(0, leftUpperT);
-            patch->SetTwistVector(1, leftUpperT);
-            patch->SetTwistVector(2, rightUpperT);
-            patch->SetTwistVector(3, rightUpperT);
+            //t
+            patch->SetData(2, 2, leftLowerT);
+            patch->SetData(2, 3, rightLowerT);
+            patch->SetData(3, 2, leftUpperT);
+            patch->SetData(3, 3, rightUpperT);
+
+        } //EAST
+        else if (direction == 1) {
+            DCoordinate3 distance1 = rightUpper - leftUpper;
+            DCoordinate3 distance2 = rightLower - leftLower;
+
+            if(distance1.x() < 0) {
+                distance1.x() *= -1;
+            }
+
+            if(distance1.y() < 0) {
+                distance1.y() *= -1;
+            }
+
+            if(distance1.z() < 0) {
+                distance1.z() *= -1;
+            }
+
+            if(distance2.x() < 0) {
+                distance2.x() *= -1;
+            }
+
+            if(distance2.y() < 0) {
+                distance2.y() *= -1;
+            }
+
+            if(distance2.z() < 0) {
+                distance2.z() *= -1;
+            }
+
+            //corners
+            patch->SetData(0, 0, rightUpper);
+            patch->SetData(0, 1, rightUpper + distance1);
+            patch->SetData(1, 0, rightLower);
+            patch->SetData(1, 1, rightLower + distance2);
+
+            //u
+            patch->SetData(2, 0, rightUpperU);
+            patch->SetData(2, 1, leftUpperU);
+            patch->SetData(3, 0, rightLowerU);
+            patch->SetData(3, 1, leftLowerU);
+
+            //v
+            patch->SetData(0, 2, rightUpperV);
+            patch->SetData(0, 3, leftUpperV);
+            patch->SetData(1, 2, rightLowerV);
+            patch->SetData(1, 3, leftLowerV);
+
+            //t
+            patch->SetData(2, 2, rightUpperT);
+            patch->SetData(2, 3, leftUpperT);
+            patch->SetData(3, 2, rightLowerT);
+            patch->SetData(3, 3, leftLowerT);
+
+        }
+        //WEST
+        else if (direction == 2) {
+            DCoordinate3 distance1 = leftUpper - rightUpper;
+            DCoordinate3 distance2 = leftLower - rightLower;
+
+            if(distance1.x() < 0) {
+                distance1.x() *= -1;
+            }
+
+            if(distance1.y() < 0) {
+                distance1.y() *= -1;
+            }
+
+            if(distance1.z() < 0) {
+                distance1.z() *= -1;
+            }
+
+            if(distance2.x() < 0) {
+                distance2.x() *= -1;
+            }
+
+            if(distance2.y() < 0) {
+                distance2.y() *= -1;
+            }
+
+            if(distance2.z() < 0) {
+                distance2.z() *= -1;
+            }
+
+            //corners
+            patch->SetData(0, 0, leftUpper - distance1);
+            patch->SetData(0, 1, leftUpper);
+            patch->SetData(1, 0, leftLower - distance2);
+            patch->SetData(1, 1, leftLower);
+
+            //u
+            patch->SetData(2, 0, rightUpperU);
+            patch->SetData(2, 1, leftUpperU);
+            patch->SetData(3, 0, rightLowerU);
+            patch->SetData(3, 1, leftLowerU);
+
+            //v
+            patch->SetData(0, 2, rightUpperV);
+            patch->SetData(0, 3, leftUpperV);
+            patch->SetData(1, 2, rightLowerV);
+            patch->SetData(1, 3, leftLowerV);
+
+            //t
+            patch->SetData(2, 2, rightUpperT);
+            patch->SetData(2, 3, leftUpperT);
+            patch->SetData(3, 2, rightLowerT);
+            patch->SetData(3, 3, leftLowerT);
+        }
+        //SOUTH
+        else if (direction == 3) {
+            DCoordinate3 distance1 = leftUpper - leftLower;
+            DCoordinate3 distance2 = rightUpper - rightLower;
+
+            if(distance1.x() < 0) {
+                distance1.x() *= -1;
+            }
+
+            if(distance1.y() < 0) {
+                distance1.y() *= -1;
+            }
+
+            if(distance1.z() < 0) {
+                distance1.z() *= -1;
+            }
+
+            if(distance2.x() < 0) {
+                distance2.x() *= -1;
+            }
+
+            if(distance2.y() < 0) {
+                distance2.y() *= -1;
+            }
+
+            if(distance2.z() < 0) {
+                distance2.z() *= -1;
+            }
+
+            //corners
+            patch->SetData(0, 0, leftLower);
+            patch->SetData(0, 1, rightLower);
+            patch->SetData(1, 0, leftLower - distance1);
+            patch->SetData(1, 1, rightLower - distance2);
+
+            //u
+            patch->SetData(2, 0, leftLowerU);
+            patch->SetData(2, 1, rightLowerU);
+            patch->SetData(3, 0, leftUpperU);
+            patch->SetData(3, 1, rightUpperU);
+
+            //v
+            patch->SetData(0, 2, leftLowerV);
+            patch->SetData(0, 3, rightLowerV);
+            patch->SetData(1, 2, leftUpperV);
+            patch->SetData(1, 3, rightUpperV);
+
+            //t
+            patch->SetData(2, 2, leftLowerT);
+            patch->SetData(2, 3, rightLowerT);
+            patch->SetData(3, 2, leftUpperT);
+            patch->SetData(3, 3, rightUpperT);
+
         }
 
         return patch;
     };
 
-    GLboolean HermiteCompositeSurface3::JoinExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1) {
-        return false;
+    BicubicHermitePatch3* HermiteCompositeSurface3::JoinExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1) {
+        int ind_primary = -1, ind_secondary = -1;
+
+        if(index_0 == index_1){
+            return nullptr;
+        }
+
+        for(GLuint i = 0 ; i < _number_of_patches ; i++) {
+            if(_attributes[i].index == index_0) {
+               ind_primary = i;
+            }
+
+            if(_attributes[i].index == index_1) {
+               ind_secondary = i;
+            }
+        }
+
+        if(ind_primary == -1 || ind_secondary == -1){
+            return nullptr;
+        }
+
+        //hibakezeles hogy ne lehessen hozzaadni ha van mar azon az oldalon szomszed
+
+
     };
 
     GLboolean HermiteCompositeSurface3::MergeExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1) {
@@ -229,6 +386,91 @@ namespace cagd{
 
     void HermiteCompositeSurface3::setSelectedCompositePatch(int index) {
         _selected_composite_patch = index;
+    }
+
+    //vector type c - corner, u, v, t
+    DCoordinate3 HermiteCompositeSurface3::getCoordinates(int pointIndex, int patchIndex, char vectorType) {
+
+        GLdouble x, y, z;
+        //left upper
+        if(pointIndex == 0){
+            if (vectorType == 'c'){
+                _attributes[patchIndex].patch->GetData(0, 0, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'v'){
+                _attributes[patchIndex].patch->GetData(0, 2, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'u'){
+                _attributes[patchIndex].patch->GetData(2, 0, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else {
+                _attributes[patchIndex].patch->GetData(2, 2, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            }
+        }
+        //right upper
+        else if(pointIndex == 1){
+            if (vectorType == 'c'){
+                _attributes[patchIndex].patch->GetData(0, 1, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'v'){
+                _attributes[patchIndex].patch->GetData(0, 3, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'u'){
+                _attributes[patchIndex].patch->GetData(2, 1, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else {
+                _attributes[patchIndex].patch->GetData(2, 3, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            }
+        }//left lower
+        else if(pointIndex == 2){
+            if (vectorType == 'c'){
+                _attributes[patchIndex].patch->GetData(1, 0, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'v'){
+                _attributes[patchIndex].patch->GetData(1, 2, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'u'){
+                _attributes[patchIndex].patch->GetData(3, 0, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else {
+                _attributes[patchIndex].patch->GetData(3, 2, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            }
+        }
+        //right lower
+        else if(pointIndex == 3){
+            if (vectorType == 'c'){
+                _attributes[patchIndex].patch->GetData(1, 1, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'v'){
+                _attributes[patchIndex].patch->GetData(1, 3, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else if(vectorType == 'u'){
+                _attributes[patchIndex].patch->GetData(3, 1, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            } else {
+                _attributes[patchIndex].patch->GetData(3, 3, x, y, z);
+                DCoordinate3 coord(x, y, z);
+                return coord;
+            }
+        }
     }
 }
 

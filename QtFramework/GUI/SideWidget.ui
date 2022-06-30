@@ -1977,8 +1977,8 @@
     <widget class="QComboBox" name="selectedPatchPrimaryDirection">
      <property name="geometry">
       <rect>
-       <x>485</x>
-       <y>370</y>
+       <x>480</x>
+       <y>340</y>
        <width>111</width>
        <height>24</height>
       </rect>
@@ -1987,8 +1987,8 @@
     <widget class="QComboBox" name="selectedPatchSecondaryDirection">
      <property name="geometry">
       <rect>
-       <x>485</x>
-       <y>340</y>
+       <x>480</x>
+       <y>370</y>
        <width>111</width>
        <height>24</height>
       </rect>

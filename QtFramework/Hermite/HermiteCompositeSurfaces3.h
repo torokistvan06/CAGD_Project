@@ -57,7 +57,7 @@ namespace cagd
         GLboolean InsertNewPatch(BicubicHermitePatch3* patch, TriangulatedMesh3* image, Material* mat, QOpenGLTexture* texture, ShaderProgram* shader, int index);
         GLboolean DeleteExistingPatch(GLuint index);
         BicubicHermitePatch3* ContinueExistingPatch(GLuint index, int direction);
-        GLboolean JoinExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
+        BicubicHermitePatch3* JoinExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
         GLboolean MergeExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
 
         GLboolean RenderAllPatches() const;
@@ -78,6 +78,8 @@ namespace cagd
 
         // other setters and getters
         // ...
+
+        DCoordinate3 getCoordinates(int pointIndex, int patchIndex, char vectorType);
     };
 }
 

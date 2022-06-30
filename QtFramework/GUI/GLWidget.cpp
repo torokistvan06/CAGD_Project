@@ -634,8 +634,15 @@ namespace cagd
        _b = value;
    }
 
-
     // Hermite Patches
+   void GLWidget::_setPatchPrimaryDirection(int index) {
+           _primary_patch_dir = index;
+       }
+
+   void GLWidget::_setPatchSecondaryDirection(int index){
+       _secondary_patch_dir = index;
+   }
+
    void GLWidget::_continuePatch(){
         if(_composite_patch_index_of_hermite_patches[_selected_hermite_patch] == -1) {
            return;
@@ -682,7 +689,19 @@ namespace cagd
 
         return;
    }
+
    void GLWidget::_joinPatch(){
+       if(_composite_patch_index_of_hermite_patches[_selected_hermite_patch] == -1) {
+          return;
+      }
+
+      int _comp_index = _composite_patch_index_of_hermite_patches[_selected_hermite_patch];
+      BicubicHermitePatch3* patch = _composite_hermite_patches[_comp_index]->JoinExistingPatches(_selected_hermite_patch, _primary_patch_dir, _selected_secondary_patch, _secondary_patch_dir);
+      if(patch == nullptr)
+          return;
+
+
+
         return;
    }
    void GLWidget::_mergePatch(){
