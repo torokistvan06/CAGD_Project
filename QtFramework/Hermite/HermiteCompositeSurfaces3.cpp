@@ -59,7 +59,10 @@ namespace cagd{
             return nullptr;
         }
 
-        //hibakezelesek hogy ne legyen mar ott szomszed
+        if(_attributes[ind].neighbours[direction] != nullptr){
+            std::cout << "Patch " << _attributes[ind].index << " already has a neighbour in direction: " << direction << "\n";
+            return nullptr;
+        }
 
         BicubicHermitePatch3 *patch = new BicubicHermitePatch3();
 
@@ -324,7 +327,15 @@ namespace cagd{
             return nullptr;
         }
 
-        //hibakezeles hogy ne lehessen hozzaadni ha van mar azon az oldalon szomszed
+        if(_attributes[ind_primary].neighbours[direction_0] != nullptr){
+            std::cout << "Patch " << _attributes[ind_primary].index << " already has a neighbour in direction: " << direction_0 << "\n";
+            return nullptr;
+        }
+
+        if(_attributes[ind_secondary].neighbours[direction_1] != nullptr){
+            std::cout << "Patch " << _attributes[ind_secondary].index << " already has a neighbour in direction: " << direction_1 << "\n";
+            return nullptr;
+        }
 
         BicubicHermitePatch3 *patch = new BicubicHermitePatch3();
 
@@ -744,7 +755,15 @@ namespace cagd{
             return false;
         }
 
-        //hibakezeles hogy ne lehessen hozzaadni ha van mar azon az oldalon szomszed
+        if(_attributes[ind_primary].neighbours[direction_0] != nullptr){
+            std::cout << "Patch " << _attributes[ind_primary].index << " already has a neighbour in direction: " << direction_0 << "\n";
+            return false;
+        }
+
+        if(_attributes[ind_secondary].neighbours[direction_1] != nullptr){
+            std::cout << "Patch " << _attributes[ind_secondary].index << " already has a neighbour in direction: " << direction_1 << "\n";
+            return false;
+        }
 
         //PRIMARY PATCH
         DCoordinate3 p0 = getCoordinates(0, ind_primary, 'c');
