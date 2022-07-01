@@ -1310,6 +1310,25 @@ namespace cagd{
         return false;
     };
 
+    GLvoid HermiteCompositeSurface3::addNeighbour(GLuint index_0, int direction_0, GLuint index_1, int direction_1) {
+        int ind_primary , ind_secondary;
+        for(int i = 0 ; i < _number_of_patches ; i++) {
+            if( _attributes[i].index == index_0) {
+                ind_primary = i;
+            }
+            if(_attributes[i].index == index_1) {
+                ind_secondary = i;
+            }
+        }
+
+        _attributes[ind_primary].neighbours[direction_0] = &_attributes[ind_secondary];
+        _attributes[ind_primary].connection_type[direction_0] = direction_1;
+
+        _attributes[ind_secondary].neighbours[direction_1] = &_attributes[ind_primary];
+        _attributes[ind_secondary].connection_type[direction_1] = direction_0;
+
+        std::cout << "asd\n";
+    }
 
     void HermiteCompositeSurface3::showTextures(bool visibility) {
         _use_textures = visibility;

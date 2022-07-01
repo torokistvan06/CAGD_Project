@@ -25,7 +25,7 @@ namespace cagd
             // ...
 
             PatchAttributes                 *neighbours[8];
-            GLint                           connection_type[8];
+            GLint                           connection_type[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
 
             // ctor, copy ctor, assignment operator, dtor (they are required by the std::vector!)
         };
@@ -64,6 +64,7 @@ namespace cagd
         GLboolean RenderSelectedPatch(GLuint index, GLuint order, GLenum render_mode) const;
 
         GLboolean updatePatch(GLuint index, TriangulatedMesh3* image);
+        GLvoid addNeighbour(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
 
         void showTextures(bool);
         void showShaders(bool);
