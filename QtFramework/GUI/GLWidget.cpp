@@ -129,13 +129,14 @@ namespace cagd
                 updateHermitePatch();
                 break;
             }
-            case 6:
-            {
-                _initializeHermiteArcs();
-                break;
-            }
+            //case 6:
+           // {
+
+            //    break;
+           // }
                 case 7:
             {
+                _initializeHermiteArcs();
                 HCoordinate3 direction (0.0, 0.0, 5.0, 0.0);
                 Color4  ambient(0.4, 0.4, 0.4, 1.0);
                 Color4  diffuse(0.8, 0.8, 0.8, 1.0);
@@ -231,6 +232,7 @@ namespace cagd
             }
                 case 6:
             {
+
                 _renderHermiteArcs();
                 break;
             }
@@ -247,6 +249,10 @@ namespace cagd
         glPopMatrix();
     }
 
+    void GLWidget::set_tab(int value){
+        _selected = value + 2;
+        update();
+    }
     // PROJECT ONLY
 
     // Hermite Arcs
