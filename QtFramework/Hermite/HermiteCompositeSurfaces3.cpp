@@ -821,7 +821,7 @@ namespace cagd{
                 _attributes[ind_secondary].patch->SetData(2, 2, (p0T+r0T)/2);
                 _attributes[ind_secondary].patch->SetData(2, 3, (p1T+r1T)/2);
             }
-            //east
+            //secondary: east
             else if(direction_1 == 1){
                 //corners
                 _attributes[ind_primary].patch->SetData(0, 0, (p0+r1)/2);
@@ -851,7 +851,7 @@ namespace cagd{
                 _attributes[ind_secondary].patch->SetData(2, 3, (p0T+r1T)/2);
                 _attributes[ind_secondary].patch->SetData(3, 3, (p1T+r3T)/2);
             }
-            //west
+            //secondary: west
             else if(direction_1 == 2){
                 //corners
                 _attributes[ind_primary].patch->SetData(0, 0, (p0+r0)/2);
@@ -881,7 +881,7 @@ namespace cagd{
                 _attributes[ind_secondary].patch->SetData(2, 2, (p0T+r0T)/2);
                 _attributes[ind_secondary].patch->SetData(3, 2, (p1T+r2T)/2);
             }
-            //south
+            //secondary: south
             else if(direction_1 == 3){
 
                 //corners
@@ -911,6 +911,381 @@ namespace cagd{
 
                 _attributes[ind_secondary].patch->SetData(3, 2, (p0T+r2T)/2);
                 _attributes[ind_secondary].patch->SetData(3, 3, (p1T+r3T)/2);
+            }
+        }
+        //primary: east
+        if(direction_0 == 1){
+
+            //secondary: north
+            if(direction_1 == 0){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r0)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r1)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p1+r0)/2);
+                _attributes[ind_secondary].patch->SetData(0, 1, (p3+r1)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r1V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p1V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(0, 3, (p3V+r1V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r1U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p1U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(2, 1, (p3U+r1U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r1T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p1T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(2, 3, (p3T+r1T)/2);
+            }
+            //secondary: east
+            else if(direction_1 == 1){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r1)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 1, (p1+r1)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p3+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r1V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 3, (p1V+r1V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r1U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 1, (p1U+r1U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r1T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 3, (p1T+r1T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p3T+r3T)/2);
+            }
+            //secondary: west
+            else if(direction_1 == 2){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r0)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r2)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p1+r0)/2);
+                _attributes[ind_secondary].patch->SetData(1, 0, (p3+r2)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r2V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p1V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 2, (p3V+r2V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r2U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p1U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 0, (p3U+r2U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r2T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p1T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 2, (p3T+r2T)/2);
+            }
+            //secondary: south
+            else if(direction_1 == 3){
+
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r2)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 0, (p1+r2)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p3+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r2V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 2, (p1V+r2V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r2U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 0, (p1U+r2U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r2T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 2, (p1T+r2T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p3T+r3T)/2);
+            }
+        }
+        //primary: west
+        if(direction_0 == 2){
+
+            //secondary: north
+            if(direction_1 == 0){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r1)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_secondary].patch->SetData(0, 1, (p2+r1)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r1V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(0, 3, (p2V+r1V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r1U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(2, 1, (p2U+r1U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r1T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(2, 3, (p2T+r1T)/2);
+            }
+            //secondary: east
+            else if(direction_1 == 1){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r1)/2);
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 1, (p0+r1)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p2+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r1V)/2);
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 3, (p0V+r1V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p2V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r1U)/2);
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 1, (p0U+r1U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p2U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r1T)/2);
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 3, (p0T+r1T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p2T+r3T)/2);
+            }
+            //secondary: west
+            else if(direction_1 == 2){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r2)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_secondary].patch->SetData(1, 0, (p2+r2)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r2V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 2, (p2V+r2V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r2U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 0, (p2U+r2U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r2T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 2, (p2T+r2T)/2);
+            }
+            //secondary: south
+            else if(direction_1 == 3){
+
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r2)/2);
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 0, (p0+r2)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p2+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r2V)/2);
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 2, (p0V+r2V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p2V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r2U)/2);
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 0, (p0U+r2U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p2U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r2T)/2);
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 2, (p0T+r2T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p2T+r3T)/2);
+            }
+        }
+        //primary: south
+        if(direction_0 == 3){
+
+            //secondary: north
+            if(direction_1 == 0){
+                //corners
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r0)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r1)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p2+r0)/2);
+                _attributes[ind_secondary].patch->SetData(0, 1, (p3+r1)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r1V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p2V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(0, 3, (p3V+r1V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r1U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p2U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(2, 1, (p3U+r1U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r1T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p2T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(2, 3, (p3T+r1T)/2);
+            }
+            //secondary: east
+            else if(direction_1 == 1){
+                //corners
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r1)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 1, (p2+r1)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p3+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r1V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 3, (p2V+r1V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r1U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 1, (p2U+r1U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r1T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 3, (p2T+r1T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p3T+r3T)/2);
+            }
+            //secondary: west
+            else if(direction_1 == 2){
+                //corners
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r0)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r2)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p2+r0)/2);
+                _attributes[ind_secondary].patch->SetData(1, 0, (p3+r2)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r2V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p2V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 2, (p3V+r2V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r2U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p2U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 0, (p3U+r2U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r2T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p2T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 2, (p3T+r2T)/2);
+            }
+            //secondary: south
+            else if(direction_1 == 3){
+
+                //corners
+                _attributes[ind_primary].patch->SetData(1, 0, (p2+r2)/2);
+                _attributes[ind_primary].patch->SetData(1, 1, (p3+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 0, (p2+r2)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p3+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(1, 2, (p2V+r2V)/2);
+                _attributes[ind_primary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 2, (p2V+r2V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p3V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(3, 0, (p2U+r2U)/2);
+                _attributes[ind_primary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 0, (p2U+r2U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p3U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(3, 2, (p2T+r2T)/2);
+                _attributes[ind_primary].patch->SetData(3, 3, (p3T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 2, (p2T+r2T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p3T+r3T)/2);
             }
         }
 
