@@ -507,6 +507,7 @@ namespace cagd
             }
 
             DCoordinate3& cp = (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point];
+
             emit xHermitePointChanged(cp[0]);
             emit yHermitePointChanged(cp[1]);
             emit zHermitePointChanged(cp[2]);

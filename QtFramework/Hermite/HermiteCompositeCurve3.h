@@ -40,11 +40,12 @@ namespace cagd
 
     protected:
         GLuint                          _number_of_arcs = 0;
-        std::vector<ArcAttributes>      _attributes;          // sequence of arc attributes
+        std::vector<ArcAttributes*>      _attributes;          // sequence of arc attributes
 
     public:
         // special/default ctor
         HermiteCompositeCurve3(GLuint);
+        ~HermiteCompositeCurve3();
 
         GLboolean InsertNewArc(CubicHermiteArc3* arc, GenericCurve3* image, GLfloat r, GLfloat g, GLfloat b, GLint index);
         GLboolean DeleteExistingArc(GLuint index);
