@@ -75,7 +75,6 @@ namespace cagd
         void setSelectedPatch(int);
         void setSelectedCompositePatch(int);
 
-
         // other setters and getters
         // ...
 

@@ -302,6 +302,7 @@ namespace cagd
         void set_trans_y(double value);
         void set_trans_z(double value);
 
+        void set_tab(int value);
         // Slots for parametric curves
 
         void set_scale(double scale);
