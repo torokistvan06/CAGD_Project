@@ -735,7 +735,9 @@ namespace cagd
        _patches_v_lines[_number_of_hermite_patches - 1] = _v_lines;
 
        _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
-//       _composite_hermite_patches[_comp_index]->addNeighbourContinue();
+
+       //TO-DO:
+       //_composite_hermite_patches[_comp_index]->addNeighbourContinue();
        update();
 
         return;
@@ -782,18 +784,44 @@ namespace cagd
       _patches_v_lines[_number_of_hermite_patches - 1] = _v_lines;
 
       _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
-//       _composite_hermite_patches[_comp_index]->addNeighbourContinue();
+
+      //TO-DO:
+      //_composite_hermite_patches[_comp_index]->addNeighbourContinue();
       update();
 
-
-
         return;
    }
+
    void GLWidget::_mergePatch(){
-        return;
+       if(_composite_patch_index_of_hermite_patches[_selected_hermite_patch] == -1) {
+          return;
+      }
+
+      int _comp_index = _composite_patch_index_of_hermite_patches[_selected_hermite_patch];
+      GLboolean successful = _composite_hermite_patches[_comp_index]->MergeExistingPatches(_selected_hermite_patch, _primary_patch_dir, _selected_secondary_patch, _secondary_patch_dir);
+      if(!successful)
+          return;
+
+      _hermite_patches[_selected_hermite_patch]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+      _hermite_patches[_selected_secondary_patch]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+
+      _images_of_hermite_patches[_selected_hermite_patch] = _hermite_patches[_selected_hermite_patch]->GenerateImage(30,30,GL_STATIC_DRAW);
+      _images_of_hermite_patches[_selected_secondary_patch] = _hermite_patches[_selected_secondary_patch]->GenerateImage(30,30,GL_STATIC_DRAW);
+
+      _images_of_hermite_patches[_selected_hermite_patch]->UpdateVertexBufferObjects(GL_STATIC_DRAW);
+      _images_of_hermite_patches[_selected_secondary_patch]->UpdateVertexBufferObjects(GL_STATIC_DRAW);
+
+      for(GLint i = 0 ; i < _number_of_composite_patches ; i++) {
+          _composite_hermite_patches[i]->updatePatch(_selected_hermite_patch, _images_of_hermite_patches[_selected_hermite_patch]);
+          _composite_hermite_patches[i]->updatePatch(_selected_secondary_patch, _images_of_hermite_patches[_selected_secondary_patch]);
+      }
+
+      //TO-DO:
+      //add new neighbours if merge successful
+      //emmit new coordinates of selected_primary_patch
+
+        update();
    }
-
-
 
     bool GLWidget::_initializeHermitePatches() {
         ifstream fin("Hermite/HermitePatches.txt");

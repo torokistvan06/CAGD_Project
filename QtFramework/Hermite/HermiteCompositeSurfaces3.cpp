@@ -724,7 +724,197 @@ namespace cagd{
     };
 
     GLboolean HermiteCompositeSurface3::MergeExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1) {
-        return false;
+        int ind_primary = -1, ind_secondary = -1;
+
+        if(index_0 == index_1){
+            return false;
+        }
+
+        for(GLuint i = 0 ; i < _number_of_patches ; i++) {
+            if(_attributes[i].index == index_0) {
+               ind_primary = i;
+            }
+
+            if(_attributes[i].index == index_1) {
+               ind_secondary = i;
+            }
+        }
+
+        if(ind_primary == -1 || ind_secondary == -1){
+            return false;
+        }
+
+        //hibakezeles hogy ne lehessen hozzaadni ha van mar azon az oldalon szomszed
+
+        //PRIMARY PATCH
+        DCoordinate3 p0 = getCoordinates(0, ind_primary, 'c');
+        DCoordinate3 p1 = getCoordinates(1, ind_primary, 'c');
+        DCoordinate3 p2 = getCoordinates(2, ind_primary, 'c');
+        DCoordinate3 p3 = getCoordinates(3, ind_primary, 'c');
+
+        DCoordinate3 p0V = getCoordinates(0, ind_primary, 'v');
+        DCoordinate3 p1V = getCoordinates(1, ind_primary, 'v');
+        DCoordinate3 p2V = getCoordinates(2, ind_primary, 'v');
+        DCoordinate3 p3V = getCoordinates(3, ind_primary, 'v');
+
+        DCoordinate3 p0U = getCoordinates(0, ind_primary, 'u');
+        DCoordinate3 p1U = getCoordinates(1, ind_primary, 'u');
+        DCoordinate3 p2U = getCoordinates(2, ind_primary, 'u');
+        DCoordinate3 p3U = getCoordinates(3, ind_primary, 'u');
+
+        DCoordinate3 p0T = getCoordinates(0, ind_primary, 't');
+        DCoordinate3 p1T = getCoordinates(1, ind_primary, 't');
+        DCoordinate3 p2T = getCoordinates(2, ind_primary, 't');
+        DCoordinate3 p3T = getCoordinates(3, ind_primary, 't');
+
+        //SECONDARY PATCH
+        DCoordinate3 r0 = getCoordinates(0, ind_secondary, 'c');
+        DCoordinate3 r1 = getCoordinates(1, ind_secondary, 'c');
+        DCoordinate3 r2 = getCoordinates(2, ind_secondary, 'c');
+        DCoordinate3 r3 = getCoordinates(3, ind_secondary, 'c');
+
+        DCoordinate3 r0V = getCoordinates(0, ind_secondary, 'v');
+        DCoordinate3 r1V = getCoordinates(1, ind_secondary, 'v');
+        DCoordinate3 r2V = getCoordinates(2, ind_secondary, 'v');
+        DCoordinate3 r3V = getCoordinates(3, ind_secondary, 'v');
+
+        DCoordinate3 r0U = getCoordinates(0, ind_secondary, 'u');
+        DCoordinate3 r1U = getCoordinates(1, ind_secondary, 'u');
+        DCoordinate3 r2U = getCoordinates(2, ind_secondary, 'u');
+        DCoordinate3 r3U = getCoordinates(3, ind_secondary, 'u');
+
+        DCoordinate3 r0T = getCoordinates(0, ind_secondary, 't');
+        DCoordinate3 r1T = getCoordinates(1, ind_secondary, 't');
+        DCoordinate3 r2T = getCoordinates(2, ind_secondary, 't');
+        DCoordinate3 r3T = getCoordinates(3, ind_secondary, 't');
+
+        //primary: north
+        if(direction_0 == 0){
+
+            //secondary: north
+            if(direction_1 == 0){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r1)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_secondary].patch->SetData(0, 1, (p1+r1)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r1V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(0, 3, (p1V+r1V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r1U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(2, 1, (p1U+r1U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r1T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(2, 3, (p1T+r1T)/2);
+            }
+            //east
+            else if(direction_1 == 1){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r1)/2);
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 1, (p0+r1)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p1+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r1V)/2);
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 3, (p0V+r1V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p1V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r1U)/2);
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 1, (p0U+r1U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p1U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r1T)/2);
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 3, (p0T+r1T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p1T+r3T)/2);
+            }
+            //west
+            else if(direction_1 == 2){
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r2)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 0, (p0+r0)/2);
+                _attributes[ind_secondary].patch->SetData(1, 0, (p1+r2)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r2V)/2);
+
+                _attributes[ind_secondary].patch->SetData(0, 2, (p0V+r0V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 2, (p1V+r2V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r2U)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 0, (p0U+r0U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 0, (p1U+r2U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r2T)/2);
+
+                _attributes[ind_secondary].patch->SetData(2, 2, (p0T+r0T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 2, (p1T+r2T)/2);
+            }
+            //south
+            else if(direction_1 == 3){
+
+                //corners
+                _attributes[ind_primary].patch->SetData(0, 0, (p0+r2)/2);
+                _attributes[ind_primary].patch->SetData(0, 1, (p1+r3)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 0, (p0+r2)/2);
+                _attributes[ind_secondary].patch->SetData(1, 1, (p1+r3)/2);
+
+                //v
+                _attributes[ind_primary].patch->SetData(0, 2, (p0V+r2V)/2);
+                _attributes[ind_primary].patch->SetData(0, 3, (p1V+r3V)/2);
+
+                _attributes[ind_secondary].patch->SetData(1, 2, (p0V+r2V)/2);
+                _attributes[ind_secondary].patch->SetData(1, 3, (p1V+r3V)/2);
+
+                //u
+                _attributes[ind_primary].patch->SetData(2, 0, (p0U+r2U)/2);
+                _attributes[ind_primary].patch->SetData(2, 1, (p1U+r3U)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 0, (p0U+r2U)/2);
+                _attributes[ind_secondary].patch->SetData(3, 1, (p1U+r3U)/2);
+
+                //t
+                _attributes[ind_primary].patch->SetData(2, 2, (p0T+r2T)/2);
+                _attributes[ind_primary].patch->SetData(2, 3, (p1T+r3T)/2);
+
+                _attributes[ind_secondary].patch->SetData(3, 2, (p0T+r2T)/2);
+                _attributes[ind_secondary].patch->SetData(3, 3, (p1T+r3T)/2);
+            }
+        }
+
+        return true;
     };
 
     GLboolean HermiteCompositeSurface3::RenderAllPatches() const {
@@ -866,5 +1056,6 @@ namespace cagd{
             }
         }
     }
+
 }
 
