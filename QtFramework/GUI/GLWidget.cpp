@@ -507,6 +507,7 @@ namespace cagd
             }
 
             DCoordinate3& cp = (*_hermite_arcs[_selected_hermite_arc])[_selected_hermite_arc_point];
+
             emit xHermitePointChanged(cp[0]);
             emit yHermitePointChanged(cp[1]);
             emit zHermitePointChanged(cp[2]);
@@ -742,8 +743,26 @@ namespace cagd
 
        _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
 
-       //TO-DO:
-       //_composite_hermite_patches[_comp_index]->addNeighbourContinue();
+       int _new_patch_neighbour_direction = 0;
+
+       //north
+       if(_primary_patch_dir == 0){
+           _new_patch_neighbour_direction = 3; //south
+       }
+       //east
+       else if(_primary_patch_dir == 1){
+           _new_patch_neighbour_direction = 2; //west
+       }
+       //west
+       else if(_primary_patch_dir == 2){
+            _new_patch_neighbour_direction = 1; //east
+       }
+       //south
+       else if(_primary_patch_dir == 3){
+            _new_patch_neighbour_direction = 0; //north
+       }
+
+       _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _number_of_hermite_patches - 1, _new_patch_neighbour_direction);
        update();
 
         return;
@@ -790,9 +809,7 @@ namespace cagd
       _patches_v_lines[_number_of_hermite_patches - 1] = _v_lines;
 
       _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
-
-      //TO-DO:
-      //_composite_hermite_patches[_comp_index]->addNeighbourContinue();
+      _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _selected_secondary_patch, _secondary_patch_dir);
       update();
 
         return;
@@ -822,9 +839,8 @@ namespace cagd
           _composite_hermite_patches[i]->updatePatch(_selected_secondary_patch, _images_of_hermite_patches[_selected_secondary_patch]);
       }
 
-      //TO-DO:
-      //add new neighbours if merge successful
-      //emmit new coordinates of selected_primary_patch
+      _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _selected_secondary_patch, _secondary_patch_dir);
+      _setSelectedHermitePatch(_selected_hermite_patch); //emmit
 
         update();
    }
