@@ -46,7 +46,7 @@ namespace cagd
 
 
     protected:
-        std::vector<PatchAttributes>    _attributes;
+        std::vector<PatchAttributes*>    _attributes;
 
     public:
         // special/default ctor
@@ -65,6 +65,8 @@ namespace cagd
 
         GLboolean updatePatch(GLuint index, TriangulatedMesh3* image);
         GLvoid addNeighbour(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
+        GLvoid updateNeighbours(GLint index, GLint pointIndex, DCoordinate3 corner, DCoordinate3 partial_u, DCoordinate3 partial_v, DCoordinate3 twist_vector);
+        GLvoid updateNeighboursRecursive(PatchAttributes*, GLint pointIndex, DCoordinate3 corner, DCoordinate3 partial_u, DCoordinate3 partial_v, DCoordinate3 twist_vector, PatchAttributes* parent);
 
         void showTextures(bool);
         void showShaders(bool);

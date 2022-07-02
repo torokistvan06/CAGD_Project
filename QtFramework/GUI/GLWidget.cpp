@@ -693,6 +693,23 @@ namespace cagd
    }
 
     // Hermite Patches
+
+   void GLWidget::_updatePatchNeighbours(DCoordinate3 corner, DCoordinate3 u, DCoordinate3 v, DCoordinate3 t) {
+       int index = _composite_patch_index_of_hermite_patches[_selected_hermite_patch];
+       if(index != -1) {
+           _composite_hermite_patches[index]->updateNeighbours(_selected_hermite_arc, _selected_hermite_arc_point, corner, u, v, t);
+           for(GLuint i = 0 ; i < _number_of_hermite_arcs ; i++) {
+               if(_composite_patch_index_of_hermite_patches[i] == index) {
+                   _hermite_patches[i]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+                   _images_of_hermite_patches[i] = _hermite_patches[i]->GenerateImage(30,30,GL_STATIC_DRAW);
+                   _images_of_hermite_patches[i]->UpdateVertexBufferObjects(GL_STATIC_DRAW);
+                   _composite_hermite_patches[index]->updatePatch(i, _images_of_hermite_patches[i]);
+               }
+           }
+       }
+   }
+
+
    void GLWidget::_setPatchPrimaryDirection(int index) {
            _primary_patch_dir = index;
        }
@@ -809,7 +826,23 @@ namespace cagd
       _patches_v_lines[_number_of_hermite_patches - 1] = _v_lines;
 
       _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
-      _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _selected_secondary_patch, _secondary_patch_dir);
+      if(_primary_patch_dir == 0) {
+          _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _number_of_hermite_patches - 1, 3);
+          _composite_hermite_patches[_comp_index]->addNeighbour(_number_of_hermite_patches - 1, 0, _selected_secondary_patch, _secondary_patch_dir);
+      }
+      else if(_primary_patch_dir == 1) {
+          _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _number_of_hermite_patches - 1, 2);
+          _composite_hermite_patches[_comp_index]->addNeighbour(_number_of_hermite_patches - 1, 1, _selected_secondary_patch, _secondary_patch_dir);
+      }
+      else if(_primary_patch_dir == 2) {
+          _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _number_of_hermite_patches - 1, 1);
+          _composite_hermite_patches[_comp_index]->addNeighbour(_number_of_hermite_patches - 1, 2, _selected_secondary_patch, _secondary_patch_dir);
+      }
+      else {
+          _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _number_of_hermite_patches - 1, 0);
+          _composite_hermite_patches[_comp_index]->addNeighbour(_number_of_hermite_patches - 1, 3, _selected_secondary_patch, _secondary_patch_dir);
+      }
+
       update();
 
         return;
@@ -1374,83 +1407,116 @@ namespace cagd
     }
 
     void GLWidget::setHermitePatchPointX(double value) {
+         DCoordinate3 corner, tmp, null(0,0,0);
          switch(_selected_hermite_patch_point) {
          case 0:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(0,0,tmp);
              (*_hermite_patches[_selected_hermite_patch])(0,0)[0] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(0,0,corner);
              break;
          }
          case 1:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(0,1,tmp);
              (*_hermite_patches[_selected_hermite_patch])(0,1)[0] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(0,1,corner);
              break;
          }
          case 2:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(1,0,tmp);
              (*_hermite_patches[_selected_hermite_patch])(1,0)[0] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(1,0,corner);
              break;
          }
          case 3:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(1,1,tmp);
              (*_hermite_patches[_selected_hermite_patch])(1,1)[0] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(1,1,corner);
              break;
          }
      }
+         corner -= tmp;
          _updateSelectedHermitePatch();
+         _updatePatchNeighbours(corner, null, null, null);
          update();
     }
 
     void GLWidget::setHermitePatchPointY(double value) {
+         DCoordinate3 corner, tmp, null(0,0,0);
          switch(_selected_hermite_patch_point) {
          case 0:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(0,0,tmp);
              (*_hermite_patches[_selected_hermite_patch])(0,0)[1] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(0,0,corner);
              break;
          }
          case 1:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(0,1,tmp);
              (*_hermite_patches[_selected_hermite_patch])(0,1)[1] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(0,1,corner);
              break;
          }
          case 2:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(1,0,tmp);
              (*_hermite_patches[_selected_hermite_patch])(1,0)[1] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(1,0,corner);
              break;
          }
          case 3:
          {
+             _hermite_patches[_selected_hermite_patch]->GetData(1,1,tmp);
              (*_hermite_patches[_selected_hermite_patch])(1,1)[1] = value;
+             _hermite_patches[_selected_hermite_patch]->GetData(1,1,corner);
              break;
          }
      }
+         corner -= tmp;
          _updateSelectedHermitePatch();
+         _updatePatchNeighbours(corner, null, null, null);
          update();
     }
 
     void GLWidget::setHermitePatchPointZ(double value) {
-         switch(_selected_hermite_patch_point) {
-         case 0:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(0,0)[2] = value;
-             break;
-         }
-         case 1:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(0,1)[2] = value;
-             break;
-         }
-         case 2:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(1,0)[2] = value;
-             break;
-         }
-         case 3:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(1,1)[2] = value;
-             break;
-         }
-     }
-         _updateSelectedHermitePatch();
+        DCoordinate3 corner, tmp, null(0,0,0);
+        switch(_selected_hermite_patch_point) {
+        case 0:
+        {
+            _hermite_patches[_selected_hermite_patch]->GetData(0,0,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(0,0)[2] = value;
+            _hermite_patches[_selected_hermite_patch]->GetData(0,0,corner);
+            break;
+        }
+        case 1:
+        {
+            _hermite_patches[_selected_hermite_patch]->GetData(0,1,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(0,1)[2] = value;
+            _hermite_patches[_selected_hermite_patch]->GetData(0,1,corner);
+            break;
+        }
+        case 2:
+        {
+            _hermite_patches[_selected_hermite_patch]->GetData(1,0,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(1,0)[2] = value;
+            _hermite_patches[_selected_hermite_patch]->GetData(1,0,corner);
+            break;
+        }
+        case 3:
+        {
+            _hermite_patches[_selected_hermite_patch]->GetData(1,1,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(1,1)[2] = value;
+            _hermite_patches[_selected_hermite_patch]->GetData(1,1,corner);
+            break;
+        }
+    }
+        corner -= tmp;
+        _updateSelectedHermitePatch();
+        _updatePatchNeighbours(corner, null, null, null);
          update();
     }
 

@@ -273,6 +273,7 @@ namespace cagd
         bool                                        _initializeHermitePatches();
         bool                                        _renderHermitePatches();
         bool                                        _updateSelectedHermitePatch();
+        void                                        _updatePatchNeighbours(DCoordinate3, DCoordinate3, DCoordinate3, DCoordinate3);
         void                                        _initializeTextures();
         void                                        _initializeShaders();
         bool                                        _initializeMaterials();
