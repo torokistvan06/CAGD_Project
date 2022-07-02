@@ -697,13 +697,28 @@ namespace cagd
    void GLWidget::_updatePatchNeighbours(DCoordinate3 corner, DCoordinate3 u, DCoordinate3 v, DCoordinate3 t) {
        int index = _composite_patch_index_of_hermite_patches[_selected_hermite_patch];
        if(index != -1) {
-           _composite_hermite_patches[index]->updateNeighbours(_selected_hermite_arc, _selected_hermite_patch_point, corner, u, v, t);
-           for(GLuint i = 0 ; i < _number_of_hermite_arcs ; i++) {
+           _composite_hermite_patches[index]->updateNeighbours(_selected_hermite_patch, _selected_hermite_patch_point, corner, u, v, t);
+           for(GLuint i = 0 ; i < _number_of_hermite_patches ; i++) {
                if(_composite_patch_index_of_hermite_patches[i] == index) {
                    _hermite_patches[i]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
                    _images_of_hermite_patches[i] = _hermite_patches[i]->GenerateImage(30,30,GL_STATIC_DRAW);
                    _images_of_hermite_patches[i]->UpdateVertexBufferObjects(GL_STATIC_DRAW);
                    _composite_hermite_patches[index]->updatePatch(i, _images_of_hermite_patches[i]);
+                   _u_lines = _hermite_patches[i]->GenerateUIsoparametricLines(10, 2, 30);
+                   for(GLuint j = 0 ; j < _u_lines->GetColumnCount(); j++) {
+                       if((*_u_lines)[j]) {
+                           (*_u_lines)[j]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+                       }
+                   }
+                   _patches_u_lines[i] = _u_lines;
+
+                   _v_lines = _hermite_patches[i]->GenerateVIsoparametricLines(10, 2, 30);
+                   for(GLuint j = 0 ; j < _v_lines->GetColumnCount(); j++) {
+                       if((*_v_lines)[j]) {
+                           (*_v_lines)[j]->UpdateVertexBufferObjects(0.1,GL_STATIC_DRAW);
+                       }
+                   }
+                   _patches_v_lines[i] = _v_lines;
                }
            }
        }

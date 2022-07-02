@@ -1834,22 +1834,22 @@ namespace cagd{
                 }
 
                 if(patch->connection_type[i] == 1) {
-                    neighbour->patch->GetData(0,1, new_data);
+                    neighbour->patch->GetData(1,0, new_data);
                     new_data += corner;
-                    neighbour->patch->SetData(0,1, new_data);
+                    neighbour->patch->SetData(1,0, new_data);
 
-                    neighbour->patch->GetData(2,1, new_data);
+                    neighbour->patch->GetData(3,0, new_data);
                     new_data += partial_u;
-                    neighbour->patch->SetData(2,1, new_data);
+                    neighbour->patch->SetData(3,0, new_data);
 
-                    neighbour->patch->GetData(0,3, new_data);
+                    neighbour->patch->GetData(1,2, new_data);
                     new_data += partial_v;
-                    neighbour->patch->SetData(0,3, new_data);
+                    neighbour->patch->SetData(1,2, new_data);
 
-                    neighbour->patch->GetData(2,3, new_data);
+                    neighbour->patch->GetData(3,2, new_data);
                     new_data += twist_vector;
-                    neighbour->patch->SetData(2,3, new_data);
-                    updateNeighboursRecursive(patch->neighbours[i], 1, corner, partial_u, partial_v, twist_vector, patch);
+                    neighbour->patch->SetData(3,2, new_data);
+                    updateNeighboursRecursive(patch->neighbours[i], 2, corner, partial_u, partial_v, twist_vector, patch);
                 }
 
                 if(patch->connection_type[i] == 2) {
@@ -1891,21 +1891,21 @@ namespace cagd{
                 }
             } else if(i == 1 && pointIndex == 1) { // EAST - RIGHT-UPPER CORNER
                 if(patch->connection_type[i] == 0) {
-                    neighbour->patch->GetData(0,1, new_data);
+                    neighbour->patch->GetData(0,0, new_data);
                     new_data += corner;
-                    neighbour->patch->SetData(0,1, new_data);
+                    neighbour->patch->SetData(0,0, new_data);
 
-                    neighbour->patch->GetData(2,1, new_data);
+                    neighbour->patch->GetData(2,0, new_data);
                     new_data += partial_u;
-                    neighbour->patch->SetData(2,1, new_data);
+                    neighbour->patch->SetData(2,0, new_data);
 
-                    neighbour->patch->GetData(0,3, new_data);
+                    neighbour->patch->GetData(0,2, new_data);
                     new_data += partial_v;
-                    neighbour->patch->SetData(0,3, new_data);
+                    neighbour->patch->SetData(0,2, new_data);
 
-                    neighbour->patch->GetData(2,3, new_data);
+                    neighbour->patch->GetData(2,2, new_data);
                     new_data += twist_vector;
-                    neighbour->patch->SetData(2,3, new_data);
+                    neighbour->patch->SetData(2,2, new_data);
                     updateNeighboursRecursive(patch->neighbours[i], 1, corner, partial_u, partial_v, twist_vector, patch);
                 }
 
@@ -1969,21 +1969,21 @@ namespace cagd{
             } else if(i == 1 && pointIndex == 3) { // EAST - RIGHT LOWER CORNER
 
                 if(patch->connection_type[i] == 0) {
-                    neighbour->patch->GetData(0,0, new_data);
+                    neighbour->patch->GetData(0,1, new_data);
                     new_data += corner;
-                    neighbour->patch->SetData(0,0, new_data);
+                    neighbour->patch->SetData(0,1, new_data);
 
-                    neighbour->patch->GetData(2,0, new_data);
+                    neighbour->patch->GetData(2,1, new_data);
                     new_data += partial_u;
-                    neighbour->patch->SetData(2,0, new_data);
+                    neighbour->patch->SetData(2,1, new_data);
 
-                    neighbour->patch->GetData(0,2, new_data);
+                    neighbour->patch->GetData(0,3, new_data);
                     new_data += partial_v;
-                    neighbour->patch->SetData(0,2, new_data);
+                    neighbour->patch->SetData(0,3, new_data);
 
-                    neighbour->patch->GetData(2,2, new_data);
+                    neighbour->patch->GetData(2,3, new_data);
                     new_data += twist_vector;
-                    neighbour->patch->SetData(2,2, new_data);
+                    neighbour->patch->SetData(2,3, new_data);
                     updateNeighboursRecursive(patch->neighbours[i], 0, corner, partial_u, partial_v, twist_vector, patch);
                 }
 
@@ -2102,21 +2102,21 @@ namespace cagd{
                 }
 
                 if(patch->connection_type[i] == 3) {
-                    neighbour->patch->GetData(1,1, new_data);
+                    neighbour->patch->GetData(1,0, new_data);
                     new_data += corner;
-                    neighbour->patch->SetData(1,1, new_data);
+                    neighbour->patch->SetData(1,0, new_data);
 
-                    neighbour->patch->GetData(3,1, new_data);
+                    neighbour->patch->GetData(3,0, new_data);
                     new_data += partial_u;
-                    neighbour->patch->SetData(3,1, new_data);
+                    neighbour->patch->SetData(3,0, new_data);
 
-                    neighbour->patch->GetData(1,3, new_data);
+                    neighbour->patch->GetData(1,2, new_data);
                     new_data += partial_v;
-                    neighbour->patch->SetData(1,3, new_data);
+                    neighbour->patch->SetData(1,2, new_data);
 
-                    neighbour->patch->GetData(3,3, new_data);
+                    neighbour->patch->GetData(3,2, new_data);
                     new_data += twist_vector;
-                    neighbour->patch->SetData(3,3, new_data);
+                    neighbour->patch->SetData(3,2, new_data);
                     updateNeighboursRecursive(patch->neighbours[i], 3, corner, partial_u, partial_v, twist_vector, patch);
                 }
 
