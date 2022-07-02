@@ -697,7 +697,7 @@ namespace cagd
    void GLWidget::_updatePatchNeighbours(DCoordinate3 corner, DCoordinate3 u, DCoordinate3 v, DCoordinate3 t) {
        int index = _composite_patch_index_of_hermite_patches[_selected_hermite_patch];
        if(index != -1) {
-           _composite_hermite_patches[index]->updateNeighbours(_selected_hermite_arc, _selected_hermite_arc_point, corner, u, v, t);
+           _composite_hermite_patches[index]->updateNeighbours(_selected_hermite_arc, _selected_hermite_patch_point, corner, u, v, t);
            for(GLuint i = 0 ; i < _number_of_hermite_arcs ; i++) {
                if(_composite_patch_index_of_hermite_patches[i] == index) {
                    _hermite_patches[i]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
@@ -873,6 +873,16 @@ namespace cagd
       }
 
       _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _selected_secondary_patch, _secondary_patch_dir);
+
+      for(GLuint i = 0 ; i < _number_of_hermite_arcs ; i++) {
+          if(_composite_patch_index_of_hermite_patches[i] == _comp_index) {
+              _hermite_patches[i]->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
+              _images_of_hermite_patches[i] = _hermite_patches[i]->GenerateImage(30,30,GL_STATIC_DRAW);
+              _images_of_hermite_patches[i]->UpdateVertexBufferObjects(GL_STATIC_DRAW);
+              _composite_hermite_patches[_comp_index]->updatePatch(i, _images_of_hermite_patches[i]);
+          }
+      }
+
       _setSelectedHermitePatch(_selected_hermite_patch); //emmit
 
         update();
