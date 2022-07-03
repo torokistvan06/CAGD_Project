@@ -76,82 +76,19 @@ namespace cagd
 
             // create and store your geometry in display lists or vertex buffer objects
 
-            switch(_selected) {
-                case 0:
-            {
-                if (!initalizeParametricCurves())
-                {
-                    throw Exception("Could not create all parametric curves!");
-                }
-                break;
-            }
-                case 1:
-            {
 
-                initializeCyclicData();
-                initializeModels();
-                _initializeMaterials();
-                initializeProperties();
-                initializeCyclicCurves();
-                connect(_old_timer, SIGNAL(timeout()), this, SLOT(animate()));
-                break;
-            }
-                case 2:
-            {
+            _initializeHermiteArcs();
 
-                initializeParametricSurfaceData();
-                _initializeMaterials();
-                _initializeTextures();
-                initializeParametricSurfaces();
-                connect(_timer, SIGNAL(timeout()), this, SLOT(animateSurface()));
-                break;
-            }
-                case 3:
-            {
-                initializeParametricSurfaceData();
-                _initializeMaterials();
-                _initializeTextures();
-                initializeParametricSurfaces();
-                connect(_timer, SIGNAL(timeout()), this, SLOT(animateSurface()));
-                _initializeShaders();
-                break;
-            }
-                case 4:
-            {
-                initializeHermiteArc();
-                updateHermiteArc();
-                break;
-            }
-            case 5:
-            {
-                _initializeShaders();
-                initializeHermitePatch();
-                updateHermitePatch();
-                break;
-            }
-            //case 6:
-           // {
+            HCoordinate3 direction (0.0, 0.0, 5.0, 0.0);
+            Color4  ambient(0.4, 0.4, 0.4, 1.0);
+            Color4  diffuse(0.8, 0.8, 0.8, 1.0);
+            Color4  specular(1.0, 1.0, 1.0, 1.0);
+            _dl = new (nothrow) DirectionalLight(GL_LIGHT1, direction, ambient, diffuse, specular);
 
-            //    break;
-           // }
-                case 7:
-            {
-                _initializeHermiteArcs();
-
-
-                HCoordinate3 direction (0.0, 0.0, 5.0, 0.0);
-                Color4  ambient(0.4, 0.4, 0.4, 1.0);
-                Color4  diffuse(0.8, 0.8, 0.8, 1.0);
-                Color4  specular(1.0, 1.0, 1.0, 1.0);
-                _dl = new (nothrow) DirectionalLight(GL_LIGHT1, direction, ambient, diffuse, specular);
-
-                _initializeMaterials();
-                _initializeTextures();
-                _initializeShaders();
-                _initializeHermitePatches();
-                break;
-            }
-            }
+            _initializeMaterials();
+            _initializeTextures();
+            _initializeShaders();
+            _initializeHermitePatches();
 
             glEnable(GL_POINT_SMOOTH);
             glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
@@ -194,51 +131,12 @@ namespace cagd
             // render your geometry (this is oldest OpenGL rendering technique, later we will use some advanced methods)
 
             switch(_selected) {
-                case 0:
-            {
-                if (!paintParametricCurves())
-                {
-                    throw Exception("Could not paint all parametric curves!");
-                }
-                break;
-            }
                 case 1:
             {
-                paintSelectedCyclicCurve();
-                paintStaticModels();
-                paintModels();
-                _old_timer->start(50);
-                break;
-            }
-                case 2:
-            {
-                paintSelectedSurface();
-                _timer->start(50);
-                break;
-            }
-                case 3:
-            {
-                _shaders[_selected_shader].Enable();
-                _leMouse.Render();
-                _shaders[_selected_shader].Disable();
-                break;
-            }
-                case 4:
-            {
-                break;
-            }
-                case 5:
-            {
-                renderHermitePatch();
-                break;
-            }
-                case 6:
-            {
-
                 _renderHermiteArcs();
                 break;
             }
-                case 7:
+                case 2:
             {
                 _renderHermitePatches();
                 break;
@@ -775,7 +673,7 @@ namespace cagd
        }
        _patches_v_lines[_number_of_hermite_patches - 1] = _v_lines;
 
-       _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
+       _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _selected_shader, _number_of_hermite_patches - 1);
 
        int _new_patch_neighbour_direction = 0;
 
@@ -842,7 +740,7 @@ namespace cagd
       }
       _patches_v_lines[_number_of_hermite_patches - 1] = _v_lines;
 
-      _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _number_of_hermite_patches - 1);
+      _composite_hermite_patches[_comp_index]->InsertNewPatch(patch,  _images_of_hermite_patches[_number_of_hermite_patches - 1], &_materials[_selected_patch_material], _texture[_selected_patch_texture], &_shaders[_selected_patch_shader], _selected_patch_shader, _number_of_hermite_patches - 1);
       if(_primary_patch_dir == 0) {
           _composite_hermite_patches[_comp_index]->addNeighbour(_selected_hermite_patch, _primary_patch_dir, _number_of_hermite_patches - 1, 3);
           _composite_hermite_patches[_comp_index]->addNeighbour(_number_of_hermite_patches - 1, 0, _selected_secondary_patch, _secondary_patch_dir);
@@ -861,8 +759,7 @@ namespace cagd
       }
 
       update();
-
-        return;
+      return;
    }
 
    void GLWidget::_mergePatch(){
@@ -971,6 +868,29 @@ namespace cagd
 
         return true;
     }
+
+    void GLWidget::_deleteSelectedPatch() {
+        if(_composite_patch_index_of_hermite_patches[_selected_hermite_patch] != -1) {
+            _composite_hermite_patches[_composite_patch_index_of_hermite_patches[_selected_hermite_patch]]->DeleteExistingPatch(_selected_hermite_patch);
+        }
+        for(GLuint i = _selected_hermite_patch ; i < _number_of_hermite_patches - 1; i++) {
+
+            _hermite_patches[i] = _hermite_patches[i + 1];
+            _images_of_hermite_patches[i] = _images_of_hermite_patches[i + 1];
+            _composite_patch_index_of_hermite_patches[i] = _composite_patch_index_of_hermite_patches[i + 1];
+            _patches_u_lines[i] = _patches_u_lines[i + 1];
+            _patches_v_lines[i] = _patches_v_lines[i + 1];
+        }
+        _number_of_hermite_patches -= 1;
+        _hermite_patches.ResizeColumns(_number_of_hermite_patches);
+        _images_of_hermite_patches.ResizeColumns(_number_of_hermite_patches);
+        _composite_patch_index_of_hermite_patches.ResizeColumns(_number_of_hermite_patches);
+        _patches_u_lines.ResizeColumns(_number_of_hermite_patches);
+        _patches_v_lines.ResizeColumns(_number_of_hermite_patches);
+
+        update();
+    }
+
 
     bool GLWidget::_renderHermitePatches() {
         _dl->Enable();
@@ -1154,8 +1074,9 @@ namespace cagd
             ShaderProgram* shader = &_shaders[_selected_patch_shader];
             BicubicHermitePatch3* patch = _hermite_patches[_selected_hermite_patch];
             TriangulatedMesh3* image = _images_of_hermite_patches[_selected_hermite_patch];
-            _composite_hermite_patches[_selected_composite_patch]->InsertNewPatch(patch, image, mat, texture, shader, _selected_hermite_patch);
+            _composite_hermite_patches[_selected_composite_patch]->InsertNewPatch(patch, image, mat, texture, shader, _selected_patch_shader, _selected_hermite_patch);
             _composite_patch_index_of_hermite_patches[_selected_hermite_patch] = _selected_composite_patch;
+            update();
         }
     }
 
@@ -1174,7 +1095,7 @@ namespace cagd
     void GLWidget::_showHermitePatchTextures(bool visibility){
          _use_textures = visibility;
          for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
-            _composite_hermite_patches[i]->showTextures(visibility);
+            _composite_hermite_patches[i]->showTextures(_use_textures);
          }
          update();
     }
@@ -1182,7 +1103,7 @@ namespace cagd
     void GLWidget::_showHermitePatchShaders(bool visibility){
          _use_shaders = visibility;
          for(GLuint i = 0 ; i < _number_of_composite_patches ; i++) {
-            _composite_hermite_patches[i]->showShaders(visibility);
+            _composite_hermite_patches[i]->showShaders(_use_shaders);
          }
          update();
     }
@@ -2273,7 +2194,7 @@ namespace cagd
                 throw Exception("Toon creation error.");
             } else {
                 _shaders[2].Enable();
-                _shaders[2].SetUniformVariable4f("default_outline_color", 60.0f, 160.0f, 60.0f, 1.0f);
+                _shaders[2].SetUniformVariable4f("default_outline_color", _red, _green, _blue, 1.0f);
                 _shaders[2].Disable();
             }
 
@@ -3610,7 +3531,7 @@ namespace cagd
     }
 
     void GLWidget::setSelectedShader(int index) {
-        _selected_shader = index;
+        _selected_patch_shader = index;
         update();
     }
 
@@ -3618,13 +3539,18 @@ namespace cagd
         if(value != _shader_scale) {
             _shader_scale = value;
 
-            _shaders[_selected_shader].Enable();
+            _shaders[3].Enable();
 
             _shaders[3].SetUniformVariable1f("scale_factor", _shader_scale);
             _shaders[3].SetUniformVariable1f("smoothing", _shader_shading);
             _shaders[3].SetUniformVariable1f("shading", _shader_smoothing);
 
-             _shaders[_selected_shader].Disable();
+             _shaders[3].Disable();
+
+             for(int i = 0 ; i < _number_of_composite_patches ; i++) {
+                 _composite_hermite_patches[i]->updateLines(&_shaders[3]);
+             }
+
              update();
         }
     }
@@ -3633,13 +3559,18 @@ namespace cagd
         if(value != _shader_smoothing) {
             _shader_smoothing = value;
 
-            _shaders[_selected_shader].Enable();
+            _shaders[3].Enable();
 
             _shaders[3].SetUniformVariable1f("scale_factor", _shader_scale);
             _shaders[3].SetUniformVariable1f("smoothing", _shader_shading);
             _shaders[3].SetUniformVariable1f("shading", _shader_smoothing);
 
-             _shaders[_selected_shader].Disable();
+
+             _shaders[3].Disable();
+
+             for(int i = 0 ; i < _number_of_composite_patches ; i++) {
+                 _composite_hermite_patches[i]->updateLines(&_shaders[3]);
+             }
              update();
         }
     }
@@ -3648,13 +3579,17 @@ namespace cagd
         if(value != _shader_shading) {
             _shader_shading = value;
 
-            _shaders[_selected_shader].Enable();
+            _shaders[3].Enable();
 
             _shaders[3].SetUniformVariable1f("scale_factor", _shader_scale);
             _shaders[3].SetUniformVariable1f("smoothing", _shader_shading);
             _shaders[3].SetUniformVariable1f("shading", _shader_smoothing);
 
-             _shaders[_selected_shader].Disable();
+             _shaders[3].Disable();
+
+             for(int i = 0 ; i < _number_of_composite_patches ; i++) {
+                 _composite_hermite_patches[i]->updateLines(&_shaders[3]);
+             }
              update();
         }
     }
@@ -3662,10 +3597,15 @@ namespace cagd
     void GLWidget::setRed(double value) {
         if(value != _red)
         {
-            _shaders[_selected_shader].Enable();
+            _shaders[2].Enable();
             _red = value;
             _shaders[2].SetUniformVariable4f("default_outline_color", _red, _green, _blue, 1.0f);
-            _shaders[_selected_shader].Disable();
+            _shaders[2].Disable();
+
+            for(int i = 0 ; i < _number_of_composite_patches ; i++) {
+                _composite_hermite_patches[i]->updateToon(&_shaders[2]);
+            }
+
             update();
         }
     }
@@ -3673,20 +3613,30 @@ namespace cagd
     void GLWidget::setBlue(double value) {
         if(value != _blue)
         {
-            _shaders[_selected_shader].Enable();
+            _shaders[2].Enable();
             _blue = value;
             _shaders[2].SetUniformVariable4f("default_outline_color", _red, _green, _blue, 1.0f);
-            _shaders[_selected_shader].Disable();
+            _shaders[2].Disable();
+
+            for(int i = 0 ; i < _number_of_composite_patches ; i++) {
+                _composite_hermite_patches[i]->updateToon(&_shaders[2]);
+            }
+
             update();
         }
 
     }void GLWidget::setGreen(double value) {
         if(value != _green)
         {
-            _shaders[_selected_shader].Enable();
+            _shaders[2].Enable();
             _green = value;
             _shaders[2].SetUniformVariable4f("default_outline_color", _red, _green, _blue, 1.0f);
-            _shaders[_selected_shader].Disable();
+            _shaders[2].Disable();
+
+            for(int i = 0 ; i < _number_of_composite_patches ; i++) {
+                _composite_hermite_patches[i]->updateToon(&_shaders[2]);
+            }
+
             update();
         }
     }

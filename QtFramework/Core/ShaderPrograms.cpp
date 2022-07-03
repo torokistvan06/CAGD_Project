@@ -159,7 +159,7 @@ GLint ShaderProgram::GetUniformVariableLocation(const GLchar *name, GLboolean lo
 GLboolean ShaderProgram::InstallShaders(const string &vertex_shader_file_name, const string &fragment_shader_file_name, GLboolean logging_is_enabled, std::ostream &output)
 {
     // loading source codes into shader objects
-    _vertex_shader_file_name = vertex_shader_file_name;
+    this->_vertex_shader_file_name = vertex_shader_file_name;
     _fragment_shader_file_name = fragment_shader_file_name;
 
     fstream vertex_shader_file(vertex_shader_file_name.c_str(), ios_base::in);

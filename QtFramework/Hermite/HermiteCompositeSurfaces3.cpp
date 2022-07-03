@@ -22,7 +22,26 @@ namespace cagd{
         return true;
     }
 
-    GLboolean HermiteCompositeSurface3::InsertNewPatch(BicubicHermitePatch3* patch, TriangulatedMesh3* image, Material* mat, QOpenGLTexture* texture, ShaderProgram* shader, int index) {
+
+    GLboolean HermiteCompositeSurface3::updateToon(ShaderProgram* shader) {
+        for(int i = 0 ; i < _number_of_patches ; i++) {
+            if(_attributes[i]->shader_index == 2) {
+                _attributes[i]->shader = shader;
+            }
+        }
+        return GL_TRUE;
+    }
+
+    GLboolean HermiteCompositeSurface3::updateLines(ShaderProgram* shader) {
+        for(int i = 0 ; i < _number_of_patches ; i++) {
+            if(_attributes[i]->shader_index == 3) {
+                _attributes[i]->shader = shader;
+            }
+        }
+        return GL_TRUE;
+    }
+
+    GLboolean HermiteCompositeSurface3::InsertNewPatch(BicubicHermitePatch3* patch, TriangulatedMesh3* image, Material* mat, QOpenGLTexture* texture, ShaderProgram* shader,GLint shaderIndex, int index) {
        PatchAttributes* element = new PatchAttributes();
 
        element->patch = patch;
@@ -31,6 +50,7 @@ namespace cagd{
        element->texture = texture;
        element->shader = shader;
        element->index = index;
+       element->shader_index = shaderIndex;
 
        for( GLuint i = 0 ; i < 8 ; i++) {
            element->neighbours[i] = nullptr;
@@ -58,7 +78,10 @@ namespace cagd{
     };
 
     GLboolean HermiteCompositeSurface3::DeleteExistingPatch(GLuint index) {
-        return false;
+        for(GLuint i = index ; i < _number_of_patches - 1 ; i++) {
+            _attributes[i] = _attributes[i + 1];
+        }
+        _attributes.resize(_number_of_patches - 1);
     };
 
     BicubicHermitePatch3* HermiteCompositeSurface3::ContinueExistingPatch(GLuint index, int direction) {
@@ -1722,6 +1745,14 @@ namespace cagd{
     GLboolean HermiteCompositeSurface3::RenderAllPatches() const {
         for(GLuint i = 0 ; i < _number_of_patches ; i++) {
 
+                _attributes[i]->material->Apply();
+                if(_use_textures) {
+                    _attributes[i]->texture->bind();
+                }
+                if(_use_shaders) {
+                    _attributes[i]->shader->Enable();
+                }
+
             _attributes[i]->_u_lines = _attributes[i]->patch->GenerateUIsoparametricLines(10, 2, 30);
             for(GLuint j = 0 ; j < _attributes[i]->_u_lines->GetColumnCount(); j++) {
                 if((*_attributes[i]->_u_lines)[i]) {
@@ -1736,9 +1767,6 @@ namespace cagd{
                 }
             }
 
-            _attributes[i]->material->Apply();
-            _attributes[i]->texture->bind();
-            _attributes[i]->shader->Enable();
              if(_show_u_lines && i == _selected_patch){
                  for(GLuint j = 0; j < _attributes[i]->_u_lines->GetColumnCount(); j++)
                  {
@@ -1811,11 +1839,15 @@ namespace cagd{
                     }
                 }
             }
+                _attributes[i]->image->Render();
 
-            _attributes[i]->image->Render();
-            _attributes[i]->shader->Disable();
-            _attributes[i]->texture->release();
+                if(_use_shaders) {
+                    _attributes[i]->shader->Disable();
+                }
 
+                if(_use_textures) {
+                    _attributes[i]->texture->release();
+                }
         }
 
         return true;
@@ -2604,6 +2636,5 @@ namespace cagd{
             }
         }
     }
-
 }
 

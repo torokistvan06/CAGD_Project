@@ -32,16 +32,7 @@ namespace cagd
 
         // variable that defines what we see on the main window
 
-        int _selected = 7;
-
-        // 0 - Parametric Curves
-        // 1 - RedBullAirAndWaterScene
-        // 2 - Parametric Surfaces
-        // 3 - Shaders
-        // 4 - Hermite Arc
-        // 5 - Hermite Patch
-        // 6 - Project Hermite Arcs
-        // 7 - Project Hermite Patches
+        int _selected = 2;
 
         // variables defining the projection matrix
 
@@ -172,9 +163,9 @@ namespace cagd
         float                       _shader_smoothing = 0;
         float                       _shader_shading = 0;
 
-        float                       _red = 0;
-        float                       _blue = 0;
-        float                       _green = 0;
+        float                       _red = 50.0f;
+        float                       _green = 50.0f;
+        float                       _blue = 50.0f;
 
 
         int                         _selected_shader = 1;
@@ -396,6 +387,8 @@ namespace cagd
         void _continuePatch();
         void _joinPatch();
         void _mergePatch();
+
+        void  _deleteSelectedPatch();
 
         void _setPatchPrimaryDirection(int index);
         void _setPatchSecondaryDirection(int index);

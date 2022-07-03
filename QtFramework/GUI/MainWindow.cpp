@@ -49,59 +49,6 @@ namespace cagd
         connect(_side_widget->trans_y_spin_box, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_trans_y(double)));
         connect(_side_widget->trans_z_spin_box, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_trans_z(double)));
 
-        connect(_side_widget->tabWidget, SIGNAL(currentChanged(int)), _gl_widget, SLOT(set_tab(int)));
-        // lab2
-
-        connect(_side_widget->Pc, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setParametricCurveIndex(int)));
-
-        connect(_side_widget->ShowTangent, SIGNAL(clicked(bool)), _gl_widget, SLOT(setVisibilityOfTangents(bool)));
-        connect(_side_widget->ShowAcceleration, SIGNAL(clicked(bool)), _gl_widget, SLOT(setVisibilityOfAccelerationVectors(bool)));
-
-        connect(_side_widget->scale_spin_box, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_scale(double)));
-        connect(_side_widget->_div_point_count_widget, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_div_point_count(int)));
-
-        // lab3
-
-        connect(_side_widget->selectedCyclicCurve, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedCyclicCurve(int)));
-
-        connect(_side_widget->showCyclicCurves, SIGNAL(clicked(bool)), _gl_widget, SLOT(setVisibilityOfCyclicCurve(bool)));
-        connect(_side_widget->showTangents, SIGNAL(clicked(bool)), _gl_widget, SLOT(setVisibilityOfTangent(bool)));
-        connect(_side_widget->showAccelerations, SIGNAL(clicked(bool)), _gl_widget, SLOT(setVisiblityOfAccelerationVector(bool)));
-
-        connect(_side_widget->speedOfSelectedCurve, SIGNAL(valueChanged(int)), _gl_widget, SLOT(setSpeedOfSelectedCurve(int)));
-        connect(_side_widget->selectedPoint, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedPoint(int)));
-
-        connect(_gl_widget, SIGNAL(setSelectedX(double)), _side_widget->selectedX, SLOT(setValue(double)));
-        connect(_gl_widget, SIGNAL(setSelectedY(double)), _side_widget->selectedY, SLOT(setValue(double)));
-        connect(_gl_widget, SIGNAL(setSelectedZ(double)), _side_widget->selectedZ, SLOT(setValue(double)));
-
-        connect(_side_widget->selectedX, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setSelectedXSlot(double)));
-        connect(_side_widget->selectedY, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setSelectedYSlot(double)));
-        connect(_side_widget->selectedZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setSelectedZSlot(double)));
-
-        connect(_gl_widget, SIGNAL(distanceSignal(double)), _side_widget->distance, SLOT(setValue(double)));
-        connect(_side_widget->distance, SIGNAL(valueChanged(double)), _gl_widget, SLOT(distanceSlot(double)));
-
-        // lab4
-
-        connect(_side_widget->selectedSurface, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedSurface(int)));
-        connect(_side_widget->selectedMaterial, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedMaterial(int)));
-        connect(_side_widget->selectedTexture, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedTexture(int)));
-
-        connect(_side_widget->showTexture, SIGNAL(clicked(bool)), _gl_widget, SLOT(setVisibilityOfTexture(bool)));
-
-        // lab5
-
-        connect(_side_widget->selecteShader, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedShader(int)));
-
-        connect(_side_widget->scale, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setShaderScale(double)));
-        connect(_side_widget->smoothing, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setSmoothing(double)));
-        connect(_side_widget->shading, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setShading(double)));
-
-
-        connect(_side_widget->red, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setRed(double)));
-        connect(_side_widget->blue, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setBlue(double)));
-        connect(_side_widget->green, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setGreen(double)));
 
         // Project - Hermite arcs
 
@@ -151,6 +98,14 @@ namespace cagd
 
         connect(_side_widget->selectedHermitePatch, SIGNAL(valueChanged(int)), _gl_widget, SLOT(_setSelectedHermitePatch(int)));
 
+        connect(_side_widget->scale, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setShaderScale(double)));
+        connect(_side_widget->smoothing, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setSmoothing(double)));
+        connect(_side_widget->shading, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setShading(double)));
+
+
+        connect(_side_widget->red, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setRed(double)));
+        connect(_side_widget->blue, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setBlue(double)));
+        connect(_side_widget->green, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setGreen(double)));
 
         connect(_gl_widget, SIGNAL(HermitePatchPointChangeX(double)), _side_widget->hermite_patch_x, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(HermitePatchPointChangeY(double)), _side_widget->hermite_patch_y, SLOT(setValue(double)));
@@ -166,6 +121,8 @@ namespace cagd
         connect(_gl_widget, SIGNAL(HermitePatchPointChangeTZ(double)), _side_widget->hermite_patch_tz, SLOT(setValue(double)));
 
         connect(_side_widget->hermite_patch_index, SIGNAL(valueChanged(int)), _gl_widget, SLOT(_setSelectedHermitePatchPoint(int)));
+
+        connect(_side_widget->deleteSelectedPatch, SIGNAL(pressed()), _gl_widget, SLOT(_deleteSelectedPatch()));
 
         connect(_side_widget->hermite_patch_x, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setHermitePatchPointX(double)));
         connect(_side_widget->hermite_patch_y, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setHermitePatchPointY(double)));
@@ -188,7 +145,7 @@ namespace cagd
         connect(_side_widget->showHermitePatchSecondaryOrder, SIGNAL(clicked(bool)), _gl_widget, SLOT(_setVisibilityOfSecondOrderDerivatives(bool)));
 
         connect(_side_widget->useTextures, SIGNAL(clicked(bool)), _gl_widget, SLOT(_showHermitePatchTextures(bool)));
-        connect(_side_widget->useShaders, SIGNAL(clicked(bool)), _gl_widget, SLOT(_showHermitePatchTextures(bool)));
+        connect(_side_widget->useShaders, SIGNAL(clicked(bool)), _gl_widget, SLOT(_showHermitePatchShaders(bool)));
 
         connect(_side_widget->selectedPatchMaterial, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(_setHermitePatchMaterial(int)));
         connect(_side_widget->selectedPatchTexture, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(_setHermitePatchTexture(int)));

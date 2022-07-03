@@ -20,6 +20,7 @@ namespace cagd
             Material                        *material; // use pointers to pre-defined materials
             QOpenGLTexture                  *texture;  // use pointers to pre-defined textures
             ShaderProgram                   *shader;   // use pointers to pre-defined shader programs
+            GLint                           shader_index;
             GLint                           index;
             // other attributes
             // ...
@@ -46,9 +47,9 @@ namespace cagd
         bool                            _show_second_order_derivates;
         bool                            _highlight_selected_composite_patch;
 
+        std::vector<PatchAttributes*>    _attributes;
 
     protected:
-        std::vector<PatchAttributes*>    _attributes;
 
     public:
         // special/default ctor
@@ -56,7 +57,7 @@ namespace cagd
         ~HermiteCompositeSurface3();
 
         // operations
-        GLboolean InsertNewPatch(BicubicHermitePatch3* patch, TriangulatedMesh3* image, Material* mat, QOpenGLTexture* texture, ShaderProgram* shader, int index);
+        GLboolean InsertNewPatch(BicubicHermitePatch3* patch, TriangulatedMesh3* image, Material* mat, QOpenGLTexture* texture, ShaderProgram* shader, GLint shaderIndex, int index);
         GLboolean DeleteExistingPatch(GLuint index);
         BicubicHermitePatch3* ContinueExistingPatch(GLuint index, int direction);
         BicubicHermitePatch3* JoinExistingPatches(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
@@ -64,6 +65,9 @@ namespace cagd
 
         GLboolean RenderAllPatches() const;
         GLboolean RenderSelectedPatch(GLuint index, GLuint order, GLenum render_mode) const;
+
+        GLboolean updateToon(ShaderProgram* shader);
+        GLboolean updateLines(ShaderProgram* shader);
 
         GLboolean updatePatch(GLuint index, TriangulatedMesh3* image);
         GLvoid addNeighbour(GLuint index_0, int direction_0, GLuint index_1, int direction_1);
