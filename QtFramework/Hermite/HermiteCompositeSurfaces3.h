@@ -26,6 +26,8 @@ namespace cagd
 
             PatchAttributes                 *neighbours[8];
             GLint                           connection_type[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
+            RowMatrix<GenericCurve3*>       _u_lines;
+            RowMatrix<GenericCurve3*>       _v_lines;
 
             // ctor, copy ctor, assignment operator, dtor (they are required by the std::vector!)
         };

@@ -29,6 +29,9 @@ namespace cagd{
        element->texture = texture;
        element->shader = shader;
        element->index = index;
+       element->_u_lines.ResizeColumns(_number_of_patches + 1);
+       element->_v_lines.ResizeColumns(_number_of_patches + 1);
+
 
        for( GLuint i = 0 ; i < 8 ; i++) {
            element->neighbours[i] = nullptr;
@@ -1709,9 +1712,83 @@ namespace cagd{
             _attributes[i]->material->Apply();
             _attributes[i]->texture->bind();
             _attributes[i]->shader->Enable();
+             if(_show_u_lines && i == _selected_patch){
+                 for(GLuint j = 0; j < _attributes[i]->_u_lines.GetColumnCount(); j++)
+                 {
+                     if((_attributes[i]->_u_lines)[j])
+                     {
+                         (_attributes[i]->_u_lines)[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                     }
+                 }
+             }
+             if(_show_v_lines && i == _selected_patch){
+                 for(GLuint j = 0; j < _attributes[i]->_v_lines.GetColumnCount(); j++)
+                 {
+                     if((_attributes[i]->_v_lines)[j])
+                     {
+                         (_attributes[i]->_v_lines)[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                     }
+                 }
+             }
+
+             if(_show_first_order_derivates && _selected_patch == i){
+                glColor3f(0.0f, 1.0f, 0.0f);
+                for(GLuint j = 0; j < _attributes[i]->_u_lines.GetColumnCount(); j++)
+                {
+                    glPointSize(1.0f);
+                    glColor3f(0.0f, 1.0f, 0.0f);
+
+                    if((_attributes[i]->_u_lines)[j])
+                    {
+                        (_attributes[i]->_u_lines)[j]->RenderDerivatives(1, GL_POINTS);
+                        (_attributes[i]->_u_lines)[j]->RenderDerivatives(1, GL_LINES);
+                    }
+                }
+
+                for(GLuint j = 0; j < _attributes[i]->_u_lines.GetColumnCount(); j++)
+                {
+                    glPointSize(1.0f);
+                    glColor3f(0.0f, 1.0f, 0.0f);
+
+                    if((_attributes[i]->_v_lines)[j])
+                    {
+                        (_attributes[i]->_v_lines)[j]->RenderDerivatives(1, GL_POINTS);
+                        (_attributes[i]->_v_lines)[j]->RenderDerivatives(1, GL_LINES);
+                    }
+                }
+            }
+
+             if(_show_second_order_derivates && _selected_patch == i){
+                glColor3f(0.0f, 1.0f, 0.0f);
+                for(GLuint j = 0; j < _attributes[i]->_u_lines.GetColumnCount(); j++)
+                {
+                    glPointSize(1.0f);
+                    glColor3f(0.0f, 1.0f, 0.0f);
+
+                    if((_attributes[i]->_u_lines)[j])
+                    {
+                        (_attributes[i]->_u_lines)[j]->RenderDerivatives(2, GL_POINTS);
+                        (_attributes[i]->_u_lines)[j]->RenderDerivatives(2, GL_LINES);
+                    }
+                }
+
+                for(GLuint j = 0; j < _attributes[i]->_v_lines.GetColumnCount(); j++)
+                {
+                    glPointSize(1.0f);
+                    glColor3f(0.0f, 1.0f, 0.0f);
+
+                    if((_attributes[i]->_v_lines)[j])
+                    {
+                        (_attributes[i]->_v_lines)[j]->RenderDerivatives(2, GL_POINTS);
+                        (_attributes[i]->_v_lines)[j]->RenderDerivatives(2, GL_LINES);
+                    }
+                }
+            }
+
             _attributes[i]->image->Render();
             _attributes[i]->shader->Disable();
             _attributes[i]->texture->release();
+
         }
 
         return true;
