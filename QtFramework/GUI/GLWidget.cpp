@@ -137,6 +137,8 @@ namespace cagd
                 case 7:
             {
                 _initializeHermiteArcs();
+
+
                 HCoordinate3 direction (0.0, 0.0, 5.0, 0.0);
                 Color4  ambient(0.4, 0.4, 0.4, 1.0);
                 Color4  diffuse(0.8, 0.8, 0.8, 1.0);
@@ -1547,247 +1549,346 @@ namespace cagd
 
 
     void GLWidget::setHermitePatchPointUX(double value) {
+         DCoordinate3 u_vector, tmp, null(0,0,0);
          switch(_selected_hermite_patch_point) {
          case 0:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,0,tmp);
              (*_hermite_patches[_selected_hermite_patch])(2,0)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,0,u_vector);
              break;
          }
          case 1:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,1,tmp);
              (*_hermite_patches[_selected_hermite_patch])(2,1)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,1,u_vector);
              break;
          }
          case 2:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(3,0,tmp);
              (*_hermite_patches[_selected_hermite_patch])(3,0)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(3,0,u_vector);
              break;
          }
          case 3:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(3,1,tmp);
              (*_hermite_patches[_selected_hermite_patch])(3,1)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(3,1,u_vector);
              break;
          }
      }
+         u_vector -= tmp;
          _updateSelectedHermitePatch();
+         _updatePatchNeighbours(null, u_vector, null, null);
          update();
     }
 
     void GLWidget::setHermitePatchPointUY(double value) {
-         switch(_selected_hermite_patch_point) {
-         case 0:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,0)[1] = value;
-             break;
-         }
-         case 1:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,1)[1] = value;
-             break;
-         }
-         case 2:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,0)[1] = value;
-             break;
-         }
-         case 3:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,1)[1] = value;
-             break;
-         }
-     }
-         _updateSelectedHermitePatch();
-         update();
+        DCoordinate3 u_vector, tmp, null(0,0,0);
+        switch(_selected_hermite_patch_point) {
+        case 0:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,0,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,0)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,0,u_vector);
+            break;
+        }
+        case 1:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,1,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,1)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,1,u_vector);
+            break;
+        }
+        case 2:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,0,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,0)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,0,u_vector);
+            break;
+        }
+        case 3:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,1,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,1)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,1,u_vector);
+            break;
+        }
+    }
+        u_vector -= tmp;
+        _updateSelectedHermitePatch();
+        _updatePatchNeighbours(null, u_vector, null, null);
+        update();
     }
 
     void GLWidget::setHermitePatchPointUZ(double value) {
-         switch(_selected_hermite_patch_point) {
-         case 0:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,0)[2] = value;
-             break;
-         }
-         case 1:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,1)[2] = value;
-             break;
-         }
-         case 2:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,0)[2] = value;
-             break;
-         }
-         case 3:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,1)[2] = value;
-             break;
-         }
-     }
-         _updateSelectedHermitePatch();
-         update();
+        DCoordinate3 u_vector, tmp, null(0,0,0);
+        switch(_selected_hermite_patch_point) {
+        case 0:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,0,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,0)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,0,u_vector);
+            break;
+        }
+        case 1:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,1,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,1)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,1,u_vector);
+            break;
+        }
+        case 2:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,0,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,0)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,0,u_vector);
+            break;
+        }
+        case 3:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,1,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,1)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,1,u_vector);
+            break;
+        }
+    }
+        u_vector -= tmp;
+        _updateSelectedHermitePatch();
+        _updatePatchNeighbours(null, u_vector, null, null);
+        update();
     }
 
 
     void GLWidget::setHermitePatchPointVX(double value) {
+         DCoordinate3 v_vector, tmp, null(0,0,0);
          switch(_selected_hermite_patch_point) {
          case 0:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(0,2,tmp);
              (*_hermite_patches[_selected_hermite_patch])(0,2)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(0,2,v_vector);
              break;
          }
          case 1:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(0,3,tmp);
              (*_hermite_patches[_selected_hermite_patch])(0,3)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(0,3,v_vector);
              break;
          }
          case 2:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(1,2,tmp);
              (*_hermite_patches[_selected_hermite_patch])(1,2)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(1,2,v_vector);
              break;
          }
          case 3:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(1,3,tmp);
              (*_hermite_patches[_selected_hermite_patch])(1,3)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(1,3,v_vector);
              break;
          }
      }
+         v_vector -= tmp;
          _updateSelectedHermitePatch();
+         _updatePatchNeighbours(null, null, v_vector, null);
          update();
     }
 
     void GLWidget::setHermitePatchPointVY(double value) {
-         switch(_selected_hermite_patch_point) {
-         case 0:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(0,2)[1] = value;
-             break;
-         }
-         case 1:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(0,3)[1] = value;
-             break;
-         }
-         case 2:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(1,2)[1] = value;
-             break;
-         }
-         case 3:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(1,3)[1] = value;
-             break;
-         }
-     }
-         _updateSelectedHermitePatch();
-         update();
+        DCoordinate3 v_vector, tmp, null(0,0,0);
+        switch(_selected_hermite_patch_point) {
+        case 0:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(0,2)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,2,v_vector);
+            break;
+        }
+        case 1:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(0,3)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,3,v_vector);
+            break;
+        }
+        case 2:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(1,2)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,2,v_vector);
+            break;
+        }
+        case 3:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(1,3)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,3,v_vector);
+            break;
+        }
+    }
+        v_vector -= tmp;
+        _updateSelectedHermitePatch();
+        _updatePatchNeighbours(null, null, v_vector, null);
+        update();
     }
 
     void GLWidget::setHermitePatchPointVZ(double value) {
-         switch(_selected_hermite_patch_point) {
-         case 0:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(0,2)[2] = value;
-             break;
-         }
-         case 1:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(0,3)[2] = value;
-             break;
-         }
-         case 2:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(1,2)[2] = value;
-             break;
-         }
-         case 3:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(1,3)[2] = value;
-             break;
-         }
-     }
-         _updateSelectedHermitePatch();
-         update();
+        DCoordinate3 v_vector, tmp, null(0,0,0);
+        switch(_selected_hermite_patch_point) {
+        case 0:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(0,2)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,2,v_vector);
+            break;
+        }
+        case 1:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(0,3)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(0,3,v_vector);
+            break;
+        }
+        case 2:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(1,2)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,2,v_vector);
+            break;
+        }
+        case 3:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(1,3)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(1,3,v_vector);
+            break;
+        }
+    }
+        v_vector -= tmp;
+        _updateSelectedHermitePatch();
+        _updatePatchNeighbours(null, null, v_vector, null);
+        update();
     }
 
     void GLWidget::setHermitePatchPointTX(double value) {
+         DCoordinate3 twist_vector, tmp, null(0,0,0);
          switch(_selected_hermite_patch_point) {
          case 0:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,tmp);
              (*_hermite_patches[_selected_hermite_patch])(2,2)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
              break;
          }
          case 1:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,3,tmp);
              (*_hermite_patches[_selected_hermite_patch])(2,3)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
              break;
          }
          case 2:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(3,2,tmp);
              (*_hermite_patches[_selected_hermite_patch])(3,2)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
              break;
          }
          case 3:
          {
+             (*_hermite_patches[_selected_hermite_patch]).GetData(3,3,tmp);
              (*_hermite_patches[_selected_hermite_patch])(3,3)[0] = value;
+             (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
              break;
          }
      }
+         twist_vector -= tmp;
          _updateSelectedHermitePatch();
+         _updatePatchNeighbours(null,null,null,twist_vector);
          update();
     }
 
     void GLWidget::setHermitePatchPointTY(double value) {
-         switch(_selected_hermite_patch_point) {
-         case 0:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,2)[1] = value;
-             break;
-         }
-         case 1:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,3)[1] = value;
-             break;
-         }
-         case 2:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,2)[1] = value;
-             break;
-         }
-         case 3:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,3)[1] = value;
-             break;
-         }
-     }
-         _updateSelectedHermitePatch();
-         update();
+        DCoordinate3 twist_vector, tmp, null(0,0,0);
+        switch(_selected_hermite_patch_point) {
+        case 0:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,2)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+        case 1:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,3)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+        case 2:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,2)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+        case 3:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,3)[1] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+    }
+        twist_vector -= tmp;
+        _updateSelectedHermitePatch();
+        _updatePatchNeighbours(null,null,null,twist_vector);
+        update();
     }
 
     void GLWidget::setHermitePatchPointTZ(double value) {
-         switch(_selected_hermite_patch_point) {
-         case 0:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,2)[2] = value;
-             break;
-         }
-         case 1:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(2,3)[2] = value;
-             break;
-         }
-         case 2:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,2)[2] = value;
-             break;
-         }
-         case 3:
-         {
-             (*_hermite_patches[_selected_hermite_patch])(3,3)[2] = value;
-             break;
-         }
-     }
-         _updateSelectedHermitePatch();
-         update();
+        DCoordinate3 twist_vector, tmp, null(0,0,0);
+        switch(_selected_hermite_patch_point) {
+        case 0:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,2)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+        case 1:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(2,3)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+        case 2:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,2,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,2)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+        case 3:
+        {
+            (*_hermite_patches[_selected_hermite_patch]).GetData(3,3,tmp);
+            (*_hermite_patches[_selected_hermite_patch])(3,3)[2] = value;
+            (*_hermite_patches[_selected_hermite_patch]).GetData(2,2,twist_vector);
+            break;
+        }
+    }
+        twist_vector -= tmp;
+        _updateSelectedHermitePatch();
+        _updatePatchNeighbours(null,null,null,twist_vector);
+        update();
     }
     // PROJECT ONLY
 
